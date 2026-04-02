@@ -1,0 +1,8 @@
+{
+  "name": "juliamakeup",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:gas": "node scripts/test-gas.mjs"
+  }
+}

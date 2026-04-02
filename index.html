@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Julia Makeup | Modern Beauty Studio</title>
+  <meta
+    name="description"
+    content="Elegant presentation page for Julia Makeup with portfolio, pricing, recommendations, contact information, and a reservation system connected to Google Sheets."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Julia Makeup home">
+        <span class="brand-mark">JM</span>
+        <span class="brand-text">
+          <strong>juliamakeup</strong>
+          <span>Makeup Artist</span>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#prices">Prices</a>
+        <a href="#recommend">Julia Recommends</a>
+        <a href="#account">Account</a>
+        <a href="#my-reservations">My bookings</a>
+        <a href="#contact">Contact</a>
+        <a class="button button-small" href="#reservation">Book</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero section">
+        <div class="hero-copy">
+          <span class="eyebrow">Modern beauty studio</span>
+          <h1>Soft glam, timeless bridal looks, and polished beauty experiences.</h1>
+          <p>
+            Julia Makeup creates elevated looks with a calm, premium booking journey.
+            Discover services, view the portfolio, create your account, and reserve your date online.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#reservation">Reserve now</a>
+            <a class="button button-ghost" href="#portfolio">View portfolio</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <span>Signature session</span>
+            <strong>From 65 EUR</strong>
+          </div>
+          <ul class="hero-points">
+            <li>Luxury bridal and event makeup</li>
+            <li>Personalized skin-first product selection</li>
+            <li>Simple reservations synced to Google Sheets</li>
+          </ul>
+          <div class="hero-availability">
+            <span>Next available</span>
+            <strong>Tuesday, 10:00</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-grid section">
+        <article>
+          <strong>6+ years</strong>
+          <span>professional artistry experience</span>
+        </article>
+        <article>
+          <strong>300+</strong>
+          <span>beauty sessions completed</span>
+        </article>
+        <article>
+          <strong>4.9/5</strong>
+          <span>average client satisfaction</span>
+        </article>
+      </section>
+
+      <section id="about" class="section section-split">
+        <div class="section-heading">
+          <span class="eyebrow">About Julia</span>
+          <h2>Minimal, refined, and designed around confidence.</h2>
+        </div>
+        <div class="card card-large">
+          <p>
+            Julia is a makeup artist focused on fresh skin, elegant detail, and makeup that looks as
+            beautiful in person as it does in photos. Every appointment is tailored to the client, from
+            subtle everyday polish to full bridal glam.
+          </p>
+          <p>
+            The studio experience is intentionally simple: browse services, create an account, reserve a
+            time, and keep everything organized in one place.
+          </p>
+        </div>
+      </section>
+
+      <section id="portfolio" class="section">
+        <div class="section-heading">
+          <span class="eyebrow">Portfolio</span>
+          <h2>Recent beauty work</h2>
+        </div>
+        <div class="portfolio-grid">
+          <article class="portfolio-card warm">
+            <div class="portfolio-label">Bridal glow</div>
+            <p>Radiant skin, soft shimmer, and romantic definition for a timeless wedding finish.</p>
+          </article>
+          <article class="portfolio-card rosy">
+            <div class="portfolio-label">Soft glam</div>
+            <p>Balanced glam with polished brows, sculpted complexion, and diffused eyes.</p>
+          </article>
+          <article class="portfolio-card nude">
+            <div class="portfolio-label">Editorial clean</div>
+            <p>Fresh, modern beauty with intentional texture and understated luxury.</p>
+          </article>
+          <article class="portfolio-card bronze">
+            <div class="portfolio-label">Evening luxe</div>
+            <p>Defined eyes, glowing skin, and long-wear artistry for special events.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="prices" class="section">
+        <div class="section-heading">
+          <span class="eyebrow">Price Page</span>
+          <h2>Clear packages with a premium finish</h2>
+        </div>
+        <div class="price-grid">
+          <article class="price-card featured">
+            <span class="price-tag">Most requested</span>
+            <h3>Signature Makeup</h3>
+            <strong>65 EUR</strong>
+            <p>Perfect for events, dinners, celebrations, and polished day-to-night beauty.</p>
+          </article>
+          <article class="price-card">
+            <h3>Bridal Makeup</h3>
+            <strong>120 EUR</strong>
+            <p>Includes consultation, long-wear application, and bridal-day beauty planning.</p>
+          </article>
+          <article class="price-card">
+            <h3>Trial Session</h3>
+            <strong>80 EUR</strong>
+            <p>Test and refine your preferred look before a major event or wedding day.</p>
+          </article>
+          <article class="price-card">
+            <h3>1:1 Makeup Lesson</h3>
+            <strong>95 EUR</strong>
+            <p>Personalized product guidance and a step-by-step routine tailored to you.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="recommend" class="section">
+        <div class="section-heading">
+          <span class="eyebrow">Julia Recommends</span>
+          <h2>Favorite beauty products</h2>
+        </div>
+        <div class="recommend-grid">
+          <article class="recommend-card">
+            <span class="pill">Skin prep</span>
+            <h3>Hydrating primer</h3>
+            <p>Creates a smooth, luminous base and helps makeup wear beautifully through the day.</p>
+          </article>
+          <article class="recommend-card">
+            <span class="pill">Complexion</span>
+            <h3>Lightweight foundation</h3>
+            <p>Buildable coverage with a natural finish for skin that still looks like skin.</p>
+          </article>
+          <article class="recommend-card">
+            <span class="pill">Eyes</span>
+            <h3>Neutral shadow palette</h3>
+            <p>Soft browns, satins, and warm tones that suit both bridal and everyday looks.</p>
+          </article>
+          <article class="recommend-card">
+            <span class="pill">Finish</span>
+            <h3>Setting spray</h3>
+            <p>Helps lock the final look in place while keeping the skin finish fresh and refined.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="account" class="section account-section">
+        <div class="section-heading">
+          <span class="eyebrow">Account & Reservation</span>
+          <h2>Create an account and manage your booking</h2>
+        </div>
+
+        <div class="account-layout">
+          <div class="card auth-card">
+            <div class="tab-row" role="tablist" aria-label="Account tabs">
+              <button class="tab-button active" type="button" data-tab="register" aria-selected="true">Register</button>
+              <button class="tab-button" type="button" data-tab="login" aria-selected="false">Login</button>
+            </div>
+
+            <form id="register-form" class="auth-form active" autocomplete="on">
+              <label>
+                Full name
+                <input type="text" name="name" placeholder="Julia Client" required>
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" placeholder="client@example.com" required>
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="Create password" required minlength="6">
+              </label>
+              <button class="button" type="submit">Create account</button>
+            </form>
+
+            <form id="login-form" class="auth-form" autocomplete="on">
+              <label>
+                Email
+                <input type="email" name="email" placeholder="client@example.com" required>
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="Enter password" required minlength="6">
+              </label>
+              <button class="button" type="submit">Sign in</button>
+            </form>
+
+            <div id="account-panel" class="account-panel hidden">
+              <p>Signed in as <strong id="account-name">Guest</strong></p>
+              <button id="logout-button" class="button button-ghost" type="button">Log out</button>
+            </div>
+          </div>
+
+          <div id="reservation" class="card reservation-card">
+            <form id="reservation-form">
+              <p class="booking-intro">Pick an open slot on the calendar, then complete your details below.</p>
+              <div class="booking-layout">
+                <div class="calendar-panel">
+                  <div class="calendar-header">
+                    <button type="button" class="calendar-nav" id="cal-prev" aria-label="Previous month">‹</button>
+                    <h3 class="calendar-month-title" id="calendar-month-label">Month</h3>
+                    <button type="button" class="calendar-nav" id="cal-next" aria-label="Next month">›</button>
+                  </div>
+                  <div class="calendar-weekdays" aria-hidden="true">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                  </div>
+                  <div class="calendar-grid" id="calendar-grid" role="grid" aria-labelledby="calendar-month-label"></div>
+                </div>
+                <div class="slots-panel">
+                  <p class="slots-hint" id="slots-hint">Select a date to see available times.</p>
+                  <div class="slots-chips" id="slots-chips" role="group" aria-label="Available time slots"></div>
+                </div>
+              </div>
+              <input type="hidden" name="date" id="reservation-date-input" value="">
+              <input type="hidden" name="time" id="reservation-time-input" value="">
+              <div class="form-grid">
+                <label>
+                  Name
+                  <input type="text" name="name" placeholder="Your name" required>
+                </label>
+                <label>
+                  Email
+                  <input type="email" name="email" placeholder="Your email" required>
+                </label>
+                <label>
+                  Service
+                  <select name="service" required>
+                    <option value="">Select a service</option>
+                    <option value="Signature Makeup">Signature Makeup</option>
+                    <option value="Bridal Makeup">Bridal Makeup</option>
+                    <option value="Trial Session">Trial Session</option>
+                    <option value="1:1 Makeup Lesson">1:1 Makeup Lesson</option>
+                  </select>
+                </label>
+                <label>
+                  Phone
+                  <input type="tel" name="phone" placeholder="+421..." required>
+                </label>
+              </div>
+              <label>
+                Notes
+                <textarea name="notes" rows="4" placeholder="Tell Julia about the occasion, style, or your preferences."></textarea>
+              </label>
+              <button class="button" type="submit">Send reservation</button>
+            </form>
+
+            <div class="integration-note">
+              <strong>Google Sheets ready</strong>
+              <p>
+                This page is prepared for a Google Apps Script backend. Add your script URL in
+                <code>assets/js/config.js</code> to store account and reservation data in Google Sheets.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div id="my-reservations" class="my-reservations card hidden">
+          <h3 class="my-reservations-title">Your reservations</h3>
+          <p class="my-reservations-lede">
+            Bookings linked to your account on <strong>this device</strong>. You can cancel here to release the slot in the calendar.
+            Bookings made in another browser are not listed until we add a server “list” API.
+          </p>
+          <ul id="my-reservations-list" class="my-reservations-list" aria-label="Your reservations"></ul>
+          <p id="my-reservations-empty" class="my-reservations-empty hidden">No bookings yet — choose a date and time above.</p>
+        </div>
+
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="section-heading">
+          <span class="eyebrow">Contact</span>
+          <h2>Reach out for bookings and beauty questions</h2>
+        </div>
+        <div class="contact-grid">
+          <article class="card">
+            <h3>Studio details</h3>
+            <p>Bratislava, Slovakia</p>
+            <p>hello@juliamakeup.com</p>
+            <p>+421 900 000 000</p>
+          </article>
+          <article class="card">
+            <h3>Hours</h3>
+            <p>Mon - Fri: 09:00 - 18:00</p>
+            <p>Saturday: 09:00 - 14:00</p>
+            <p>Sunday: by request</p>
+          </article>
+          <article class="card">
+            <h3>Booking note</h3>
+            <p>For bridal dates and group bookings, reserve early to secure your preferred time.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>juliamakeup</p>
+      <span>Minimal beauty, modern booking, elegant experience.</span>
+    </footer>
+  </div>
+
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
