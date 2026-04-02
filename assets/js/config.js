@@ -3,7 +3,7 @@
  */
 export const CONFIG = {
   googleScriptUrl:
-    "https://script.google.com/macros/s/AKfycbyl0jiVcdu5WVN0kHqmxVrqcNqeAtGCa9rK_yzsrTCJhTDkXKhXyQE73D1Vyyhe4kK1/exec",
+    "https://script.google.com/macros/s/AKfycbz1GmhIy1UbvXEu1flV01q7PVDyJx1NWHVGN_Glj6_FklD7XfZHKkyh6FoihfrHA7lz/exec",
   useGoogleSheets: true,
 };
 
