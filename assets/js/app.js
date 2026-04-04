@@ -880,8 +880,125 @@ function initHeaderScroll() {
   onScroll();
 }
 
+function initHeroScrollSkip() {
+  const hero = document.querySelector(".hero-carousel");
+
+  if (!hero) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let lockUntil = 0;
+  let touchStartY = 0;
+  let touchStartedInHero = false;
+
+  function heroBottom() {
+    return hero.offsetHeight;
+  }
+
+  function isInsideHeroScrollRange() {
+    return window.scrollY < heroBottom() - 2;
+  }
+
+  function skipPastHero() {
+    const top = heroBottom();
+    lockUntil = Date.now() + 800;
+
+    if (prefersReducedMotion.matches) {
+      window.scrollTo(0, top);
+    } else {
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+      if (Date.now() < lockUntil) {
+        if (event.deltaY > 0) {
+          event.preventDefault();
+        }
+
+        return;
+      }
+
+      if (!isInsideHeroScrollRange() || event.deltaY <= 45) {
+        return;
+      }
+
+      event.preventDefault();
+      skipPastHero();
+    },
+    { passive: false }
+  );
+
+  document.addEventListener(
+    "touchstart",
+    (event) => {
+      if (!isInsideHeroScrollRange()) {
+        touchStartedInHero = false;
+        return;
+      }
+
+      touchStartY = event.touches[0].clientY;
+      touchStartedInHero = hero.contains(event.target);
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "touchend",
+    (event) => {
+      if (!touchStartedInHero) {
+        return;
+      }
+
+      touchStartedInHero = false;
+
+      if (Date.now() < lockUntil || !isInsideHeroScrollRange()) {
+        return;
+      }
+
+      const endY = event.changedTouches[0].clientY;
+      const deltaY = touchStartY - endY;
+
+      if (deltaY > 75) {
+        skipPastHero();
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener("keydown", (event) => {
+    if (!isInsideHeroScrollRange() || Date.now() < lockUntil) {
+      return;
+    }
+
+    const tag = document.activeElement?.tagName;
+
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+      return;
+    }
+
+    if (event.key === "PageDown" || event.key === "ArrowDown") {
+      event.preventDefault();
+      skipPastHero();
+    }
+
+    if (event.key === " " && !event.ctrlKey && !event.metaKey) {
+      if (document.activeElement?.closest?.("button, a, [role='button']")) {
+        return;
+      }
+
+      event.preventDefault();
+      skipPastHero();
+    }
+  });
+}
+
 restoreSession();
 bindEvents();
 initBookingCalendar();
 initHeroCarousel();
 initHeaderScroll();
+initHeroScrollSkip();
