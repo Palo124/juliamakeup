@@ -114,6 +114,7 @@ function toggleMobileMenu() {
 
   const isOpen = elements.siteNav.classList.toggle("open");
   elements.menuToggle.setAttribute("aria-expanded", String(isOpen));
+  elements.menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
 }
 
 function switchTab(targetTab) {
@@ -773,6 +774,114 @@ function bindEvents() {
   elements.logoutButton.addEventListener("click", handleLogout);
 }
 
+function initHeroCarousel() {
+  const track = document.getElementById("hero-carousel-track");
+  const dotsRoot = document.getElementById("hero-carousel-dots");
+  const prevButton = document.getElementById("hero-carousel-prev");
+  const nextButton = document.getElementById("hero-carousel-next");
+
+  if (!track || !dotsRoot) {
+    return;
+  }
+
+  const slides = track.querySelectorAll(".hero-carousel-slide");
+  const count = slides.length;
+
+  if (count === 0) {
+    return;
+  }
+
+  dotsRoot.innerHTML = "";
+
+  let index = 0;
+  let autoTimer = null;
+
+  function go(targetIndex) {
+    index = ((targetIndex % count) + count) % count;
+    track.style.transform = `translateX(-${index * 100}vw)`;
+
+    dotsRoot.querySelectorAll(".hero-carousel-dot").forEach((dot, dotIndex) => {
+      dot.classList.toggle("is-active", dotIndex === index);
+      dot.setAttribute("aria-selected", String(dotIndex === index));
+    });
+  }
+
+  for (let slideIndex = 0; slideIndex < count; slideIndex += 1) {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = `hero-carousel-dot${slideIndex === 0 ? " is-active" : ""}`;
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-label", `Slide ${slideIndex + 1} of ${count}`);
+    dot.setAttribute("aria-selected", slideIndex === 0 ? "true" : "false");
+    dot.addEventListener("click", () => {
+      go(slideIndex);
+      restartAuto();
+    });
+    dotsRoot.append(dot);
+  }
+
+  function restartAuto() {
+    clearInterval(autoTimer);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (reduceMotion.matches) {
+      return;
+    }
+
+    autoTimer = window.setInterval(() => {
+      go(index + 1);
+    }, 6500);
+  }
+
+  prevButton?.addEventListener("click", () => {
+    go(index - 1);
+    restartAuto();
+  });
+
+  nextButton?.addEventListener("click", () => {
+    go(index + 1);
+    restartAuto();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      clearInterval(autoTimer);
+    } else {
+      restartAuto();
+    }
+  });
+
+  restartAuto();
+}
+
+function initHeaderScroll() {
+  const header = document.querySelector(".site-header--hero");
+  const hero = document.querySelector(".hero-carousel");
+  const nav = document.getElementById("site-nav");
+  const menuToggle = document.querySelector(".menu-toggle");
+
+  if (!header || !hero) {
+    return;
+  }
+
+  function onScroll() {
+    const threshold = Math.max(hero.offsetHeight - 24, 0);
+    const pastHero = window.scrollY > threshold;
+    header.classList.toggle("site-header--past-hero", pastHero);
+
+    if (!pastHero && nav?.classList.contains("open")) {
+      nav.classList.remove("open");
+      menuToggle?.setAttribute("aria-expanded", "false");
+      menuToggle?.setAttribute("aria-label", "Open menu");
+    }
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+
 restoreSession();
 bindEvents();
 initBookingCalendar();
+initHeroCarousel();
+initHeaderScroll();

@@ -3,32 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Julia Makeup | Modern Beauty Studio</title>
+  <title>Juliere Beauty | Modern Beauty Studio</title>
   <meta
     name="description"
-    content="Elegant presentation page for Julia Makeup with portfolio, pricing, recommendations, contact information, and a reservation system connected to Google Sheets."
+    content="Juliere Beauty — elegant makeup studio with portfolio, pricing, booking, and reservations."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <div class="page-shell">
-    <header class="site-header">
-      <a class="brand" href="#home" aria-label="Julia Makeup home">
-        <span class="brand-mark">JM</span>
+  <div class="hero-stage">
+    <section
+      id="home"
+      class="hero-carousel"
+      aria-roledescription="carousel"
+      aria-label="Juliere Beauty"
+    >
+      <div class="hero-carousel-viewport">
+        <div class="hero-carousel-track" id="hero-carousel-track">
+          <figure class="hero-carousel-slide">
+            <img
+              class="hero-carousel-img"
+              src="assets/img/IMG_5886.jpeg"
+              width="3024"
+              height="4032"
+              alt="Portrait — professional makeup look, Juliere Beauty"
+              fetchpriority="high"
+            >
+            <figcaption class="visually-hidden">Featured portrait for Juliere Beauty</figcaption>
+          </figure>
+          <figure class="hero-carousel-slide">
+            <img
+              class="hero-carousel-img"
+              src="assets/img/hero-slide-2.svg"
+              width="900"
+              height="1200"
+              alt=""
+            >
+            <figcaption class="visually-hidden">Hero image placeholder — replace with portrait photo</figcaption>
+          </figure>
+          <figure class="hero-carousel-slide">
+            <img
+              class="hero-carousel-img"
+              src="assets/img/hero-slide-3.svg"
+              width="900"
+              height="1200"
+              alt=""
+            >
+            <figcaption class="visually-hidden">Hero image placeholder — replace with portrait photo</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="hero-carousel-scrim" aria-hidden="true"></div>
+      <div class="hero-carousel-content">
+        <p class="hero-carousel-tagline">Modern beauty studio</p>
+        <h1 class="hero-carousel-brand">
+          <span class="hero-carousel-brand-line hero-carousel-brand-line--primary">Juliere</span>
+          <span class="hero-carousel-brand-line hero-carousel-brand-line--secondary">Beauty</span>
+        </h1>
+      </div>
+      <div class="hero-carousel-ui">
+        <button
+          type="button"
+          class="hero-carousel-arrow hero-carousel-arrow--prev"
+          id="hero-carousel-prev"
+          aria-label="Previous slide"
+        >
+          ‹
+        </button>
+        <div class="hero-carousel-dots" id="hero-carousel-dots" role="tablist" aria-label="Choose slide"></div>
+        <button
+          type="button"
+          class="hero-carousel-arrow hero-carousel-arrow--next"
+          id="hero-carousel-next"
+          aria-label="Next slide"
+        >
+          ›
+        </button>
+      </div>
+      <a class="hero-carousel-scroll" href="#intro">
+        <span class="hero-carousel-scroll-line"></span>
+        <span class="hero-carousel-scroll-text">Scroll</span>
+      </a>
+    </section>
+
+    <header class="site-header site-header--hero">
+      <a class="brand" href="#home" aria-label="Juliere Beauty home">
+        <span class="brand-mark">JB</span>
         <span class="brand-text">
-          <strong>juliamakeup</strong>
-          <span>Makeup Artist</span>
+          <strong>Juliere Beauty</strong>
+          <span>Makeup artist</span>
         </span>
       </a>
 
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        Menu
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        aria-label="Open menu"
+      >
+        <span class="menu-toggle-bars" aria-hidden="true">
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+        </span>
       </button>
 
       <nav id="site-nav" class="site-nav" aria-label="Main">
@@ -42,35 +126,18 @@
         <a class="button button-small" href="#reservation">Book</a>
       </nav>
     </header>
+  </div>
 
+  <div class="page-shell">
     <main>
-      <section id="home" class="hero section">
-        <div class="hero-copy">
-          <span class="eyebrow">Modern beauty studio</span>
-          <h1>Soft glam, timeless bridal looks, and polished beauty experiences.</h1>
-          <p>
-            Julia Makeup creates elevated looks with a calm, premium booking journey.
-            Discover services, view the portfolio, create your account, and reserve your date online.
+      <section id="intro" class="intro-band section">
+        <div class="intro-band-inner">
+          <p class="intro-band-text">
+            Soft glam, timeless bridal looks, and polished beauty experiences — reserve your date online.
           </p>
-          <div class="hero-actions">
+          <div class="intro-band-actions">
             <a class="button" href="#reservation">Reserve now</a>
             <a class="button button-ghost" href="#portfolio">View portfolio</a>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <div class="hero-card-top">
-            <span>Signature session</span>
-            <strong>From 65 EUR</strong>
-          </div>
-          <ul class="hero-points">
-            <li>Luxury bridal and event makeup</li>
-            <li>Personalized skin-first product selection</li>
-            <li>Simple reservations synced to Google Sheets</li>
-          </ul>
-          <div class="hero-availability">
-            <span>Next available</span>
-            <strong>Tuesday, 10:00</strong>
           </div>
         </div>
       </section>
@@ -341,7 +408,7 @@
     </main>
 
     <footer class="site-footer">
-      <p>juliamakeup</p>
+      <p>Juliere Beauty</p>
       <span>Minimal beauty, modern booking, elegant experience.</span>
     </footer>
   </div>

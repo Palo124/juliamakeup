@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200" role="img" aria-label="Portrait placeholder 2  replace with photo">
+  <defs>
+    <linearGradient id="g2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a3530"/>
+      <stop offset="50%" style="stop-color:#8b6b5c"/>
+      <stop offset="100%" style="stop-color:#2d2220"/>
+    </linearGradient>
+    <radialGradient id="face2" cx="48%" cy="30%" r="38%">
+      <stop offset="0%" style="stop-color:#e8d4cc;stop-opacity:0.28"/>
+      <stop offset="100%" style="stop-color:#e8d4cc;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="1200" fill="url(#g2)"/>
+  <ellipse cx="430" cy="360" rx="200" ry="260" fill="url(#face2)"/>
+  <text x="450" y="1120" text-anchor="middle" fill="rgba(255,245,240,0.25)" font-family="Georgia,serif" font-size="22" letter-spacing="0.2em">PLACEHOLDER 2</text>
+</svg>
