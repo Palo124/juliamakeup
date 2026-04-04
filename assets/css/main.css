@@ -124,6 +124,10 @@ textarea {
   box-shadow: 0 4px 12px rgba(176, 123, 103, 0.25);
 }
 
+.site-nav .lang-switch {
+  flex-shrink: 0;
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -1289,37 +1293,102 @@ textarea {
 
   .site-header {
     flex-wrap: wrap;
+    align-items: center;
+    row-gap: 6px;
     border-radius: 28px;
   }
 
+  .site-header:has(.site-nav.open) {
+    row-gap: 12px;
+  }
+
+  /*
+   * Flatten .header-actions so the open nav is a direct flex child of .site-header.
+   * Otherwise the nav’s 100% width only spans the right column beside the logo,
+   * which makes links hug the right edge and leaves empty space on the left.
+   */
   .header-actions {
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    display: contents;
+  }
+
+  .site-header .brand {
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .site-header .menu-toggle {
+    order: 2;
+    flex: 0 0 auto;
   }
 
   .menu-toggle {
     display: inline-flex;
   }
 
+  .site-header .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .site-nav {
     display: none;
-    width: 100%;
     flex-direction: column;
-    align-items: flex-start;
-    padding-top: 12px;
-    order: 10;
-    flex-basis: 100%;
+    align-items: stretch;
+    gap: 2px;
+    padding-top: 8px;
   }
 
   .site-nav.open {
     display: flex;
   }
 
+  .site-nav a:not(.button) {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.65rem 0;
+    line-height: 1.35;
+    font-size: 1.02rem;
+    font-weight: 500;
+    text-align: left;
+    text-decoration: none;
+    border-radius: 10px;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .site-nav a:not(.button):hover,
+  .site-nav a:not(.button):focus-visible {
+    background: rgba(36, 28, 24, 0.05);
+    outline: none;
+  }
+
+  .site-nav .button.button-small {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .site-nav .lang-switch {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    align-self: stretch;
+    justify-content: flex-start;
+  }
+
   .site-header--hero .site-nav.open {
     background: rgba(255, 251, 247, 0.98);
     backdrop-filter: blur(14px);
     border-radius: 20px;
-    padding: 12px 16px 18px;
+    padding: 16px 18px 20px;
     border: 1px solid var(--line);
   }
 
