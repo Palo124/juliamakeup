@@ -888,9 +888,12 @@ function initHeroScrollSkip() {
   }
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const prefersCoarsePointer = window.matchMedia("(pointer: coarse)");
   let lockUntil = 0;
   let touchStartY = 0;
+  let touchStartX = 0;
   let touchStartedInHero = false;
+  let scrollAnimationFrame = null;
 
   function heroBottom() {
     return hero.offsetHeight;
@@ -900,15 +903,52 @@ function initHeroScrollSkip() {
     return window.scrollY < heroBottom() - 2;
   }
 
+  function easeOutCubic(progress) {
+    return 1 - (1 - progress) ** 3;
+  }
+
+  function animateScrollTo(targetY, durationMs) {
+    if (scrollAnimationFrame !== null) {
+      cancelAnimationFrame(scrollAnimationFrame);
+      scrollAnimationFrame = null;
+    }
+
+    const startY = window.scrollY;
+    const travel = targetY - startY;
+
+    if (Math.abs(travel) < 2) {
+      return;
+    }
+
+    const startTime = performance.now();
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / durationMs);
+      window.scrollTo(0, startY + travel * easeOutCubic(t));
+
+      if (t < 1) {
+        scrollAnimationFrame = requestAnimationFrame(tick);
+      } else {
+        scrollAnimationFrame = null;
+      }
+    }
+
+    scrollAnimationFrame = requestAnimationFrame(tick);
+  }
+
   function skipPastHero() {
     const top = heroBottom();
-    lockUntil = Date.now() + 800;
 
     if (prefersReducedMotion.matches) {
+      lockUntil = Date.now() + 400;
       window.scrollTo(0, top);
-    } else {
-      window.scrollTo({ top, behavior: "smooth" });
+      return;
     }
+
+    const durationMs = prefersCoarsePointer.matches ? 700 : 540;
+    lockUntil = Date.now() + durationMs + 320;
+    animateScrollTo(top, durationMs);
   }
 
   window.addEventListener(
@@ -941,32 +981,36 @@ function initHeroScrollSkip() {
       }
 
       touchStartY = event.touches[0].clientY;
+      touchStartX = event.touches[0].clientX;
       touchStartedInHero = hero.contains(event.target);
     },
     { passive: true }
   );
 
   document.addEventListener(
-    "touchend",
+    "touchmove",
     (event) => {
-      if (!touchStartedInHero) {
+      if (!touchStartedInHero || Date.now() < lockUntil || !isInsideHeroScrollRange()) {
         return;
       }
 
+      const touch = event.touches[0];
+      const verticalIntent = touchStartY - touch.clientY;
+      const horizontalDrift = Math.abs(touch.clientX - touchStartX);
+
+      if (verticalIntent < 24) {
+        return;
+      }
+
+      if (verticalIntent < horizontalDrift * 0.75) {
+        return;
+      }
+
+      event.preventDefault();
       touchStartedInHero = false;
-
-      if (Date.now() < lockUntil || !isInsideHeroScrollRange()) {
-        return;
-      }
-
-      const endY = event.changedTouches[0].clientY;
-      const deltaY = touchStartY - endY;
-
-      if (deltaY > 75) {
-        skipPastHero();
-      }
+      skipPastHero();
     },
-    { passive: true }
+    { passive: false }
   );
 
   window.addEventListener("keydown", (event) => {
