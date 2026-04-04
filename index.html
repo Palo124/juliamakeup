@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juliere Beauty | Modern Beauty Studio</title>
+  <title id="page-title">Juliere Beauty | Moderné kozmetické štúdio</title>
   <meta
     name="description"
-    content="Juliere Beauty — elegant makeup studio with portfolio, pricing, booking, and reservations."
+    data-i18n-content="meta.description"
+    content="Juliere Beauty — elegantné vizážistické štúdio s portfóliom, cenníkom, rezerváciou a prehľadom termínov."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +23,7 @@
       id="home"
       class="hero-carousel"
       aria-roledescription="carousel"
+      data-i18n-aria="hero.carouselAria"
       aria-label="Juliere Beauty"
     >
       <div class="hero-carousel-viewport">
@@ -32,10 +34,11 @@
               src="assets/img/IMG_5886.jpeg"
               width="3024"
               height="4032"
+              data-i18n-alt="hero.slide1.alt"
               alt="Portrait — professional makeup look, Juliere Beauty"
               fetchpriority="high"
             >
-            <figcaption class="visually-hidden">Featured portrait for Juliere Beauty</figcaption>
+            <figcaption class="visually-hidden" data-i18n="hero.slide1.caption">Featured portrait for Juliere Beauty</figcaption>
           </figure>
           <figure class="hero-carousel-slide">
             <img
@@ -43,9 +46,10 @@
               src="assets/img/7FBFCB0A-79CF-4F99-9B6F-10E6A78F4975.jpeg"
               width="2295"
               height="3060"
+              data-i18n-alt="hero.slide2.alt"
               alt="Luxury makeup products — Juliere Beauty studio"
             >
-            <figcaption class="visually-hidden">Flat lay of professional makeup products</figcaption>
+            <figcaption class="visually-hidden" data-i18n="hero.slide2.caption">Flat lay of professional makeup products</figcaption>
           </figure>
           <figure class="hero-carousel-slide">
             <img
@@ -53,15 +57,16 @@
               src="assets/img/IMG_7567.jpeg"
               width="3024"
               height="4032"
+              data-i18n-alt="hero.slide3.alt"
               alt="Portrait — soft glam makeup, Juliere Beauty"
             >
-            <figcaption class="visually-hidden">Portrait with professional makeup look</figcaption>
+            <figcaption class="visually-hidden" data-i18n="hero.slide3.caption">Portrait with professional makeup look</figcaption>
           </figure>
         </div>
       </div>
       <div class="hero-carousel-scrim" aria-hidden="true"></div>
       <div class="hero-carousel-content">
-        <p class="hero-carousel-tagline">Modern beauty studio</p>
+        <p class="hero-carousel-tagline" data-i18n="hero.tagline">Modern beauty studio</p>
         <h1 class="hero-carousel-brand">
           <span class="hero-carousel-brand-line hero-carousel-brand-line--primary">Juliere</span>
           <span class="hero-carousel-brand-line hero-carousel-brand-line--secondary">Beauty</span>
@@ -72,15 +77,17 @@
           type="button"
           class="hero-carousel-arrow hero-carousel-arrow--prev"
           id="hero-carousel-prev"
+          data-i18n-aria="hero.prevSlide"
           aria-label="Previous slide"
         >
           ‹
         </button>
-        <div class="hero-carousel-dots" id="hero-carousel-dots" role="tablist" aria-label="Choose slide"></div>
+        <div class="hero-carousel-dots" id="hero-carousel-dots" role="tablist" data-i18n-aria="hero.chooseSlide" aria-label="Choose slide"></div>
         <button
           type="button"
           class="hero-carousel-arrow hero-carousel-arrow--next"
           id="hero-carousel-next"
+          data-i18n-aria="hero.nextSlide"
           aria-label="Next slide"
         >
           ›
@@ -88,43 +95,51 @@
       </div>
       <a class="hero-carousel-scroll" href="#intro">
         <span class="hero-carousel-scroll-line"></span>
-        <span class="hero-carousel-scroll-text">Scroll</span>
+        <span class="hero-carousel-scroll-text" data-i18n="hero.scroll">Scroll</span>
       </a>
     </section>
 
     <header class="site-header site-header--hero">
-      <a class="brand" href="#home" aria-label="Juliere Beauty home">
+      <a class="brand" href="#home" data-i18n-aria="header.brandAria" aria-label="Juliere Beauty home">
         <span class="brand-mark">JB</span>
         <span class="brand-text">
-          <strong>Juliere Beauty</strong>
-          <span>Makeup artist</span>
+          <strong data-i18n="header.brandStrong">Juliere Beauty</strong>
+          <span data-i18n="header.brandSub">Makeup artist</span>
         </span>
       </a>
 
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="site-nav"
-        aria-label="Open menu"
-      >
-        <span class="menu-toggle-bars" aria-hidden="true">
-          <span class="menu-toggle-bar"></span>
-          <span class="menu-toggle-bar"></span>
-          <span class="menu-toggle-bar"></span>
-        </span>
-      </button>
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria="lang.switchAria" aria-label="Language">
+          <button type="button" class="lang-switch-btn" data-lang-set="en" aria-pressed="false">EN</button>
+          <button type="button" class="lang-switch-btn is-active" data-lang-set="sk" aria-pressed="true">SK</button>
+        </div>
 
-      <nav id="site-nav" class="site-nav" aria-label="Main">
-        <a href="#about">About</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#prices">Prices</a>
-        <a href="#recommend">Julia Recommends</a>
-        <a href="#account">Account</a>
-        <a href="#my-reservations">My bookings</a>
-        <a href="#contact">Contact</a>
-        <a class="button button-small" href="#reservation">Book</a>
-      </nav>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          data-i18n-aria="header.openMenu"
+          aria-label="Open menu"
+        >
+          <span class="menu-toggle-bars" aria-hidden="true">
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+          </span>
+        </button>
+
+        <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Main">
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+        <a href="#prices" data-i18n="nav.prices">Prices</a>
+        <a href="#recommend" data-i18n="nav.recommend">Julia Recommends</a>
+        <a href="#account" data-i18n="nav.account">Account</a>
+        <a href="#my-reservations" data-i18n="nav.bookings">My bookings</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <a class="button button-small" href="#reservation" data-i18n="nav.book">Book</a>
+        </nav>
+      </div>
     </header>
   </div>
 
@@ -132,43 +147,43 @@
     <main>
       <section id="intro" class="intro-band section">
         <div class="intro-band-inner">
-          <p class="intro-band-text">
+          <p class="intro-band-text" data-i18n="intro.text">
             Soft glam, timeless bridal looks, and polished beauty experiences — reserve your date online.
           </p>
           <div class="intro-band-actions">
-            <a class="button" href="#reservation">Reserve now</a>
-            <a class="button button-ghost" href="#portfolio">View portfolio</a>
+            <a class="button" href="#reservation" data-i18n="intro.reserve">Reserve now</a>
+            <a class="button button-ghost" href="#portfolio" data-i18n="intro.portfolio">View portfolio</a>
           </div>
         </div>
       </section>
 
       <section class="stats-grid section">
         <article>
-          <strong>6+ years</strong>
-          <span>professional artistry experience</span>
+          <strong data-i18n="stats.years">6+ years</strong>
+          <span data-i18n="stats.yearsDesc">professional artistry experience</span>
         </article>
         <article>
-          <strong>300+</strong>
-          <span>beauty sessions completed</span>
+          <strong data-i18n="stats.sessions">300+</strong>
+          <span data-i18n="stats.sessionsDesc">beauty sessions completed</span>
         </article>
         <article>
-          <strong>4.9/5</strong>
-          <span>average client satisfaction</span>
+          <strong data-i18n="stats.rating">4.9/5</strong>
+          <span data-i18n="stats.ratingDesc">average client satisfaction</span>
         </article>
       </section>
 
       <section id="about" class="section section-split">
         <div class="section-heading">
-          <span class="eyebrow">About Julia</span>
-          <h2>Minimal, refined, and designed around confidence.</h2>
+          <span class="eyebrow" data-i18n="about.eyebrow">About Julia</span>
+          <h2 data-i18n="about.h2">Minimal, refined, and designed around confidence.</h2>
         </div>
         <div class="card card-large">
-          <p>
+          <p data-i18n="about.p1">
             Julia is a makeup artist focused on fresh skin, elegant detail, and makeup that looks as
             beautiful in person as it does in photos. Every appointment is tailored to the client, from
             subtle everyday polish to full bridal glam.
           </p>
-          <p>
+          <p data-i18n="about.p2">
             The studio experience is intentionally simple: browse services, create an account, reserve a
             time, and keep everything organized in one place.
           </p>
@@ -177,239 +192,237 @@
 
       <section id="portfolio" class="section">
         <div class="section-heading">
-          <span class="eyebrow">Portfolio</span>
-          <h2>Recent beauty work</h2>
+          <span class="eyebrow" data-i18n="portfolio.eyebrow">Portfolio</span>
+          <h2 data-i18n="portfolio.h2">Recent beauty work</h2>
         </div>
         <div class="portfolio-grid">
           <article class="portfolio-card warm">
-            <div class="portfolio-label">Bridal glow</div>
-            <p>Radiant skin, soft shimmer, and romantic definition for a timeless wedding finish.</p>
+            <div class="portfolio-label" data-i18n="portfolio.bridal.label">Bridal glow</div>
+            <p data-i18n="portfolio.bridal.p">Radiant skin, soft shimmer, and romantic definition for a timeless wedding finish.</p>
           </article>
           <article class="portfolio-card rosy">
-            <div class="portfolio-label">Soft glam</div>
-            <p>Balanced glam with polished brows, sculpted complexion, and diffused eyes.</p>
+            <div class="portfolio-label" data-i18n="portfolio.soft.label">Soft glam</div>
+            <p data-i18n="portfolio.soft.p">Balanced glam with polished brows, sculpted complexion, and diffused eyes.</p>
           </article>
           <article class="portfolio-card nude">
-            <div class="portfolio-label">Editorial clean</div>
-            <p>Fresh, modern beauty with intentional texture and understated luxury.</p>
+            <div class="portfolio-label" data-i18n="portfolio.editorial.label">Editorial clean</div>
+            <p data-i18n="portfolio.editorial.p">Fresh, modern beauty with intentional texture and understated luxury.</p>
           </article>
           <article class="portfolio-card bronze">
-            <div class="portfolio-label">Evening luxe</div>
-            <p>Defined eyes, glowing skin, and long-wear artistry for special events.</p>
+            <div class="portfolio-label" data-i18n="portfolio.evening.label">Evening luxe</div>
+            <p data-i18n="portfolio.evening.p">Defined eyes, glowing skin, and long-wear artistry for special events.</p>
           </article>
         </div>
       </section>
 
       <section id="prices" class="section">
         <div class="section-heading">
-          <span class="eyebrow">Price Page</span>
-          <h2>Clear packages with a premium finish</h2>
+          <span class="eyebrow" data-i18n="prices.eyebrow">Price Page</span>
+          <h2 data-i18n="prices.h2">Clear packages with a premium finish</h2>
         </div>
         <div class="price-grid">
           <article class="price-card featured">
-            <span class="price-tag">Most requested</span>
-            <h3>Signature Makeup</h3>
+            <span class="price-tag" data-i18n="prices.signature.tag">Most requested</span>
+            <h3 data-i18n="prices.signature.h3">Signature Makeup</h3>
             <strong>65 EUR</strong>
-            <p>Perfect for events, dinners, celebrations, and polished day-to-night beauty.</p>
+            <p data-i18n="prices.signature.p">Perfect for events, dinners, celebrations, and polished day-to-night beauty.</p>
           </article>
           <article class="price-card">
-            <h3>Bridal Makeup</h3>
+            <h3 data-i18n="prices.bridal.h3">Bridal Makeup</h3>
             <strong>120 EUR</strong>
-            <p>Includes consultation, long-wear application, and bridal-day beauty planning.</p>
+            <p data-i18n="prices.bridal.p">Includes consultation, long-wear application, and bridal-day beauty planning.</p>
           </article>
           <article class="price-card">
-            <h3>Trial Session</h3>
+            <h3 data-i18n="prices.trial.h3">Trial Session</h3>
             <strong>80 EUR</strong>
-            <p>Test and refine your preferred look before a major event or wedding day.</p>
+            <p data-i18n="prices.trial.p">Test and refine your preferred look before a major event or wedding day.</p>
           </article>
           <article class="price-card">
-            <h3>1:1 Makeup Lesson</h3>
+            <h3 data-i18n="prices.lesson.h3">1:1 Makeup Lesson</h3>
             <strong>95 EUR</strong>
-            <p>Personalized product guidance and a step-by-step routine tailored to you.</p>
+            <p data-i18n="prices.lesson.p">Personalized product guidance and a step-by-step routine tailored to you.</p>
           </article>
         </div>
       </section>
 
       <section id="recommend" class="section">
         <div class="section-heading">
-          <span class="eyebrow">Julia Recommends</span>
-          <h2>Favorite beauty products</h2>
+          <span class="eyebrow" data-i18n="recommend.eyebrow">Julia Recommends</span>
+          <h2 data-i18n="recommend.h2">Favorite beauty products</h2>
         </div>
         <div class="recommend-grid">
           <article class="recommend-card">
-            <span class="pill">Skin prep</span>
-            <h3>Hydrating primer</h3>
-            <p>Creates a smooth, luminous base and helps makeup wear beautifully through the day.</p>
+            <span class="pill" data-i18n="recommend.prep.pill">Skin prep</span>
+            <h3 data-i18n="recommend.prep.h3">Hydrating primer</h3>
+            <p data-i18n="recommend.prep.p">Creates a smooth, luminous base and helps makeup wear beautifully through the day.</p>
           </article>
           <article class="recommend-card">
-            <span class="pill">Complexion</span>
-            <h3>Lightweight foundation</h3>
-            <p>Buildable coverage with a natural finish for skin that still looks like skin.</p>
+            <span class="pill" data-i18n="recommend.complexion.pill">Complexion</span>
+            <h3 data-i18n="recommend.complexion.h3">Lightweight foundation</h3>
+            <p data-i18n="recommend.complexion.p">Buildable coverage with a natural finish for skin that still looks like skin.</p>
           </article>
           <article class="recommend-card">
-            <span class="pill">Eyes</span>
-            <h3>Neutral shadow palette</h3>
-            <p>Soft browns, satins, and warm tones that suit both bridal and everyday looks.</p>
+            <span class="pill" data-i18n="recommend.eyes.pill">Eyes</span>
+            <h3 data-i18n="recommend.eyes.h3">Neutral shadow palette</h3>
+            <p data-i18n="recommend.eyes.p">Soft browns, satins, and warm tones that suit both bridal and everyday looks.</p>
           </article>
           <article class="recommend-card">
-            <span class="pill">Finish</span>
-            <h3>Setting spray</h3>
-            <p>Helps lock the final look in place while keeping the skin finish fresh and refined.</p>
+            <span class="pill" data-i18n="recommend.finish.pill">Finish</span>
+            <h3 data-i18n="recommend.finish.h3">Setting spray</h3>
+            <p data-i18n="recommend.finish.p">Helps lock the final look in place while keeping the skin finish fresh and refined.</p>
           </article>
         </div>
       </section>
 
       <section id="account" class="section account-section">
         <div class="section-heading">
-          <span class="eyebrow">Account & Reservation</span>
-          <h2>Create an account and manage your booking</h2>
+          <span class="eyebrow" data-i18n="account.eyebrow">Account & Reservation</span>
+          <h2 data-i18n="account.h2">Create an account and manage your booking</h2>
         </div>
 
         <div class="account-layout">
           <div class="card auth-card">
-            <div class="tab-row" role="tablist" aria-label="Account tabs">
-              <button class="tab-button active" type="button" data-tab="register" aria-selected="true">Register</button>
-              <button class="tab-button" type="button" data-tab="login" aria-selected="false">Login</button>
+            <div class="tab-row" role="tablist" data-i18n-aria="account.tabsAria" aria-label="Account tabs">
+              <button class="tab-button active" type="button" data-tab="register" aria-selected="true" data-i18n="account.tabRegister">Register</button>
+              <button class="tab-button" type="button" data-tab="login" aria-selected="false" data-i18n="account.tabLogin">Login</button>
             </div>
 
             <form id="register-form" class="auth-form active" autocomplete="on">
               <label>
-                Full name
-                <input type="text" name="name" placeholder="Julia Client" required>
+                <span data-i18n="account.fullName">Full name</span>
+                <input type="text" name="name" data-i18n-placeholder="account.phName" placeholder="Julia Client" required>
               </label>
               <label>
-                Email
-                <input type="email" name="email" placeholder="client@example.com" required>
+                <span data-i18n="account.email">Email</span>
+                <input type="email" name="email" data-i18n-placeholder="account.phEmail" placeholder="client@example.com" required>
               </label>
               <label>
-                Password
-                <input type="password" name="password" placeholder="Create password" required minlength="6">
+                <span data-i18n="account.password">Password</span>
+                <input type="password" name="password" data-i18n-placeholder="account.phPasswordCreate" placeholder="Create password" required minlength="6">
               </label>
-              <button class="button" type="submit">Create account</button>
+              <button class="button" type="submit" data-i18n="account.createAccount">Create account</button>
             </form>
 
             <form id="login-form" class="auth-form" autocomplete="on">
               <label>
-                Email
-                <input type="email" name="email" placeholder="client@example.com" required>
+                <span data-i18n="account.email">Email</span>
+                <input type="email" name="email" data-i18n-placeholder="account.phEmail" placeholder="client@example.com" required>
               </label>
               <label>
-                Password
-                <input type="password" name="password" placeholder="Enter password" required minlength="6">
+                <span data-i18n="account.password">Password</span>
+                <input type="password" name="password" data-i18n-placeholder="account.phPasswordEnter" placeholder="Enter password" required minlength="6">
               </label>
-              <button class="button" type="submit">Sign in</button>
+              <button class="button" type="submit" data-i18n="account.signIn">Sign in</button>
             </form>
 
             <div id="account-panel" class="account-panel hidden">
-              <p>Signed in as <strong id="account-name">Guest</strong></p>
-              <button id="logout-button" class="button button-ghost" type="button">Log out</button>
+              <p><span data-i18n="account.signedInPrefix">Signed in as</span> <strong id="account-name">Guest</strong></p>
+              <button id="logout-button" class="button button-ghost" type="button" data-i18n="account.logout">Log out</button>
             </div>
           </div>
 
           <div id="reservation" class="card reservation-card">
             <form id="reservation-form">
-              <p class="booking-intro">Pick an open slot on the calendar, then complete your details below.</p>
+              <p class="booking-intro" data-i18n="booking.intro">Pick an open slot on the calendar, then complete your details below.</p>
               <div class="booking-layout">
                 <div class="calendar-panel">
                   <div class="calendar-header">
-                    <button type="button" class="calendar-nav" id="cal-prev" aria-label="Previous month">‹</button>
+                    <button type="button" class="calendar-nav" id="cal-prev" data-i18n-aria="cal.prevMonth" aria-label="Previous month">‹</button>
                     <h3 class="calendar-month-title" id="calendar-month-label">Month</h3>
-                    <button type="button" class="calendar-nav" id="cal-next" aria-label="Next month">›</button>
+                    <button type="button" class="calendar-nav" id="cal-next" data-i18n-aria="cal.nextMonth" aria-label="Next month">›</button>
                   </div>
                   <div class="calendar-weekdays" aria-hidden="true">
-                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    <span data-i18n="cal.mo">Mon</span><span data-i18n="cal.tu">Tue</span><span data-i18n="cal.we">Wed</span><span data-i18n="cal.th">Thu</span><span data-i18n="cal.fr">Fri</span><span data-i18n="cal.sa">Sat</span><span data-i18n="cal.su">Sun</span>
                   </div>
                   <div class="calendar-grid" id="calendar-grid" role="grid" aria-labelledby="calendar-month-label"></div>
                 </div>
                 <div class="slots-panel">
-                  <p class="slots-hint" id="slots-hint">Select a date to see available times.</p>
-                  <div class="slots-chips" id="slots-chips" role="group" aria-label="Available time slots"></div>
+                  <p class="slots-hint" id="slots-hint" data-i18n="slots.hintNone">Select a date to see available times.</p>
+                  <div class="slots-chips" id="slots-chips" role="group" data-i18n-aria="slots.groupAria" aria-label="Available time slots"></div>
                 </div>
               </div>
               <input type="hidden" name="date" id="reservation-date-input" value="">
               <input type="hidden" name="time" id="reservation-time-input" value="">
               <div class="form-grid">
                 <label>
-                  Name
-                  <input type="text" name="name" placeholder="Your name" required>
+                  <span data-i18n="res.name">Name</span>
+                  <input type="text" name="name" data-i18n-placeholder="res.phName" placeholder="Your name" required>
                 </label>
                 <label>
-                  Email
-                  <input type="email" name="email" placeholder="Your email" required>
+                  <span data-i18n="res.email">Email</span>
+                  <input type="email" name="email" data-i18n-placeholder="res.phEmail" placeholder="Your email" required>
                 </label>
                 <label>
-                  Service
+                  <span data-i18n="res.service">Service</span>
                   <select name="service" required>
-                    <option value="">Select a service</option>
-                    <option value="Signature Makeup">Signature Makeup</option>
-                    <option value="Bridal Makeup">Bridal Makeup</option>
-                    <option value="Trial Session">Trial Session</option>
-                    <option value="1:1 Makeup Lesson">1:1 Makeup Lesson</option>
+                    <option value="" data-i18n-option="res.selectService">Select a service</option>
+                    <option value="Signature Makeup" data-i18n-option="service.signature">Signature Makeup</option>
+                    <option value="Bridal Makeup" data-i18n-option="service.bridal">Bridal Makeup</option>
+                    <option value="Trial Session" data-i18n-option="service.trial">Trial Session</option>
+                    <option value="1:1 Makeup Lesson" data-i18n-option="service.lesson">1:1 Makeup Lesson</option>
                   </select>
                 </label>
                 <label>
-                  Phone
+                  <span data-i18n="res.phone">Phone</span>
                   <input type="tel" name="phone" placeholder="+421..." required>
                 </label>
               </div>
               <label>
-                Notes
-                <textarea name="notes" rows="4" placeholder="Tell Julia about the occasion, style, or your preferences."></textarea>
+                <span data-i18n="res.notes">Notes</span>
+                <textarea name="notes" rows="4" data-i18n-placeholder="res.phNotes" placeholder="Tell Julia about the occasion, style, or your preferences."></textarea>
               </label>
-              <button class="button" type="submit">Send reservation</button>
+              <button class="button" type="submit" data-i18n="res.submit">Send reservation</button>
             </form>
 
             <div class="integration-note">
-              <strong>Google Sheets ready</strong>
+              <strong data-i18n="integration.title">Google Sheets ready</strong>
               <p>
-                This page is prepared for a Google Apps Script backend. Add your script URL in
-                <code>assets/js/config.js</code> to store account and reservation data in Google Sheets.
+                <span data-i18n="integration.pBefore">This page is prepared for a Google Apps Script backend. Add your script URL in </span><code>assets/js/config.js</code><span data-i18n="integration.pAfter"> to store account and reservation data in Google Sheets.</span>
               </p>
             </div>
           </div>
         </div>
 
         <div id="my-reservations" class="my-reservations card hidden">
-          <h3 class="my-reservations-title">Your reservations</h3>
+          <h3 class="my-reservations-title" data-i18n="myRes.title">Your reservations</h3>
           <p class="my-reservations-lede">
-            Bookings linked to your account on <strong>this device</strong>. You can cancel here to release the slot in the calendar.
-            Bookings made in another browser are not listed until we add a server “list” API.
+            <span data-i18n="myRes.ledeBefore">Bookings linked to your account on </span><strong data-i18n="myRes.ledeStrong">this device</strong><span data-i18n="myRes.ledeAfter">. You can cancel here to release the slot in the calendar. Bookings made in another browser are not listed until we add a server “list” API.</span>
           </p>
-          <ul id="my-reservations-list" class="my-reservations-list" aria-label="Your reservations"></ul>
-          <p id="my-reservations-empty" class="my-reservations-empty hidden">No bookings yet — choose a date and time above.</p>
+          <ul id="my-reservations-list" class="my-reservations-list" data-i18n-aria="myRes.listAria" aria-label="Your reservations"></ul>
+          <p id="my-reservations-empty" class="my-reservations-empty hidden" data-i18n="myRes.empty">No bookings yet — choose a date and time above.</p>
         </div>
 
       </section>
 
       <section id="contact" class="section contact-section">
         <div class="section-heading">
-          <span class="eyebrow">Contact</span>
-          <h2>Reach out for bookings and beauty questions</h2>
+          <span class="eyebrow" data-i18n="contact.eyebrow">Contact</span>
+          <h2 data-i18n="contact.h2">Reach out for bookings and beauty questions</h2>
         </div>
         <div class="contact-grid">
           <article class="card">
-            <h3>Studio details</h3>
-            <p>Bratislava, Slovakia</p>
+            <h3 data-i18n="contact.studioTitle">Studio details</h3>
+            <p data-i18n="contact.line1">Bratislava, Slovakia</p>
             <p>hello@juliamakeup.com</p>
             <p>+421 900 000 000</p>
           </article>
           <article class="card">
-            <h3>Hours</h3>
-            <p>Mon - Fri: 09:00 - 18:00</p>
-            <p>Saturday: 09:00 - 14:00</p>
-            <p>Sunday: by request</p>
+            <h3 data-i18n="contact.hoursTitle">Hours</h3>
+            <p data-i18n="contact.hours1">Mon - Fri: 09:00 - 18:00</p>
+            <p data-i18n="contact.hours2">Saturday: 09:00 - 14:00</p>
+            <p data-i18n="contact.hours3">Sunday: by request</p>
           </article>
           <article class="card">
-            <h3>Booking note</h3>
-            <p>For bridal dates and group bookings, reserve early to secure your preferred time.</p>
+            <h3 data-i18n="contact.noteTitle">Booking note</h3>
+            <p data-i18n="contact.noteP">For bridal dates and group bookings, reserve early to secure your preferred time.</p>
           </article>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p>Juliere Beauty</p>
-      <span>Minimal beauty, modern booking, elegant experience.</span>
+      <p data-i18n="footer.brand">Juliere Beauty</p>
+      <span data-i18n="footer.tagline">Minimal beauty, modern booking, elegant experience.</span>
     </footer>
   </div>
 

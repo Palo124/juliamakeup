@@ -1,4 +1,5 @@
 import { CONFIG, BOOKING } from "./config.js";
+import { initI18n, t, getDateLocale } from "./i18n.js";
 
 const STORAGE_KEYS = {
   users: "juliamakeup-users",
@@ -80,7 +81,7 @@ function showToast(message, type = "info") {
   const close = document.createElement("button");
   close.type = "button";
   close.className = "toast-close";
-  close.setAttribute("aria-label", "Dismiss");
+  close.setAttribute("aria-label", t("toast.dismiss"));
   close.textContent = "\u00d7";
 
   inner.append(text, close);
@@ -114,7 +115,7 @@ function toggleMobileMenu() {
 
   const isOpen = elements.siteNav.classList.toggle("open");
   elements.menuToggle.setAttribute("aria-expanded", String(isOpen));
-  elements.menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  elements.menuToggle.setAttribute("aria-label", isOpen ? t("header.closeMenu") : t("header.openMenu"));
 }
 
 function switchTab(targetTab) {
@@ -185,7 +186,7 @@ function formatReservationWhenLabel(dateStr, timeStr) {
   }
 
   const dateObj = parseDateKey(dateStr);
-  const datePart = dateObj.toLocaleDateString("en-GB", {
+  const datePart = dateObj.toLocaleDateString(getDateLocale(), {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -235,7 +236,7 @@ async function cancelMyReservation(target) {
   const index = findReservationIndex(all, target);
 
   if (index === -1) {
-    showToast("Could not find that booking.", "error");
+    showToast(t("toast.bookingNotFound"), "error");
     return;
   }
 
@@ -254,7 +255,7 @@ async function cancelMyReservation(target) {
 
   all.splice(index, 1);
   writeStorage(STORAGE_KEYS.reservations, all);
-  showToast("Booking cancelled. The time slot is available again.", "success");
+  showToast(t("toast.bookingCancelled"), "success");
   renderMyReservations();
   renderBookingCalendar();
   renderBookingSlots();
@@ -302,7 +303,7 @@ function renderMyReservations() {
     meta.className = "my-reservations-meta";
 
     const title = document.createElement("strong");
-    title.textContent = reservation.service || "Booking";
+    title.textContent = reservation.service || t("myRes.bookingFallback");
 
     const when = document.createElement("span");
     when.textContent = formatReservationWhenLabel(reservation.date, reservation.time);
@@ -311,14 +312,14 @@ function renderMyReservations() {
 
     if (reservation.phone) {
       const phone = document.createElement("span");
-      phone.textContent = `Phone: ${reservation.phone}`;
+      phone.textContent = `${t("myRes.phonePrefix")} ${reservation.phone}`;
       meta.append(phone);
     }
 
     const cancelButton = document.createElement("button");
     cancelButton.type = "button";
     cancelButton.className = "button button-danger button-small";
-    cancelButton.textContent = "Cancel booking";
+    cancelButton.textContent = t("myRes.cancel");
     cancelButton.addEventListener("click", () => {
       void cancelMyReservation(reservation);
     });
@@ -367,7 +368,7 @@ function resetBookingPicker() {
   }
 
   if (elements.slotsHint) {
-    elements.slotsHint.textContent = "Select a date to see available times.";
+    elements.slotsHint.textContent = t("slots.hintNone");
   }
 
   if (elements.slotsChips) {
@@ -390,7 +391,7 @@ function renderBookingCalendar() {
   const today = startOfLocalDay(new Date());
   const todayKey = formatDateKey(today.getFullYear(), today.getMonth(), today.getDate());
 
-  elements.calendarMonthLabel.textContent = firstOfMonth.toLocaleDateString("en-GB", {
+  elements.calendarMonthLabel.textContent = firstOfMonth.toLocaleDateString(getDateLocale(), {
     month: "long",
     year: "numeric",
   });
@@ -416,7 +417,7 @@ function renderBookingCalendar() {
     if (!isDateSelectable(dateKey)) {
       button.classList.add("is-disabled");
       button.disabled = true;
-      button.title = "No availability";
+      button.title = t("cal.noAvailability");
     } else {
       button.addEventListener("click", () => selectBookingDate(dateKey));
     }
@@ -486,7 +487,7 @@ function shiftBookingMonth(delta) {
       }
 
       if (elements.slotsHint) {
-        elements.slotsHint.textContent = "Select a date to see available times.";
+        elements.slotsHint.textContent = t("slots.hintNone");
       }
 
       if (elements.slotsChips) {
@@ -510,14 +511,14 @@ function selectBookingDate(dateKey) {
     elements.reservationTimeInput.value = "";
   }
 
-  const label = parseDateKey(dateKey).toLocaleDateString("en-GB", {
+  const label = parseDateKey(dateKey).toLocaleDateString(getDateLocale(), {
     weekday: "long",
     day: "numeric",
     month: "long",
   });
 
   if (elements.slotsHint) {
-    elements.slotsHint.textContent = `Available times for ${label}`;
+    elements.slotsHint.textContent = t("slots.hintFor", { date: label });
   }
 
   renderBookingSlots();
@@ -550,7 +551,7 @@ function renderBookingSlots() {
     if (isBooked) {
       button.classList.add("is-booked");
       button.disabled = true;
-      button.title = "Already booked";
+      button.title = t("slots.booked");
     } else {
       if (time === bookingState.selectedTime) {
         button.classList.add("is-selected");
@@ -565,7 +566,7 @@ function renderBookingSlots() {
   const openSlots = times.filter((time) => !booked.has(`${bookingState.selectedDate}|${time}`));
 
   if (openSlots.length === 0 && elements.slotsHint) {
-    elements.slotsHint.textContent = "No open slots on this day. Please pick another date.";
+    elements.slotsHint.textContent = t("slots.noOpen");
   }
 }
 
@@ -606,16 +607,14 @@ async function postToGoogleSheets(payload) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to sync with Google Sheets.");
+    throw new Error(t("toast.syncFailed"));
   }
 
   const text = await response.text();
   try {
     return JSON.parse(text);
   } catch (error) {
-    throw new Error(
-      "Server returned a non-JSON response. Check the web app URL and Apps Script deployment."
-    );
+    throw new Error(t("toast.badResponse"));
   }
 }
 
@@ -624,7 +623,7 @@ async function syncAction(action, data) {
     const result = await postToGoogleSheets({ action, ...data });
 
     if (result && result.ok === false) {
-      throw new Error(result.message || "Google Sheets request failed.");
+      throw new Error(result.message || t("toast.sheetsFailed"));
     }
 
     return result;
@@ -645,7 +644,7 @@ async function handleRegister(event) {
   const alreadyExists = users.some((user) => user.email === email);
 
   if (alreadyExists) {
-    showToast("An account with this email already exists.", "error");
+    showToast(t("toast.accountExists"), "error");
     return;
   }
 
@@ -659,7 +658,7 @@ async function handleRegister(event) {
     state.currentUser = user;
     updateAccountUI();
     elements.registerForm.reset();
-    showToast(`Welcome, ${name}. Your account is ready — you can book a slot below.`, "success");
+    showToast(t("toast.welcome", { name }), "success");
   } catch (error) {
     showToast(error.message, "error");
   }
@@ -676,7 +675,7 @@ async function handleLogin(event) {
   const user = users.find((entry) => entry.email === email && entry.password === password);
 
   if (!user) {
-    showToast("Wrong email or password.", "error");
+    showToast(t("toast.wrongLogin"), "error");
     return;
   }
 
@@ -687,7 +686,7 @@ async function handleLogin(event) {
     await syncAction("login", { email, password });
     updateAccountUI();
     elements.loginForm.reset();
-    showToast(`Signed in as ${state.currentUser.name}. Pick a date and time to reserve.`, "success");
+    showToast(t("toast.signedIn", { name: state.currentUser.name }), "success");
   } catch (error) {
     showToast(error.message, "error");
   }
@@ -702,14 +701,14 @@ async function handleReservation(event) {
   const time = reservation.time?.toString().trim();
 
   if (!date || !time) {
-    showToast("Choose a date on the calendar, then select a time slot.", "error");
+    showToast(t("toast.pickSlot"), "error");
     return;
   }
 
   const slotKey = `${date}|${time}`;
 
   if (getBookedSlotKeys().has(slotKey)) {
-    showToast("That slot was just taken. Please pick another time.", "error");
+    showToast(t("toast.slotTaken"), "error");
     renderBookingSlots();
     renderBookingCalendar();
     return;
@@ -725,7 +724,7 @@ async function handleReservation(event) {
 
   try {
     await syncAction("reservation", { reservation });
-    const dateLabel = parseDateKey(date).toLocaleDateString("en-GB", {
+    const dateLabel = parseDateKey(date).toLocaleDateString(getDateLocale(), {
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -734,7 +733,7 @@ async function handleReservation(event) {
     resetBookingPicker();
     updateAccountUI();
     renderMyReservations();
-    showToast(`Reservation saved: ${dateLabel} at ${time}. Julia will confirm soon.`, "success");
+    showToast(t("toast.reservationSaved", { date: dateLabel, time }), "success");
   } catch (error) {
     reservations.pop();
     writeStorage(STORAGE_KEYS.reservations, reservations);
@@ -751,7 +750,7 @@ function handleLogout() {
   elements.reservationForm.reset();
   resetBookingPicker();
   renderMyReservations();
-  showToast("You have been signed out.", "info");
+  showToast(t("toast.signedOut"), "info");
 }
 
 function restoreSession() {
@@ -811,7 +810,7 @@ function initHeroCarousel() {
     dot.type = "button";
     dot.className = `hero-carousel-dot${slideIndex === 0 ? " is-active" : ""}`;
     dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-label", `Slide ${slideIndex + 1} of ${count}`);
+    dot.setAttribute("aria-label", t("carousel.slideOf", { n: slideIndex + 1, total: count }));
     dot.setAttribute("aria-selected", slideIndex === 0 ? "true" : "false");
     dot.addEventListener("click", () => {
       go(slideIndex);
@@ -872,7 +871,7 @@ function initHeaderScroll() {
     if (!pastHero && nav?.classList.contains("open")) {
       nav.classList.remove("open");
       menuToggle?.setAttribute("aria-expanded", "false");
-      menuToggle?.setAttribute("aria-label", "Open menu");
+      menuToggle?.setAttribute("aria-label", t("header.openMenu"));
     }
   }
 
@@ -1039,6 +1038,41 @@ function initHeroScrollSkip() {
     }
   });
 }
+
+function updateCarouselDotsI18n() {
+  const dotsRoot = document.getElementById("hero-carousel-dots");
+  if (!dotsRoot) {
+    return;
+  }
+
+  const dots = dotsRoot.querySelectorAll(".hero-carousel-dot");
+  const count = dots.length;
+
+  dots.forEach((dot, slideIndex) => {
+    dot.setAttribute("aria-label", t("carousel.slideOf", { n: slideIndex + 1, total: count }));
+  });
+}
+
+function onLanguageChanged() {
+  if (elements.menuToggle && elements.siteNav) {
+    const isOpen = elements.siteNav.classList.contains("open");
+    elements.menuToggle.setAttribute("aria-label", isOpen ? t("header.closeMenu") : t("header.openMenu"));
+  }
+
+  renderBookingCalendar();
+
+  if (bookingState.selectedDate) {
+    renderBookingSlots();
+  } else if (elements.slotsHint) {
+    elements.slotsHint.textContent = t("slots.hintNone");
+  }
+
+  renderMyReservations();
+  updateCarouselDotsI18n();
+}
+
+initI18n();
+window.addEventListener("juliamakeup:lang", onLanguageChanged);
 
 restoreSession();
 bindEvents();
