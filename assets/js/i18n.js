@@ -464,8 +464,78 @@ export async function loadTextsFromGoogleSheet() {
   }
 }
 
+const DRIVE_FILE_ID_RE = /^[a-zA-Z0-9_-]+$/;
+
+/**
+ * Extracts a Google Drive file ID from a share URL, `?id=…` link, or a raw ID string.
+ * @param {unknown} input
+ * @returns {string | null}
+ */
+export function extractGoogleDriveFileId(input) {
+  const s = String(input).trim();
+  if (!s) {
+    return null;
+  }
+
+  // Raw file ID: no URL markers (colon slash query)
+  if (!/[\/:?#]/.test(s) && DRIVE_FILE_ID_RE.test(s) && s.length >= 10) {
+    return s;
+  }
+
+  let u;
+  try {
+    u = new URL(s);
+  } catch {
+    try {
+      u = new URL(s.startsWith("http") ? s : `https://${s}`);
+    } catch {
+      u = null;
+    }
+  }
+
+  if (u) {
+    const host = u.hostname.replace(/^www\./i, "");
+    const isDriveHost = host === "drive.google.com" || host === "docs.google.com";
+
+    const filePath = u.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (filePath) {
+      return filePath[1];
+    }
+
+    const idParam = u.searchParams.get("id");
+    if (idParam && DRIVE_FILE_ID_RE.test(idParam) && isDriveHost) {
+      return idParam;
+    }
+  }
+
+  if (/drive\.google\.com|docs\.google\.com/i.test(s)) {
+    const q = s.match(/[?&#]id=([a-zA-Z0-9_-]+)/i);
+    if (q) {
+      return q[1];
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Normalizes Drive share links, `?id=` URLs, or a raw file ID to a browser-usable image URL.
+ * @param {unknown} input
+ * @returns {string | null}
+ */
+export function toDriveImageUrl(input) {
+  const id = extractGoogleDriveFileId(input);
+  if (!id) {
+    return null;
+  }
+
+  const sz = (CONFIG.driveImageThumbnailSz || "w1920").trim() || "w1920";
+  return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=${encodeURIComponent(sz)}`;
+}
+
 /**
  * Accepts https/http URLs or same-site paths (`assets/...` or `/...`).
+ * Rewrites Google Drive values to thumbnail URLs via {@link toDriveImageUrl}.
  * @param {unknown} raw
  * @returns {string | null}
  */
@@ -477,6 +547,11 @@ function resolveSiteImageUrl(raw) {
   const s = String(raw).trim();
   if (!s) {
     return null;
+  }
+
+  const driveThumb = toDriveImageUrl(s);
+  if (driveThumb) {
+    return driveThumb;
   }
 
   if (/^https:\/\//i.test(s)) {
@@ -518,6 +593,10 @@ export function applySheetImageUrls() {
 
     const resolved = resolveSiteImageUrl(sheetImageUrls[key]);
     if (resolved) {
+      if (resolved.includes("drive.google.com/")) {
+        img.referrerPolicy = "no-referrer";
+      }
+
       img.src = resolved;
     }
   });
