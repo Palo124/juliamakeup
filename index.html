@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+  <div id="site-scroll-snap" class="site-scroll-snap">
   <div class="hero-stage">
     <section
       id="home"
@@ -26,7 +27,7 @@
       data-i18n-aria="hero.carouselAria"
       aria-label="Juliere Beauty"
     >
-      <div class="hero-carousel-viewport">
+      <div class="hero-carousel-viewport" id="hero-carousel-viewport">
         <div class="hero-carousel-track" id="hero-carousel-track">
           <figure class="hero-carousel-slide">
             <img
@@ -426,6 +427,7 @@
       <p data-i18n="footer.brand">Juliere Beauty</p>
       <span data-i18n="footer.tagline">Minimal beauty, modern booking, elegant experience.</span>
     </footer>
+  </div>
   </div>
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
