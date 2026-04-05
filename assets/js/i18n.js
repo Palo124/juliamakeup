@@ -1,10 +1,13 @@
 /**
- * Site copy: English (default) and Slovak.
+ * Site copy: English and Slovak.
+ * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentScriptUrl).
  */
+import { CONFIG } from "./config.js";
+
 const LANG_STORAGE_KEY = "juliamakeup-lang";
 
 /** @type {Record<string, Record<string, string>>} */
-const STRINGS = {
+const BUNDLED_STRINGS = {
   en: {
     "meta.title": "Juliere Beauty | Modern Beauty Studio",
     "meta.description":
@@ -397,6 +400,129 @@ const STRINGS = {
   },
 };
 
+/** Merged from Google Sheet at load; empty values fall back to bundled copy. */
+let sheetOverrides = { en: {}, sk: {} };
+
+/** Optional image URLs from sheet tab IMG (`data-site-img` keys). */
+let sheetImageUrls = {};
+
+/**
+ * @param {unknown} raw
+ * @returns {Record<string, string>}
+ */
+function normalizeStringMap(raw) {
+  if (!raw || typeof raw !== "object") {
+    return {};
+  }
+
+  /** @type {Record<string, string>} */
+  const out = {};
+
+  for (const [k, v] of Object.entries(raw)) {
+    const key = k.trim();
+    if (!key || key.startsWith("#")) {
+      continue;
+    }
+
+    out[key] = v === null || v === undefined ? "" : String(v);
+  }
+
+  return out;
+}
+
+/**
+ * Fetches copy from the dedicated Site Texts Apps Script (tabs ENG + SK in the bound sheet).
+ */
+export async function loadTextsFromGoogleSheet() {
+  sheetOverrides = { en: {}, sk: {} };
+  sheetImageUrls = {};
+
+  if (!CONFIG.useSheetTexts || !CONFIG.contentScriptUrl?.trim()) {
+    return;
+  }
+
+  try {
+    const response = await fetch(CONFIG.contentScriptUrl.trim(), {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify({ action: "getSiteTexts" }),
+    });
+
+    const text = await response.text();
+    const data = JSON.parse(text);
+
+    if (data?.ok && data.en && data.sk) {
+      sheetOverrides.en = normalizeStringMap(data.en);
+      sheetOverrides.sk = normalizeStringMap(data.sk);
+      sheetImageUrls = normalizeStringMap(data.img || {});
+    }
+  } catch (error) {
+    console.warn("[i18n] Could not load texts from Google Sheet; using bundled strings.", error);
+  }
+}
+
+/**
+ * Accepts https/http URLs or same-site paths (`assets/...` or `/...`).
+ * @param {unknown} raw
+ * @returns {string | null}
+ */
+function resolveSiteImageUrl(raw) {
+  if (raw === undefined || raw === null) {
+    return null;
+  }
+
+  const s = String(raw).trim();
+  if (!s) {
+    return null;
+  }
+
+  if (/^https:\/\//i.test(s)) {
+    try {
+      const u = new URL(s);
+      return u.protocol === "https:" ? u.href : null;
+    } catch {
+      return null;
+    }
+  }
+
+  if (/^http:\/\//i.test(s)) {
+    try {
+      const u = new URL(s);
+      return u.protocol === "http:" ? u.href : null;
+    } catch {
+      return null;
+    }
+  }
+
+  if (/^assets\//i.test(s)) {
+    return s;
+  }
+
+  if (s.startsWith("/") && !s.startsWith("//")) {
+    return s;
+  }
+
+  return null;
+}
+
+/** Apply `src` from sheet for elements with `data-site-img` (hero and future images). */
+export function applySheetImageUrls() {
+  document.querySelectorAll("img[data-site-img]").forEach((img) => {
+    const key = img.dataset.siteImg?.trim();
+    if (!key) {
+      return;
+    }
+
+    const resolved = resolveSiteImageUrl(sheetImageUrls[key]);
+    if (resolved) {
+      img.src = resolved;
+    }
+  });
+}
+
 /**
  * @returns {"en" | "sk"}
  */
@@ -435,7 +561,13 @@ export function setLang(lang) {
  */
 export function t(key, vars) {
   const lang = getLang();
-  let str = STRINGS[lang]?.[key] ?? STRINGS.en[key] ?? key;
+  const fromSheet = sheetOverrides[lang]?.[key];
+  const sheetVal = fromSheet !== undefined && String(fromSheet).length > 0 ? String(fromSheet) : null;
+  let str =
+    sheetVal ??
+    BUNDLED_STRINGS[lang]?.[key] ??
+    BUNDLED_STRINGS.en[key] ??
+    key;
   if (vars && typeof str === "string") {
     for (const [k, v] of Object.entries(vars)) {
       str = str.split(`{{${k}}}`).join(String(v));
@@ -513,9 +645,11 @@ export function applyTranslations() {
   });
 }
 
-export function initI18n() {
+export async function initI18n() {
+  await loadTextsFromGoogleSheet();
   document.documentElement.lang = getLang() === "sk" ? "sk" : "en";
   applyTranslations();
+  applySheetImageUrls();
   document.querySelectorAll("[data-lang-set]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const next = btn.dataset.langSet;
@@ -525,3 +659,6 @@ export function initI18n() {
     });
   });
 }
+
+/** Bundled defaults; use `npm run export:site-texts` to regenerate sheet seeds. */
+export { BUNDLED_STRINGS };

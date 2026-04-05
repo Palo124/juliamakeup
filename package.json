@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:gas": "node scripts/test-gas.mjs"
+    "test:gas": "node scripts/test-gas.mjs",
+    "test:site-texts": "node scripts/test-site-text-gas.mjs",
+    "export:site-texts": "node scripts/export-site-text-seeds.mjs"
   }
 }

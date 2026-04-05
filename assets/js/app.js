@@ -1071,12 +1071,16 @@ function onLanguageChanged() {
   updateCarouselDotsI18n();
 }
 
-initI18n();
-window.addEventListener("juliamakeup:lang", onLanguageChanged);
+async function bootstrap() {
+  await initI18n();
+  window.addEventListener("juliamakeup:lang", onLanguageChanged);
 
-restoreSession();
-bindEvents();
-initBookingCalendar();
-initHeroCarousel();
-initHeaderScroll();
-initHeroScrollSkip();
+  restoreSession();
+  bindEvents();
+  initBookingCalendar();
+  initHeroCarousel();
+  initHeaderScroll();
+  initHeroScrollSkip();
+}
+
+void bootstrap();
