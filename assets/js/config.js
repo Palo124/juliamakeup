@@ -18,6 +18,14 @@ export const CONFIG = {
    * `w256` looks soft on full-width heroes; `w1920` is a better default (more bandwidth).
    */
   driveImageThumbnailSz: "w1920",
+
+  /**
+   * Contact section map: paste the full `src` URL from Google Maps
+   * (Share → Embed a map → copy HTML). Shows a pin for that place.
+   * Placeholder below centers on Bratislava until you replace it.
+   */
+  googleMapsEmbedUrl:
+    "https://maps.google.com/maps?q=Bratislava%2C+Slovakia&t=&z=14&ie=UTF8&iwloc=&output=embed",
 };
 
 /**

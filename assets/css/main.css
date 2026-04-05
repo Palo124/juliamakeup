@@ -1,3 +1,7 @@
+/**
+ * Global styles for Juliere Beauty (single file; group related rules when editing).
+ * Layout: tokens → base → header/hero → sections → components (forms, calendar, toast).
+ */
 :root {
   --bg: #f6f1eb;
   --surface: rgba(255, 255, 255, 0.68);
@@ -39,17 +43,13 @@ body {
     linear-gradient(180deg, #fbf7f3 0%, #f5ede6 100%);
 }
 
-/**
- * WebKit-style vertical scroll snap: one overflow scroller + mandatory y snap
- * (see https://webkit.org/demos/scroll-snap/ ). Horizontal hero snap stays on .hero-carousel-viewport.
- */
+/** Main page scrollport (body is overflow:hidden; this flex child scrolls). */
 .site-scroll-snap {
   flex: 1;
   min-height: 0;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
   -webkit-overflow-scrolling: touch;
@@ -58,7 +58,6 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .site-scroll-snap {
-    scroll-snap-type: none;
     scroll-behavior: auto;
   }
 }
@@ -91,14 +90,10 @@ textarea {
 }
 
 .site-scroll-snap .page-shell main > section {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
   scroll-margin-top: 88px;
 }
 
 .site-scroll-snap .page-shell > .site-footer {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
   scroll-margin-top: 88px;
 }
 
@@ -319,8 +314,6 @@ textarea {
 .hero-stage {
   position: relative;
   width: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
 }
 
 .hero-carousel {
@@ -1316,6 +1309,64 @@ textarea {
 
 .contact-grid {
   grid-template-columns: repeat(3, 1fr);
+}
+
+.contact-map.card {
+  margin-top: 20px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.contact-map-heading {
+  margin: 0;
+  padding: 22px 26px 14px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.contact-map-frame-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  background: rgba(36, 28, 24, 0.06);
+}
+
+.contact-map-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.faq-list.card {
+  padding: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 18px 26px;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
 }
 
 .site-footer {

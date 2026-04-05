@@ -1,6 +1,6 @@
 # Julia Makeup
 
-Modern one-page presentation website for `juliamakeup` with hero, portfolio, pricing, recommendations, contact, account UI, calendar booking, and Google Sheets–ready integration.
+Modern one-page presentation website for `juliamakeup` with hero, portfolio, pricing, reviews, contact (with map), account UI, calendar booking, and Google Sheets–ready integration.
 
 ## Project layout
 
@@ -13,14 +13,19 @@ juliamakeup/
 │   ├── css/
 │   │   └── main.css           # Global styles
 │   ├── js/
-│   │   ├── config.js          # Google Sheets URL, booking hours (edit here)
-│   │   └── app.js             # UI + storage + calendar logic
+│   │   ├── main.js            # Entry: bootstraps features + i18n
+│   │   ├── config.js          # Google URLs, map embed, booking hours (edit here)
+│   │   ├── i18n.js            # EN/SK copy + optional Sheet overrides
+│   │   ├── core/              # Shared: constants, storage, dates, DOM refs, state
+│   │   ├── services/          # Google Sheets API bridge
+│   │   ├── ui/                # Cross-cutting UI (e.g. toasts)
+│   │   └── features/          # Auth, booking, hero carousel, navigation, map
 │   └── img/                   # Images (favicon, photos) — add files here
 └── backend/
     └── google-apps-script.gs  # Paste into Google Apps Script (not served to browsers)
 ```
 
-The site is a **static frontend**: no build step required. Browsers load `index.html`, which pulls CSS from `assets/css/` and JavaScript from `assets/js/`.
+The site is a **static frontend**: no build step required. Browsers load `index.html`, which pulls CSS from `assets/css/` and the module graph from `assets/js/main.js`.
 
 ## Run locally
 
