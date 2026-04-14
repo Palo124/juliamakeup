@@ -1,0 +1,13 @@
+key	url
+hero.slide1	
+hero.slide2	
+hero.slide3	
+portfolio.tile.bridal	
+portfolio.tile.soft	
+portfolio.tile.editorial	
+portfolio.tile.evening	
+about.portrait	
+picture	
+# picture = contact portrait; Drive share / ?id= / raw ID → thumbnail (see drive-image.js).
+# Paste HTTPS image URLs (or leave empty to use bundled files in index.html).
+# Allowed: https://... http://... assets/img/... /absolute-path-from-site-root

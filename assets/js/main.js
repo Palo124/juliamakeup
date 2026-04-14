@@ -1,26 +1,41 @@
 /**
  * Site entry — wires i18n, features, and UI. See `assets/js/` layout:
- *   core/     shared state, DOM refs, dates, storage
- *   services/ backend bridges (Google Sheets)
+ *   core/     DOM refs, constants
+ *   services/ backend bridges (Google Sheets for copy)
  *   ui/       cross-cutting UI (toasts)
- *   features/ page features (auth, booking, hero, navigation)
+ *   features/ page features (hero, navigation, map)
  */
 import { initI18n, t } from "./i18n.js";
 import { elements } from "./core/elements.js";
-import { bookingState } from "./core/state.js";
 import { initContactMap } from "./features/contact-map.js";
 import { bindNavigation } from "./features/navigation.js";
-import { bindAuthEvents, restoreSession } from "./features/auth.js";
-import {
-  bindReservationForm,
-  initBookingCalendar,
-  renderBookingCalendar,
-  renderBookingSlots,
-  renderMyReservations,
-} from "./features/booking.js";
 import { initHeroCarousel, updateCarouselDotsI18n } from "./features/hero-carousel.js";
+import { initPortfolioCarousel, updatePortfolioCarouselDotsI18n } from "./features/portfolio-carousel.js";
+import { initPortfolioGallery, refreshPortfolioGalleryI18n } from "./features/portfolio-gallery.js";
+import { initPriceCarousel, updatePriceCarouselDotsI18n } from "./features/price-carousel.js";
+import { initReviewsCarousel, updateReviewsCarouselDotsI18n } from "./features/reviews-carousel.js";
+import {
+  initBeforeVisitCarousel,
+  updateBeforeVisitCarouselDotsI18n,
+} from "./features/before-visit-carousel.js";
+import { initPriceServiceDialog, refreshPriceServiceDialogI18n } from "./features/price-service-dialog.js";
 import { initHeaderScroll } from "./features/header-scroll.js";
-import { initHeroScrollSkip } from "./features/hero-scroll-skip.js";
+import { initSheetBooking } from "./features/sheet-booking.js";
+import { CONFIG } from "./config.js";
+
+function initFooterSocial() {
+  const pairs = [
+    ["footer-link-instagram", CONFIG.social?.instagram],
+    ["footer-link-facebook", CONFIG.social?.facebook],
+    ["footer-link-x", CONFIG.social?.x],
+  ];
+  for (const [id, url] of pairs) {
+    const a = document.getElementById(id);
+    if (a && typeof url === "string" && url.trim()) {
+      a.href = url.trim();
+    }
+  }
+}
 
 function onLanguageChanged() {
   if (elements.menuToggle && elements.siteNav) {
@@ -28,31 +43,31 @@ function onLanguageChanged() {
     elements.menuToggle.setAttribute("aria-label", isOpen ? t("header.closeMenu") : t("header.openMenu"));
   }
 
-  renderBookingCalendar();
-
-  if (bookingState.selectedDate) {
-    renderBookingSlots();
-  } else if (elements.slotsHint) {
-    elements.slotsHint.textContent = t("slots.hintNone");
-  }
-
-  renderMyReservations();
   updateCarouselDotsI18n();
+  updatePortfolioCarouselDotsI18n();
+  updatePriceCarouselDotsI18n();
+  updateReviewsCarouselDotsI18n();
+  updateBeforeVisitCarouselDotsI18n();
+  refreshPortfolioGalleryI18n();
+  refreshPriceServiceDialogI18n();
 }
 
 async function bootstrap() {
   initContactMap();
   await initI18n();
+  initFooterSocial();
   window.addEventListener("juliamakeup:lang", onLanguageChanged);
 
-  restoreSession();
   bindNavigation();
-  bindAuthEvents();
-  initBookingCalendar();
-  bindReservationForm();
   initHeroCarousel();
+  initPortfolioCarousel();
+  initPriceCarousel();
+  initReviewsCarousel();
+  initBeforeVisitCarousel();
+  await initPortfolioGallery();
+  initPriceServiceDialog();
   initHeaderScroll();
-  initHeroScrollSkip();
+  initSheetBooking();
 }
 
 void bootstrap();

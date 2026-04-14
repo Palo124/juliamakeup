@@ -7,7 +7,7 @@
   <meta
     name="description"
     data-i18n-content="meta.description"
-    content="Juliere Beauty — elegantné vizážistické štúdio s portfóliom, cenníkom, rezerváciou a prehľadom termínov."
+    content="Juliere Beauty — elegantné vizážistické štúdio s portfóliom, cenníkom, online rezerváciou a kontaktom."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,10 +105,9 @@
 
     <header class="site-header site-header--hero">
       <a class="brand" href="#home" data-i18n-aria="header.brandAria" aria-label="Juliere Beauty home">
-        <span class="brand-mark">JB</span>
-        <span class="brand-text">
-          <strong data-i18n="header.brandStrong">Juliere Beauty</strong>
-          <span data-i18n="header.brandSub">Makeup artist</span>
+        <span class="brand-lockup">
+          <span class="brand-lockup-primary" data-i18n="header.brandPrimary">Juliere</span>
+          <span class="brand-lockup-secondary" data-i18n="header.brandSecondary">Beauty</span>
         </span>
       </a>
 
@@ -134,6 +133,7 @@
           <a href="#prices" data-i18n="nav.prices">Prices</a>
           <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
           <a href="#before-visit" data-i18n="nav.beforeVisit">Before your appointment</a>
+          <a href="#booking" data-i18n="nav.booking">Book</a>
           <a href="#contact" data-i18n="nav.contact">Contact</a>
           <a href="#faq" data-i18n="nav.faq">Q&amp;A</a>
           <div class="lang-switch" role="group" data-i18n-aria="lang.switchAria" aria-label="Language">
@@ -150,279 +150,493 @@
       <section id="intro" class="intro-band section">
         <div class="intro-band-inner">
           <p class="intro-band-text" data-i18n="intro.text">
-            Soft glam, timeless bridal looks, and polished beauty experiences — reserve your date online.
+            Soft glam, timeless bridal looks, and polished beauty experiences — get in touch to plan your visit.
           </p>
           <div class="intro-band-actions">
-            <a class="button" href="#reservation" data-i18n="intro.reserve">Reserve now</a>
+            <a class="button" href="#booking" data-i18n="intro.book">Book a slot</a>
             <a class="button button-ghost" href="#portfolio" data-i18n="intro.portfolio">View portfolio</a>
           </div>
         </div>
       </section>
 
-      <section class="stats-grid section">
-        <article>
-          <strong data-i18n="stats.years">6+ years</strong>
-          <span data-i18n="stats.yearsDesc">professional artistry experience</span>
-        </article>
-        <article>
-          <strong data-i18n="stats.sessions">300+</strong>
-          <span data-i18n="stats.sessionsDesc">beauty sessions completed</span>
-        </article>
-        <article>
-          <strong data-i18n="stats.rating">4.9/5</strong>
-          <span data-i18n="stats.ratingDesc">average client satisfaction</span>
-        </article>
+      <section id="about" class="section about-section">
+        <div class="section-heading section-heading--about">
+          <h2 data-i18n="about.h2">About me</h2>
+        </div>
+
+        <div class="about-bubble card">
+          <div class="about-bubble__text">
+            <p data-i18n="about.p1">
+              Julia is a makeup artist focused on fresh skin, elegant detail, and makeup that looks as
+              beautiful in person as it does in photos. Every appointment is tailored to the client, from
+              subtle everyday polish to full bridal glam.
+            </p>
+            <p data-i18n="about.p2">
+              Browse services and pricing, then reach out — from first message to your appointment, everything stays clear and calm.
+            </p>
+          </div>
+          <figure class="about-bubble__photo">
+            <img
+              src="assets/img/IMG_5886.jpeg"
+              width="3024"
+              height="4032"
+              data-site-img="about.portrait"
+              data-i18n-alt="about.photoAlt"
+              alt="Julia — Juliere Beauty makeup artist"
+              loading="lazy"
+            >
+          </figure>
+        </div>
+
+        <div class="about-stats stats-grid" role="group" data-i18n-aria="about.statsAria" aria-label="Highlights">
+          <article class="about-stat-bubble">
+            <strong data-i18n="stats.years">8+ years</strong>
+            <span data-i18n="stats.yearsDesc">professional artistry experience</span>
+          </article>
+          <article class="about-stat-bubble">
+            <strong data-i18n="stats.sessions">300+</strong>
+            <span data-i18n="stats.sessionsDesc">beauty sessions completed</span>
+          </article>
+          <article class="about-stat-bubble">
+            <strong data-i18n="stats.rating">4.9/5</strong>
+            <span data-i18n="stats.ratingDesc">average from client reviews</span>
+          </article>
+        </div>
       </section>
 
-      <section id="about" class="section section-split">
-        <div class="section-heading">
-          <span class="eyebrow" data-i18n="about.eyebrow">About Julia</span>
-          <h2 data-i18n="about.h2">Minimal, refined, and designed around confidence.</h2>
-        </div>
-        <div class="card card-large">
-          <p data-i18n="about.p1">
-            Julia is a makeup artist focused on fresh skin, elegant detail, and makeup that looks as
-            beautiful in person as it does in photos. Every appointment is tailored to the client, from
-            subtle everyday polish to full bridal glam.
-          </p>
-          <p data-i18n="about.p2">
-            The studio experience is intentionally simple: browse services, create an account, reserve a
-            time, and keep everything organized in one place.
-          </p>
-        </div>
-      </section>
-
-      <section id="portfolio" class="section">
+      <section
+        id="portfolio"
+        class="section portfolio-carousel"
+        aria-roledescription="carousel"
+        data-i18n-aria="portfolio.carouselAria"
+        aria-label="Portfolio"
+      >
         <div class="section-heading">
           <span class="eyebrow" data-i18n="portfolio.eyebrow">Portfolio</span>
           <h2 data-i18n="portfolio.h2">Recent beauty work</h2>
         </div>
-        <div class="portfolio-grid">
-          <article class="portfolio-card warm">
-            <div class="portfolio-label" data-i18n="portfolio.bridal.label">Bridal glow</div>
-            <p data-i18n="portfolio.bridal.p">Radiant skin, soft shimmer, and romantic definition for a timeless wedding finish.</p>
-          </article>
-          <article class="portfolio-card rosy">
-            <div class="portfolio-label" data-i18n="portfolio.soft.label">Soft glam</div>
-            <p data-i18n="portfolio.soft.p">Balanced glam with polished brows, sculpted complexion, and diffused eyes.</p>
-          </article>
-          <article class="portfolio-card nude">
-            <div class="portfolio-label" data-i18n="portfolio.editorial.label">Editorial clean</div>
-            <p data-i18n="portfolio.editorial.p">Fresh, modern beauty with intentional texture and understated luxury.</p>
-          </article>
-          <article class="portfolio-card bronze">
-            <div class="portfolio-label" data-i18n="portfolio.evening.label">Evening luxe</div>
-            <p data-i18n="portfolio.evening.p">Defined eyes, glowing skin, and long-wear artistry for special events.</p>
-          </article>
+        <div class="portfolio-carousel-viewport" id="portfolio-carousel-viewport">
+          <div class="portfolio-carousel-track" id="portfolio-carousel-track">
+            <article
+              class="portfolio-card portfolio-carousel-slide portfolio-card--gallery warm"
+              data-portfolio-category="bridal"
+              role="button"
+              tabindex="0"
+            >
+              <div class="portfolio-card__media" aria-hidden="true">
+                <img
+                  class="portfolio-card__thumb"
+                  src="assets/img/IMG_5886.jpeg"
+                  alt=""
+                  width="3024"
+                  height="4032"
+                  loading="lazy"
+                  decoding="async"
+                  data-site-img="portfolio.tile.bridal"
+                >
+              </div>
+              <div class="portfolio-card__content">
+                <div class="portfolio-label" data-i18n="portfolio.bridal.label">Bridal glow</div>
+                <p data-i18n="portfolio.bridal.p">Radiant skin, soft shimmer, and romantic definition for a timeless wedding finish.</p>
+              </div>
+            </article>
+            <article
+              class="portfolio-card portfolio-carousel-slide portfolio-card--gallery rosy"
+              data-portfolio-category="soft"
+              role="button"
+              tabindex="0"
+            >
+              <div class="portfolio-card__media" aria-hidden="true">
+                <img
+                  class="portfolio-card__thumb"
+                  src="assets/img/IMG_7567.jpeg"
+                  alt=""
+                  width="3024"
+                  height="4032"
+                  loading="lazy"
+                  decoding="async"
+                  data-site-img="portfolio.tile.soft"
+                >
+              </div>
+              <div class="portfolio-card__content">
+                <div class="portfolio-label" data-i18n="portfolio.soft.label">Soft glam</div>
+                <p data-i18n="portfolio.soft.p">Balanced glam with polished brows, sculpted complexion, and diffused eyes.</p>
+              </div>
+            </article>
+            <article
+              class="portfolio-card portfolio-carousel-slide portfolio-card--gallery nude"
+              data-portfolio-category="editorial"
+              role="button"
+              tabindex="0"
+            >
+              <div class="portfolio-card__media" aria-hidden="true">
+                <img
+                  class="portfolio-card__thumb portfolio-card__thumb--product"
+                  src="assets/img/product_used.jpg"
+                  alt=""
+                  width="3051"
+                  height="3988"
+                  loading="lazy"
+                  decoding="async"
+                  data-site-img="portfolio.tile.editorial"
+                >
+              </div>
+              <div class="portfolio-card__content">
+                <div class="portfolio-label" data-i18n="portfolio.editorial.label">Editorial clean</div>
+                <p data-i18n="portfolio.editorial.p">Fresh, modern beauty with intentional texture and understated luxury.</p>
+              </div>
+            </article>
+            <article
+              class="portfolio-card portfolio-carousel-slide portfolio-card--gallery bronze"
+              data-portfolio-category="evening"
+              role="button"
+              tabindex="0"
+            >
+              <div class="portfolio-card__media" aria-hidden="true">
+                <img
+                  class="portfolio-card__thumb"
+                  src="assets/img/IMG_7567.jpeg"
+                  alt=""
+                  width="3024"
+                  height="4032"
+                  loading="lazy"
+                  decoding="async"
+                  data-site-img="portfolio.tile.evening"
+                >
+              </div>
+              <div class="portfolio-card__content">
+                <div class="portfolio-label" data-i18n="portfolio.evening.label">Evening luxe</div>
+                <p data-i18n="portfolio.evening.p">Defined eyes, glowing skin, and long-wear artistry for special events.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="portfolio-carousel-ui">
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--prev"
+            id="portfolio-carousel-prev"
+            data-i18n-aria="hero.prevSlide"
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <div
+            class="portfolio-carousel-dots"
+            id="portfolio-carousel-dots"
+            role="tablist"
+            data-i18n-aria="hero.chooseSlide"
+            aria-label="Choose slide"
+          ></div>
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--next"
+            id="portfolio-carousel-next"
+            data-i18n-aria="hero.nextSlide"
+            aria-label="Next slide"
+          >
+            ›
+          </button>
         </div>
       </section>
 
-      <section id="prices" class="section">
+      <section
+        id="prices"
+        class="section portfolio-carousel price-carousel"
+        aria-roledescription="carousel"
+        data-i18n-aria="prices.carouselAria"
+      >
         <div class="section-heading">
           <span class="eyebrow" data-i18n="prices.eyebrow">Pricing & services</span>
           <h2 data-i18n="prices.h2">Packages tailored to your occasion</h2>
         </div>
-        <div class="price-grid">
-          <article class="price-card featured">
-            <span class="price-tag" data-i18n="prices.signature.tag">Most requested</span>
-            <h3 data-i18n="prices.signature.h3">Signature Makeup</h3>
-            <strong>65 EUR</strong>
-            <p data-i18n="prices.signature.p">Perfect for events, dinners, celebrations, and polished day-to-night beauty.</p>
-          </article>
-          <article class="price-card">
-            <h3 data-i18n="prices.bridal.h3">Bridal Makeup</h3>
-            <strong>120 EUR</strong>
-            <p data-i18n="prices.bridal.p">Includes consultation, long-wear application, and bridal-day beauty planning.</p>
-          </article>
-          <article class="price-card">
-            <h3 data-i18n="prices.trial.h3">Trial Session</h3>
-            <strong>80 EUR</strong>
-            <p data-i18n="prices.trial.p">Test and refine your preferred look before a major event or wedding day.</p>
-          </article>
-          <article class="price-card">
-            <h3 data-i18n="prices.lesson.h3">1:1 Makeup Lesson</h3>
-            <strong>95 EUR</strong>
-            <p data-i18n="prices.lesson.p">Personalized product guidance and a step-by-step routine tailored to you.</p>
-          </article>
+        <div class="portfolio-carousel-viewport" id="price-carousel-viewport">
+          <div class="portfolio-carousel-track" id="price-carousel-track">
+            <article
+              class="price-card featured price-card--clickable portfolio-carousel-slide"
+              data-price-service="signature"
+              role="button"
+              tabindex="0"
+            >
+              <span class="price-tag" data-i18n="prices.signature.tag">Most requested</span>
+              <h3 data-i18n="prices.signature.h3">Signature Makeup</h3>
+              <strong data-i18n="prices.signature.price">65 EUR</strong>
+              <p data-i18n="prices.signature.p">Perfect for events, dinners, celebrations, and polished day-to-night beauty.</p>
+            </article>
+            <article
+              class="price-card price-card--clickable portfolio-carousel-slide"
+              data-price-service="bridal"
+              role="button"
+              tabindex="0"
+            >
+              <h3 data-i18n="prices.bridal.h3">Bridal Makeup</h3>
+              <strong data-i18n="prices.bridal.price">120 EUR</strong>
+              <p data-i18n="prices.bridal.p">Includes consultation, long-wear application, and bridal-day beauty planning.</p>
+            </article>
+            <article
+              class="price-card price-card--clickable portfolio-carousel-slide"
+              data-price-service="trial"
+              role="button"
+              tabindex="0"
+            >
+              <h3 data-i18n="prices.trial.h3">Trial Session</h3>
+              <strong data-i18n="prices.trial.price">80 EUR</strong>
+              <p data-i18n="prices.trial.p">Test and refine your preferred look before a major event or wedding day.</p>
+            </article>
+            <article
+              class="price-card price-card--clickable portfolio-carousel-slide"
+              data-price-service="lesson"
+              role="button"
+              tabindex="0"
+            >
+              <h3 data-i18n="prices.lesson.h3">1:1 Makeup Lesson</h3>
+              <strong data-i18n="prices.lesson.price">95 EUR</strong>
+              <p data-i18n="prices.lesson.p">Personalized product guidance and a step-by-step routine tailored to you.</p>
+            </article>
+          </div>
+        </div>
+        <div class="portfolio-carousel-ui">
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--prev"
+            id="price-carousel-prev"
+            data-i18n-aria="hero.prevSlide"
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <div
+            class="portfolio-carousel-dots"
+            id="price-carousel-dots"
+            role="tablist"
+            data-i18n-aria="hero.chooseSlide"
+            aria-label="Choose slide"
+          ></div>
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--next"
+            id="price-carousel-next"
+            data-i18n-aria="hero.nextSlide"
+            aria-label="Next slide"
+          >
+            ›
+          </button>
         </div>
       </section>
 
-      <section id="reviews" class="section">
+      <section
+        id="reviews"
+        class="section portfolio-carousel reviews-carousel"
+        aria-roledescription="carousel"
+        data-i18n-aria="reviews.carouselAria"
+      >
         <div class="section-heading">
           <span class="eyebrow" data-i18n="reviews.eyebrow">Reviews</span>
           <h2 data-i18n="reviews.h2">What clients say</h2>
         </div>
-        <div class="recommend-grid">
-          <article class="recommend-card">
-            <span class="pill" data-i18n="reviews.c1.pill">Bridal</span>
-            <h3 data-i18n="reviews.c1.h3">Sophia K.</h3>
-            <p data-i18n="reviews.c1.p">Calm, precise, and the makeup lasted perfectly through the whole day and night.</p>
-          </article>
-          <article class="recommend-card">
-            <span class="pill" data-i18n="reviews.c2.pill">Event</span>
-            <h3 data-i18n="reviews.c2.h3">Nina M.</h3>
-            <p data-i18n="reviews.c2.p">Exactly the soft glam I wanted — natural in person, stunning in photos.</p>
-          </article>
-          <article class="recommend-card">
-            <span class="pill" data-i18n="reviews.c3.pill">Lesson</span>
-            <h3 data-i18n="reviews.c3.h3">Tereza V.</h3>
-            <p data-i18n="reviews.c3.p">The 1:1 lesson finally made my everyday routine feel doable and elegant.</p>
-          </article>
-          <article class="recommend-card">
-            <span class="pill" data-i18n="reviews.c4.pill">Trial</span>
-            <h3 data-i18n="reviews.c4.h3">Lucia P.</h3>
-            <p data-i18n="reviews.c4.p">Trial before the wedding gave us time to refine everything — zero stress on the day.</p>
-          </article>
+        <div class="portfolio-carousel-viewport" id="reviews-carousel-viewport">
+          <div class="portfolio-carousel-track" id="reviews-carousel-track">
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="reviews.c1.pill">Bridal</span>
+              <h3 data-i18n="reviews.c1.h3">Sophia K.</h3>
+              <p data-i18n="reviews.c1.p">Calm, precise, and the makeup lasted perfectly through the whole day and night.</p>
+            </article>
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="reviews.c2.pill">Event</span>
+              <h3 data-i18n="reviews.c2.h3">Nina M.</h3>
+              <p data-i18n="reviews.c2.p">Exactly the soft glam I wanted — natural in person, stunning in photos.</p>
+            </article>
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="reviews.c3.pill">Lesson</span>
+              <h3 data-i18n="reviews.c3.h3">Tereza V.</h3>
+              <p data-i18n="reviews.c3.p">The 1:1 lesson finally made my everyday routine feel doable and elegant.</p>
+            </article>
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="reviews.c4.pill">Trial</span>
+              <h3 data-i18n="reviews.c4.h3">Lucia P.</h3>
+              <p data-i18n="reviews.c4.p">Trial before the wedding gave us time to refine everything — zero stress on the day.</p>
+            </article>
+          </div>
+        </div>
+        <div class="portfolio-carousel-ui">
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--prev"
+            id="reviews-carousel-prev"
+            data-i18n-aria="hero.prevSlide"
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <div
+            class="portfolio-carousel-dots"
+            id="reviews-carousel-dots"
+            role="tablist"
+            data-i18n-aria="hero.chooseSlide"
+            aria-label="Choose slide"
+          ></div>
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--next"
+            id="reviews-carousel-next"
+            data-i18n-aria="hero.nextSlide"
+            aria-label="Next slide"
+          >
+            ›
+          </button>
         </div>
       </section>
 
-      <section id="before-visit" class="section">
+      <section
+        id="before-visit"
+        class="section portfolio-carousel before-visit-carousel"
+        aria-roledescription="carousel"
+        data-i18n-aria="beforeVisit.carouselAria"
+      >
         <div class="section-heading">
           <span class="eyebrow" data-i18n="beforeVisit.eyebrow">Before you arrive</span>
           <h2 data-i18n="beforeVisit.h2">A few tips so your appointment goes smoothly</h2>
         </div>
-        <div class="recommend-grid">
-          <article class="recommend-card">
-            <span class="pill" data-i18n="beforeVisit.t1.pill">Skin</span>
-            <h3 data-i18n="beforeVisit.t1.h3">Come with a clean face</h3>
-            <p data-i18n="beforeVisit.t1.p">Arrive without makeup if you can, and skip heavy creams right before the session.</p>
-          </article>
-          <article class="recommend-card">
-            <span class="pill" data-i18n="beforeVisit.t2.pill">References</span>
-            <h3 data-i18n="beforeVisit.t2.h3">Bring inspiration</h3>
-            <p data-i18n="beforeVisit.t2.p">Save a few photos you like — it helps align on tone, intensity, and finish.</p>
-          </article>
-          <article class="recommend-card">
-            <span class="pill" data-i18n="beforeVisit.t3.pill">Outfit</span>
-            <h3 data-i18n="beforeVisit.t3.h3">Neckline &amp; jewelry</h3>
-            <p data-i18n="beforeVisit.t3.p">Wear or bring something close to your event neckline so the look feels cohesive.</p>
-          </article>
-          <article class="recommend-card">
-            <span class="pill" data-i18n="beforeVisit.t4.pill">Timing</span>
-            <h3 data-i18n="beforeVisit.t4.h3">Plan a little buffer</h3>
-            <p data-i18n="beforeVisit.t4.p">Artistry takes time — allow a few extra minutes so we never have to rush the details.</p>
-          </article>
+        <div class="portfolio-carousel-viewport" id="before-visit-carousel-viewport">
+          <div class="portfolio-carousel-track" id="before-visit-carousel-track">
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="beforeVisit.t1.pill">Skin</span>
+              <h3 data-i18n="beforeVisit.t1.h3">Come with a clean face</h3>
+              <p data-i18n="beforeVisit.t1.p">Arrive without makeup if you can, and skip heavy creams right before the session.</p>
+            </article>
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="beforeVisit.t2.pill">References</span>
+              <h3 data-i18n="beforeVisit.t2.h3">Bring inspiration</h3>
+              <p data-i18n="beforeVisit.t2.p">Save a few photos you like — it helps align on tone, intensity, and finish.</p>
+            </article>
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="beforeVisit.t3.pill">Outfit</span>
+              <h3 data-i18n="beforeVisit.t3.h3">Neckline &amp; jewelry</h3>
+              <p data-i18n="beforeVisit.t3.p">Wear or bring something close to your event neckline so the look feels cohesive.</p>
+            </article>
+            <article class="recommend-card portfolio-carousel-slide">
+              <span class="pill" data-i18n="beforeVisit.t4.pill">Timing</span>
+              <h3 data-i18n="beforeVisit.t4.h3">Plan a little buffer</h3>
+              <p data-i18n="beforeVisit.t4.p">Artistry takes time — allow a few extra minutes so we never have to rush the details.</p>
+            </article>
+          </div>
+        </div>
+        <div class="portfolio-carousel-ui">
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--prev"
+            id="before-visit-carousel-prev"
+            data-i18n-aria="hero.prevSlide"
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <div
+            class="portfolio-carousel-dots"
+            id="before-visit-carousel-dots"
+            role="tablist"
+            data-i18n-aria="hero.chooseSlide"
+            aria-label="Choose slide"
+          ></div>
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--next"
+            id="before-visit-carousel-next"
+            data-i18n-aria="hero.nextSlide"
+            aria-label="Next slide"
+          >
+            ›
+          </button>
         </div>
       </section>
 
-      <section id="account" class="section account-section">
+      <section id="booking" class="section booking-section">
         <div class="section-heading">
-          <span class="eyebrow" data-i18n="account.eyebrow">Account & Reservation</span>
-          <h2 data-i18n="account.h2">Create an account and manage your booking</h2>
+          <span class="eyebrow" data-i18n="booking.eyebrow">Booking</span>
+          <h2 data-i18n="booking.h2">Choose an available time</h2>
         </div>
-
-        <div class="account-layout">
-          <div class="card auth-card">
-            <div class="tab-row" role="tablist" data-i18n-aria="account.tabsAria" aria-label="Account tabs">
-              <button class="tab-button active" type="button" data-tab="register" aria-selected="true" data-i18n="account.tabRegister">Register</button>
-              <button class="tab-button" type="button" data-tab="login" aria-selected="false" data-i18n="account.tabLogin">Login</button>
-            </div>
-
-            <form id="register-form" class="auth-form active" autocomplete="on">
-              <label>
-                <span data-i18n="account.fullName">Full name</span>
-                <input type="text" name="name" data-i18n-placeholder="account.phName" placeholder="Julia Client" required>
-              </label>
-              <label>
-                <span data-i18n="account.email">Email</span>
-                <input type="email" name="email" data-i18n-placeholder="account.phEmail" placeholder="client@example.com" required>
-              </label>
-              <label>
-                <span data-i18n="account.password">Password</span>
-                <input type="password" name="password" data-i18n-placeholder="account.phPasswordCreate" placeholder="Create password" required minlength="6">
-              </label>
-              <button class="button" type="submit" data-i18n="account.createAccount">Create account</button>
-            </form>
-
-            <form id="login-form" class="auth-form" autocomplete="on">
-              <label>
-                <span data-i18n="account.email">Email</span>
-                <input type="email" name="email" data-i18n-placeholder="account.phEmail" placeholder="client@example.com" required>
-              </label>
-              <label>
-                <span data-i18n="account.password">Password</span>
-                <input type="password" name="password" data-i18n-placeholder="account.phPasswordEnter" placeholder="Enter password" required minlength="6">
-              </label>
-              <button class="button" type="submit" data-i18n="account.signIn">Sign in</button>
-            </form>
-
-            <div id="account-panel" class="account-panel hidden">
-              <p><span data-i18n="account.signedInPrefix">Signed in as</span> <strong id="account-name">Guest</strong></p>
-              <button id="logout-button" class="button button-ghost" type="button" data-i18n="account.logout">Log out</button>
-            </div>
-          </div>
-
-          <div id="reservation" class="card reservation-card">
-            <form id="reservation-form">
-              <p class="booking-intro" data-i18n="booking.intro">Pick an open slot on the calendar, then complete your details below.</p>
-              <div class="booking-layout">
-                <div class="calendar-panel">
-                  <div class="calendar-header">
-                    <button type="button" class="calendar-nav" id="cal-prev" data-i18n-aria="cal.prevMonth" aria-label="Previous month">‹</button>
-                    <h3 class="calendar-month-title" id="calendar-month-label">Month</h3>
-                    <button type="button" class="calendar-nav" id="cal-next" data-i18n-aria="cal.nextMonth" aria-label="Next month">›</button>
-                  </div>
-                  <div class="calendar-weekdays" aria-hidden="true">
-                    <span data-i18n="cal.mo">Mon</span><span data-i18n="cal.tu">Tue</span><span data-i18n="cal.we">Wed</span><span data-i18n="cal.th">Thu</span><span data-i18n="cal.fr">Fri</span><span data-i18n="cal.sa">Sat</span><span data-i18n="cal.su">Sun</span>
-                  </div>
-                  <div class="calendar-grid" id="calendar-grid" role="grid" aria-labelledby="calendar-month-label"></div>
-                </div>
-                <div class="slots-panel">
-                  <p class="slots-hint" id="slots-hint" data-i18n="slots.hintNone">Select a date to see available times.</p>
-                  <div class="slots-chips" id="slots-chips" role="group" data-i18n-aria="slots.groupAria" aria-label="Available time slots"></div>
-                </div>
-              </div>
-              <input type="hidden" name="date" id="reservation-date-input" value="">
-              <input type="hidden" name="time" id="reservation-time-input" value="">
-              <div class="form-grid">
-                <label>
-                  <span data-i18n="res.name">Name</span>
-                  <input type="text" name="name" data-i18n-placeholder="res.phName" placeholder="Your name" required>
-                </label>
-                <label>
-                  <span data-i18n="res.email">Email</span>
-                  <input type="email" name="email" data-i18n-placeholder="res.phEmail" placeholder="Your email" required>
-                </label>
-                <label>
-                  <span data-i18n="res.service">Service</span>
-                  <select name="service" required>
-                    <option value="" data-i18n-option="res.selectService">Select a service</option>
-                    <option value="Signature Makeup" data-i18n-option="service.signature">Signature Makeup</option>
-                    <option value="Bridal Makeup" data-i18n-option="service.bridal">Bridal Makeup</option>
-                    <option value="Trial Session" data-i18n-option="service.trial">Trial Session</option>
-                    <option value="1:1 Makeup Lesson" data-i18n-option="service.lesson">1:1 Makeup Lesson</option>
-                  </select>
-                </label>
-                <label>
-                  <span data-i18n="res.phone">Phone</span>
-                  <input type="tel" name="phone" placeholder="+421..." required>
-                </label>
-              </div>
-              <label>
-                <span data-i18n="res.notes">Notes</span>
-                <textarea name="notes" rows="4" data-i18n-placeholder="res.phNotes" placeholder="Tell Julia about the occasion, style, or your preferences."></textarea>
-              </label>
-              <button class="button" type="submit" data-i18n="res.submit">Send reservation</button>
-            </form>
-
-            <div class="integration-note">
-              <strong data-i18n="integration.title">Google Sheets ready</strong>
-              <p>
-                <span data-i18n="integration.pBefore">This page is prepared for a Google Apps Script backend. Add your script URL in </span><code>assets/js/config.js</code><span data-i18n="integration.pAfter"> to store account and reservation data in Google Sheets.</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div id="my-reservations" class="my-reservations card hidden">
-          <h3 class="my-reservations-title" data-i18n="myRes.title">Your reservations</h3>
-          <p class="my-reservations-lede">
-            <span data-i18n="myRes.ledeBefore">Bookings linked to your account on </span><strong data-i18n="myRes.ledeStrong">this device</strong><span data-i18n="myRes.ledeAfter">. You can cancel here to release the slot in the calendar. Bookings made in another browser are not listed until we add a server “list” API.</span>
+        <div class="card booking-card">
+          <p class="booking-intro" data-i18n="booking.intro">
+            First choose a service, then pick a date and time. Your booking is saved and that slot is marked busy for others.
           </p>
-          <ul id="my-reservations-list" class="my-reservations-list" data-i18n-aria="myRes.listAria" aria-label="Your reservations"></ul>
-          <p id="my-reservations-empty" class="my-reservations-empty hidden" data-i18n="myRes.empty">No bookings yet — choose a date and time above.</p>
+          <form id="booking-form" class="booking-form" autocomplete="on">
+            <div class="booking-service-row">
+              <label>
+                <span data-i18n="booking.serviceFirst">Which service do you want?</span>
+                <select id="booking-service" name="service" required>
+                  <option value="" data-i18n-option="booking.selectService">Select a service</option>
+                  <option value="Signature Makeup" data-i18n-option="service.signature">Signature Makeup</option>
+                  <option value="Bridal Makeup" data-i18n-option="service.bridal">Bridal Makeup</option>
+                  <option value="Trial Session" data-i18n-option="service.trial">Trial Session</option>
+                  <option value="1:1 Makeup Lesson" data-i18n-option="service.lesson">1:1 Makeup Lesson</option>
+                </select>
+              </label>
+            </div>
+            <input type="hidden" name="slotId" id="booking-slot-id" value="">
+            <p id="booking-slots-status" class="booking-slots-status" aria-live="polite"></p>
+            <div id="booking-picker" class="booking-picker hidden">
+            <div class="booking-calendar" id="booking-calendar" aria-hidden="false">
+              <div class="booking-calendar-header">
+                <button
+                  type="button"
+                  class="booking-cal-nav"
+                  id="booking-cal-prev"
+                  data-i18n-aria="booking.calPrev"
+                  aria-label="Previous month"
+                >
+                  ‹
+                </button>
+                <h3 class="booking-cal-month-title" id="booking-cal-month">Month</h3>
+                <button
+                  type="button"
+                  class="booking-cal-nav"
+                  id="booking-cal-next"
+                  data-i18n-aria="booking.calNext"
+                  aria-label="Next month"
+                >
+                  ›
+                </button>
+              </div>
+              <div class="booking-calendar-weekdays" id="booking-cal-weekdays" aria-hidden="true"></div>
+              <div
+                class="booking-calendar-grid"
+                id="booking-cal-grid"
+                role="group"
+                data-i18n-aria="booking.calGridAria"
+                aria-label="Calendar"
+              ></div>
+            </div>
+            <div class="booking-slots-panel">
+              <div
+                id="booking-slots"
+                class="booking-slots"
+                role="group"
+                data-i18n-aria="booking.slotsGroupAria"
+                aria-label="Available time slots"
+              ></div>
+            </div>
+          </div>
+            <div class="booking-form-grid">
+              <label>
+                <span data-i18n="booking.name">Name</span>
+                <input type="text" name="name" data-i18n-placeholder="booking.phName" placeholder="Your name" required>
+              </label>
+              <label>
+                <span data-i18n="booking.email">Email</span>
+                <input type="email" name="email" data-i18n-placeholder="booking.phEmail" placeholder="you@example.com" required>
+              </label>
+              <label>
+                <span data-i18n="booking.phone">Phone</span>
+                <input type="tel" name="phone" data-i18n-placeholder="booking.phPhone" placeholder="+421…" required>
+              </label>
+            </div>
+            <label>
+              <span data-i18n="booking.notes">Notes</span>
+              <textarea name="notes" rows="3" data-i18n-placeholder="booking.phNotes" placeholder="Occasion, style, or preferences"></textarea>
+            </label>
+            <button class="button" type="submit" data-i18n="booking.submit">Send reservation</button>
+          </form>
         </div>
-
       </section>
 
       <section id="contact" class="section contact-section">
@@ -473,11 +687,11 @@
         <div class="faq-list card">
           <details class="faq-item">
             <summary data-i18n="faq.q1">How do I book?</summary>
-            <p data-i18n="faq.a1">Use “Reserve now” above, pick a date and time in the calendar, then submit your details. Julia will confirm.</p>
+            <p data-i18n="faq.a1">Use the booking section above to pick an open slot, or reach out by email or phone. Julia will confirm the details.</p>
           </details>
           <details class="faq-item">
             <summary data-i18n="faq.q2">Can I change or cancel?</summary>
-            <p data-i18n="faq.a2">Contact the studio as soon as your plans shift. If you are signed in on this device, you can cancel from your booking list.</p>
+            <p data-i18n="faq.a2">Contact the studio as soon as your plans shift and we will adjust the appointment together.</p>
           </details>
           <details class="faq-item">
             <summary data-i18n="faq.q3">Do I need a trial for bridal makeup?</summary>
@@ -485,7 +699,7 @@
           </details>
           <details class="faq-item">
             <summary data-i18n="faq.q4">What if I have sensitive skin?</summary>
-            <p data-i18n="faq.a4">Mention it in your notes when booking. Julia uses professional products and can adjust the routine to your needs.</p>
+            <p data-i18n="faq.a4">Mention it when you reach out. Julia uses professional products and can adjust the routine to your needs.</p>
           </details>
         </div>
       </section>
@@ -493,12 +707,97 @@
 
     <footer class="site-footer">
       <p data-i18n="footer.brand">Juliere Beauty</p>
-      <span data-i18n="footer.tagline">Minimal beauty, modern booking, elegant experience.</span>
+      <nav class="site-footer__social" data-i18n-aria="footer.socialAria" aria-label="Social media">
+        <a
+          id="footer-link-instagram"
+          class="site-footer__social-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="site-footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+            />
+          </svg>
+          <span class="visually-hidden" data-i18n="footer.socialInstagram">Instagram</span>
+        </a>
+        <a
+          id="footer-link-facebook"
+          class="site-footer__social-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="site-footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            />
+          </svg>
+          <span class="visually-hidden" data-i18n="footer.socialFacebook">Facebook</span>
+        </a>
+        <a
+          id="footer-link-x"
+          class="site-footer__social-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="site-footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+            />
+          </svg>
+          <span class="visually-hidden" data-i18n="footer.socialX">X</span>
+        </a>
+      </nav>
     </footer>
   </div>
   </div>
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
+
+  <dialog id="portfolio-gallery-dialog" class="portfolio-gallery-dialog" aria-labelledby="portfolio-gallery-title">
+    <div class="portfolio-gallery-dialog__panel">
+      <header class="portfolio-gallery-dialog__header">
+        <h2 id="portfolio-gallery-title" class="portfolio-gallery-dialog__title"></h2>
+        <button
+          type="button"
+          id="portfolio-gallery-close"
+          class="portfolio-gallery-dialog__close"
+          data-i18n-aria="portfolio.gallery.close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </header>
+      <div id="portfolio-gallery-grid" class="portfolio-gallery-dialog__grid"></div>
+    </div>
+  </dialog>
+
+  <dialog id="price-service-dialog" class="portfolio-gallery-dialog price-service-dialog" aria-labelledby="price-service-title">
+    <div class="portfolio-gallery-dialog__panel price-service-dialog__panel">
+      <header class="portfolio-gallery-dialog__header">
+        <div class="price-service-dialog__heading">
+          <h2 id="price-service-title" class="portfolio-gallery-dialog__title"></h2>
+          <p id="price-service-price" class="price-service-dialog__price"></p>
+          <p id="price-service-duration" class="price-service-dialog__duration"></p>
+        </div>
+        <button
+          type="button"
+          id="price-service-close"
+          class="portfolio-gallery-dialog__close"
+          data-i18n-aria="prices.detail.close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </header>
+      <div id="price-service-body" class="price-service-dialog__body"></div>
+    </div>
+  </dialog>
+
   <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>

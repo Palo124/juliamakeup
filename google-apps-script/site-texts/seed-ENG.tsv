@@ -1,0 +1,198 @@
+key	text
+meta.title	Juliere Beauty | Modern Beauty Studio
+meta.description	Juliere Beauty — elegant makeup studio with portfolio, pricing, booking, and reservations.
+hero.carouselAria	Juliere Beauty
+hero.slide1.alt	Portrait — professional makeup look, Juliere Beauty
+hero.slide1.caption	Featured portrait for Juliere Beauty
+hero.slide2.alt	Luxury makeup products — Juliere Beauty studio
+hero.slide2.caption	Flat lay of professional makeup products
+hero.slide3.alt	Portrait — soft glam makeup, Juliere Beauty
+hero.slide3.caption	Portrait with professional makeup look
+hero.tagline	Modern beauty studio
+hero.prevSlide	Previous slide
+hero.nextSlide	Next slide
+hero.chooseSlide	Choose slide
+hero.scroll	Scroll
+header.brandAria	Juliere Beauty home
+header.brandPrimary	Juliere
+header.brandSecondary	Beauty
+header.openMenu	Open menu
+header.closeMenu	Close menu
+header.navMain	Main
+nav.about	About
+nav.portfolio	Portfolio
+nav.prices	Prices & services
+nav.reviews	Reviews
+nav.beforeVisit	Before your appointment
+nav.contact	Contact
+nav.faq	Q&A
+intro.text	Soft glam, timeless bridal looks, and polished beauty experiences — reserve your date online.
+intro.reserve	Reserve now
+intro.portfolio	View portfolio
+stats.years	8+ years
+stats.yearsDesc	professional artistry experience
+stats.sessions	300+
+stats.sessionsDesc	beauty sessions completed
+stats.rating	4.9/5
+stats.ratingDesc	average from client reviews
+about.eyebrow	About Julia
+about.h2	About me
+about.statsAria	About highlights
+about.photoAlt	Julia — Juliere Beauty makeup artist
+about.p1	Julia is a makeup artist focused on fresh skin, elegant detail, and makeup that looks as beautiful in person as it does in photos. Every appointment is tailored to the client, from subtle everyday polish to full bridal glam.
+about.p2	Browse services and pricing, then reserve online — from first click to your appointment, everything stays clear and calm.
+portfolio.eyebrow	Portfolio
+portfolio.h2	Recent beauty work
+portfolio.bridal.label	Bridal glow
+portfolio.bridal.p	Radiant skin, soft shimmer, and romantic definition for a timeless wedding finish.
+portfolio.soft.label	Soft glam
+portfolio.soft.p	Balanced glam with polished brows, sculpted complexion, and diffused eyes.
+portfolio.editorial.label	Editorial clean
+portfolio.editorial.p	Fresh, modern beauty with intentional texture and understated luxury.
+portfolio.evening.label	Evening luxe
+portfolio.evening.p	Defined eyes, glowing skin, and long-wear artistry for special events.
+prices.eyebrow	Pricing & services
+prices.h2	Packages tailored to your occasion
+prices.signature.tag	Most requested
+prices.signature.h3	Signature Makeup
+prices.signature.p	Perfect for events, dinners, celebrations, and polished day-to-night beauty.
+prices.bridal.h3	Bridal Makeup
+prices.bridal.p	Includes consultation, long-wear application, and bridal-day beauty planning.
+prices.trial.h3	Trial Session
+prices.trial.p	Test and refine your preferred look before a major event or wedding day.
+prices.lesson.h3	1:1 Makeup Lesson
+prices.lesson.p	Personalized product guidance and a step-by-step routine tailored to you.
+reviews.eyebrow	Reviews
+reviews.h2	What clients say
+reviews.carouselAria	Client reviews — browse testimonials
+beforeVisit.carouselAria	Before your visit — browse tips
+reviews.c1.pill	Bridal
+reviews.c1.h3	Sophia K.
+reviews.c1.p	Calm, precise, and the makeup lasted perfectly through the whole day and night.
+reviews.c2.pill	Event
+reviews.c2.h3	Nina M.
+reviews.c2.p	Exactly the soft glam I wanted — natural in person, stunning in photos.
+reviews.c3.pill	Lesson
+reviews.c3.h3	Tereza V.
+reviews.c3.p	The 1:1 lesson finally made my everyday routine feel doable and elegant.
+reviews.c4.pill	Trial
+reviews.c4.h3	Lucia P.
+reviews.c4.p	Trial before the wedding gave us time to refine everything — zero stress on the day.
+beforeVisit.eyebrow	Before you arrive
+beforeVisit.h2	A few tips so your appointment goes smoothly
+beforeVisit.t1.pill	Skin
+beforeVisit.t1.h3	Come with a clean face
+beforeVisit.t1.p	Arrive without makeup if you can, and skip heavy creams right before the session.
+beforeVisit.t2.pill	References
+beforeVisit.t2.h3	Bring inspiration
+beforeVisit.t2.p	Save a few photos you like — it helps align on tone, intensity, and finish.
+beforeVisit.t3.pill	Outfit
+beforeVisit.t3.h3	Neckline & jewelry
+beforeVisit.t3.p	Wear or bring something close to your event neckline so the look feels cohesive.
+beforeVisit.t4.pill	Timing
+beforeVisit.t4.h3	Plan a little buffer
+beforeVisit.t4.p	Artistry takes time — allow a few extra minutes so we never have to rush the details.
+faq.eyebrow	Q&A
+faq.h2	Common questions
+faq.q1	How do I book?
+faq.a1	Use "Reserve now" above, pick a date and time in the calendar, then submit your details. Julia will confirm.
+faq.q2	Can I change or cancel?
+faq.a2	Contact the studio as soon as your plans shift. If you are signed in on this device, you can cancel from your booking list.
+faq.q3	Do I need a trial for bridal makeup?
+faq.a3	A trial is recommended so the look is locked in before the big day — but it is optional depending on your timeline.
+faq.q4	What if I have sensitive skin?
+faq.a4	Mention it in your notes when booking. Julia uses professional products and can adjust the routine to your needs.
+account.eyebrow	Account & Reservation
+account.h2	Create an account and manage your booking
+account.tabsAria	Account tabs
+account.tabRegister	Register
+account.tabLogin	Login
+account.fullName	Full name
+account.email	Email
+account.password	Password
+account.phName	Julia Client
+account.phEmail	client@example.com
+account.phPasswordCreate	Create password
+account.phPasswordEnter	Enter password
+account.createAccount	Create account
+account.signIn	Sign in
+account.signedInPrefix	Signed in as
+account.logout	Log out
+booking.intro	Pick an open slot on the calendar, then complete your details below.
+cal.prevMonth	Previous month
+cal.nextMonth	Next month
+cal.mo	Mon
+cal.tu	Tue
+cal.we	Wed
+cal.th	Thu
+cal.fr	Fri
+cal.sa	Sat
+cal.su	Sun
+cal.noAvailability	No availability
+slots.hintNone	Select a date to see available times.
+slots.hintFor	Available times for {{date}}
+slots.noOpen	No open slots on this day. Please pick another date.
+slots.groupAria	Available time slots
+slots.booked	Already booked
+res.name	Name
+res.email	Email
+res.service	Service
+res.selectService	Select a service
+res.phone	Phone
+res.notes	Notes
+res.phName	Your name
+res.phEmail	Your email
+res.phNotes	Tell Julia about the occasion, style, or your preferences.
+res.submit	Send reservation
+service.signature	Signature Makeup
+service.bridal	Bridal Makeup
+service.trial	Trial Session
+service.lesson	1:1 Makeup Lesson
+integration.title	Google Sheets ready
+integration.pBefore	This page is prepared for a Google Apps Script backend. Add your script URL in 
+integration.pAfter	 to store account and reservation data in Google Sheets.
+myRes.title	Your reservations
+myRes.ledeBefore	Bookings linked to your account on 
+myRes.ledeStrong	this device
+myRes.ledeAfter	. You can cancel here to release the slot in the calendar. Bookings made in another browser are not listed until we add a server “list” API.
+myRes.listAria	Your reservations
+myRes.empty	No bookings yet — choose a date and time above.
+myRes.bookingFallback	Booking
+myRes.phonePrefix	Phone:
+myRes.cancel	Cancel booking
+contact.eyebrow	Contact
+contact.h2	Reach out for bookings and beauty questions
+contact.studioTitle	Studio details
+contact.hoursTitle	Hours
+contact.noteTitle	Booking note
+contact.line1	Bratislava, Slovakia
+contact.hours1	Mon - Fri: 09:00 - 18:00
+contact.hours2	Saturday: 09:00 - 14:00
+contact.hours3	Sunday: by request
+contact.noteP	For bridal dates and group bookings, reserve early to secure your preferred time.
+contact.mapHeading	Studio location
+contact.mapTitle	Google Map — studio location
+contact.pictureAlt	Portrait — Juliere Beauty
+footer.brand	Juliere Beauty
+footer.socialAria	Social media
+footer.socialInstagram	Instagram
+footer.socialFacebook	Facebook
+footer.socialX	X
+lang.switchAria	Language
+lang.en	English
+lang.sk	Slovenčina
+toast.dismiss	Dismiss
+carousel.slideOf	Slide {{n}} of {{total}}
+toast.bookingNotFound	Could not find that booking.
+toast.bookingCancelled	Booking cancelled. The time slot is available again.
+toast.accountExists	An account with this email already exists.
+toast.welcome	Welcome, {{name}}. Your account is ready — you can book a slot below.
+toast.wrongLogin	Wrong email or password.
+toast.signedIn	Signed in as {{name}}. Pick a date and time to reserve.
+toast.pickSlot	Choose a date on the calendar, then select a time slot.
+toast.slotTaken	That slot was just taken. Please pick another time.
+toast.reservationSaved	Reservation saved: {{date}} at {{time}}. Julia will confirm soon.
+toast.signedOut	You have been signed out.
+toast.syncFailed	Failed to sync with Google Sheets.
+toast.badResponse	Server returned a non-JSON response. Check the web app URL and Apps Script deployment.
+toast.sheetsFailed	Google Sheets request failed.

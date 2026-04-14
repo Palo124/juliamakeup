@@ -25,9 +25,23 @@ export function initHeroCarousel() {
   let index = 0;
   let autoTimer = null;
   let scrollRaf = null;
+  const heroRoot = viewport.closest(".hero-carousel");
 
   function slideWidth() {
+    const w = slides[0]?.offsetWidth;
+    if (w && w > 0) {
+      return w;
+    }
     return viewport.clientWidth || 1;
+  }
+
+  function allSlidesFitInView() {
+    const w = slideWidth();
+    return count * w <= viewport.clientWidth + 2;
+  }
+
+  function updateAllSlidesVisibleClass() {
+    heroRoot?.classList.toggle("hero-carousel--all-slides-visible", allSlidesFitInView());
   }
 
   function readIndexFromScroll() {
@@ -96,13 +110,21 @@ export function initHeroCarousel() {
   }
 
   window.addEventListener("resize", () => {
-    viewport.scrollTo({ left: index * slideWidth(), top: 0, behavior: "auto" });
+    if (allSlidesFitInView()) {
+      index = 0;
+      viewport.scrollTo({ left: 0, top: 0, behavior: "auto" });
+      syncDots();
+    } else {
+      viewport.scrollTo({ left: index * slideWidth(), top: 0, behavior: "auto" });
+    }
+    updateAllSlidesVisibleClass();
+    restartAuto();
   });
 
   function restartAuto() {
     clearInterval(autoTimer);
 
-    if (reduceMotion.matches) {
+    if (reduceMotion.matches || allSlidesFitInView()) {
       return;
     }
 
@@ -130,6 +152,7 @@ export function initHeroCarousel() {
   });
 
   viewport.scrollLeft = 0;
+  updateAllSlidesVisibleClass();
   restartAuto();
 }
 
