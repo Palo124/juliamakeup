@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title" data-page-title-i18n="meta.titleBooking">Juliere Beauty | Book online</title>
+  <meta
+    name="description"
+    data-i18n-content="meta.descriptionBooking"
+    content="Reserve a makeup appointment — choose a service and pick an available time."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <div class="page-shell page-shell--sub">
+    <header class="site-header">
+      <a class="brand" href="index.html" data-i18n-aria="header.brandAria" aria-label="Juliere Beauty home">
+        <span class="brand-lockup">
+          <span class="brand-lockup-primary" data-i18n="header.brandPrimary">Juliere</span>
+          <span class="brand-lockup-secondary" data-i18n="header.brandSecondary">Beauty</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          data-i18n-aria="header.openMenu"
+          aria-label="Open menu"
+        >
+          <span class="menu-toggle-bars" aria-hidden="true">
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+          </span>
+        </button>
+
+        <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Main">
+          <a href="index.html#about" data-i18n="nav.about">About</a>
+          <a href="index.html#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+          <a href="index.html#prices" data-i18n="nav.prices">Prices</a>
+          <a href="reviews.html" data-i18n="nav.reviews">Reviews</a>
+          <a href="index.html#before-visit" data-i18n="nav.beforeVisit">Before your appointment</a>
+          <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+          <a href="index.html#faq" data-i18n="nav.faq">Q&amp;A</a>
+          <a class="site-nav__booking" href="booking.html" data-i18n="nav.booking" aria-current="page">Book</a>
+          <div class="lang-switch" role="group" data-i18n-aria="lang.switchAria" aria-label="Language">
+            <button type="button" class="lang-switch-btn" data-lang-set="en" aria-pressed="false">EN</button>
+            <button type="button" class="lang-switch-btn is-active" data-lang-set="sk" aria-pressed="true">SK</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="booking" class="section booking-section">
+        <div class="section-heading">
+          <span class="eyebrow" data-i18n="booking.eyebrow">Booking</span>
+          <h2 data-i18n="booking.h2">Choose an available time</h2>
+        </div>
+        <div class="card booking-card">
+          <p class="booking-intro" data-i18n="booking.intro">
+            First choose a service, then pick a date and time. Your booking is saved and that slot is marked busy for others.
+          </p>
+          <form id="booking-form" class="booking-form" autocomplete="on">
+            <div class="booking-service-row">
+              <label>
+                <span data-i18n="booking.serviceFirst">Which service do you want?</span>
+                <select id="booking-service" name="service" required>
+                  <option value="" data-i18n-option="booking.selectService">Select a service</option>
+                  <option value="Signature Makeup" data-i18n-option="service.signature">Signature Makeup</option>
+                  <option value="Bridal Makeup" data-i18n-option="service.bridal">Bridal Makeup</option>
+                  <option value="Trial Session" data-i18n-option="service.trial">Trial Session</option>
+                  <option value="1:1 Makeup Lesson" data-i18n-option="service.lesson">1:1 Makeup Lesson</option>
+                </select>
+              </label>
+            </div>
+            <input type="hidden" name="slotId" id="booking-slot-id" value="">
+            <p id="booking-slots-status" class="booking-slots-status" aria-live="polite"></p>
+            <div id="booking-picker" class="booking-picker hidden">
+            <div class="booking-calendar" id="booking-calendar" aria-hidden="false">
+              <div class="booking-calendar-header">
+                <button
+                  type="button"
+                  class="booking-cal-nav"
+                  id="booking-cal-prev"
+                  data-i18n-aria="booking.calPrev"
+                  aria-label="Previous month"
+                >
+                  ‹
+                </button>
+                <h3 class="booking-cal-month-title" id="booking-cal-month">Month</h3>
+                <button
+                  type="button"
+                  class="booking-cal-nav"
+                  id="booking-cal-next"
+                  data-i18n-aria="booking.calNext"
+                  aria-label="Next month"
+                >
+                  ›
+                </button>
+              </div>
+              <div class="booking-calendar-weekdays" id="booking-cal-weekdays" aria-hidden="true"></div>
+              <div
+                class="booking-calendar-grid"
+                id="booking-cal-grid"
+                role="group"
+                data-i18n-aria="booking.calGridAria"
+                aria-label="Calendar"
+              ></div>
+            </div>
+            <div class="booking-slots-panel">
+              <div
+                id="booking-slots"
+                class="booking-slots"
+                role="group"
+                data-i18n-aria="booking.slotsGroupAria"
+                aria-label="Available time slots"
+              ></div>
+            </div>
+          </div>
+            <div class="booking-form-grid">
+              <label>
+                <span data-i18n="booking.name">Name</span>
+                <input type="text" name="name" data-i18n-placeholder="booking.phName" placeholder="Your name" required>
+              </label>
+              <label>
+                <span data-i18n="booking.email">Email</span>
+                <input type="email" name="email" data-i18n-placeholder="booking.phEmail" placeholder="you@example.com" required>
+              </label>
+              <label>
+                <span data-i18n="booking.phone">Phone</span>
+                <input type="tel" name="phone" data-i18n-placeholder="booking.phPhone" placeholder="+421…" required>
+              </label>
+            </div>
+            <label>
+              <span data-i18n="booking.notes">Notes</span>
+              <textarea name="notes" rows="3" data-i18n-placeholder="booking.phNotes" placeholder="Occasion, style, or preferences"></textarea>
+            </label>
+            <button class="button" type="submit" data-i18n="booking.submit">Send reservation</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p data-i18n="footer.brand">Juliere Beauty</p>
+      <nav class="site-footer__social" data-i18n-aria="footer.socialAria" aria-label="Social media">
+        <a
+          id="footer-link-instagram"
+          class="site-footer__social-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="site-footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+            />
+          </svg>
+          <span class="visually-hidden" data-i18n="footer.socialInstagram">Instagram</span>
+        </a>
+        <a
+          id="footer-link-facebook"
+          class="site-footer__social-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="site-footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            />
+          </svg>
+          <span class="visually-hidden" data-i18n="footer.socialFacebook">Facebook</span>
+        </a>
+        <a
+          id="footer-link-x"
+          class="site-footer__social-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="site-footer__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+            />
+          </svg>
+          <span class="visually-hidden" data-i18n="footer.socialX">X</span>
+        </a>
+      </nav>
+    </footer>
+  </div>
+
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

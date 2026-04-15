@@ -12,6 +12,12 @@ const BUNDLED_STRINGS = {
     "meta.title": "Juliere Beauty | Modern Beauty Studio",
     "meta.description":
       "Juliere Beauty — elegant makeup studio with portfolio, pricing, online booking, and contact.",
+    "meta.titleReviews": "Juliere Beauty | Reviews",
+    "meta.descriptionReviews":
+      "Client reviews and testimonials — Juliere Beauty makeup studio.",
+    "meta.titleBooking": "Juliere Beauty | Book online",
+    "meta.descriptionBooking":
+      "Reserve a makeup appointment — choose a service and pick an available time.",
 
     "hero.carouselAria": "Juliere Beauty",
     "hero.slide1.alt": "Portrait — professional makeup look, Juliere Beauty",
@@ -187,7 +193,7 @@ const BUNDLED_STRINGS = {
     "faq.h2": "Common questions",
     "faq.q1": "How do I book?",
     "faq.a1":
-      "Use the booking section above to pick an open slot, or reach out by email or phone. Julia will confirm the details.",
+      "Use the booking page to pick an open slot, or reach out by email or phone. Julia will confirm the details.",
     "faq.q2": "Can I change or cancel?",
     "faq.a2":
       "Contact the studio as soon as your plans shift and we will adjust the appointment together.",
@@ -273,6 +279,12 @@ const BUNDLED_STRINGS = {
   },
   sk: {
     "meta.title": "Juliere Beauty | Moderné kozmetické štúdio",
+    "meta.titleReviews": "Juliere Beauty | Recenzie",
+    "meta.descriptionReviews":
+      "Recenzie a referencie klientov — kozmetické štúdio Juliere Beauty.",
+    "meta.titleBooking": "Juliere Beauty | Online rezervácia",
+    "meta.descriptionBooking":
+      "Rezervujte si termín na líčenie — zvoľte službu a voľný čas.",
     "meta.description":
       "Juliere Beauty — elegantné vizážistické štúdio s portfóliom, cenníkom, online rezerváciou a kontaktom.",
 
@@ -450,7 +462,7 @@ const BUNDLED_STRINGS = {
     "faq.h2": "Často kladené otázky",
     "faq.q1": "Ako si rezervujem termín?",
     "faq.a1":
-      "Vyššie v sekcii rezervácie vyberte voľný termín, alebo sa ozvite e-mailom alebo telefónom. Julia potvrdí podrobnosti.",
+      "Na stránke rezervácie vyberte voľný termín, alebo sa ozvite e-mailom alebo telefónom. Julia potvrdí podrobnosti.",
     "faq.q2": "Môžem zmeniť alebo zrušiť rezerváciu?",
     "faq.a2":
       "Čo najskôr napíšte štúdiu a spoločne upravíme termín.",
@@ -801,7 +813,8 @@ export function applyTranslations() {
 
   const titleEl = document.getElementById("page-title");
   if (titleEl) {
-    titleEl.textContent = t("meta.title");
+    const titleKey = titleEl.dataset.pageTitleI18n || "meta.title";
+    titleEl.textContent = t(titleKey);
   }
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {

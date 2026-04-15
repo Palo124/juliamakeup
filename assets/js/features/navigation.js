@@ -11,8 +11,36 @@ export function toggleMobileMenu() {
   elements.menuToggle.setAttribute("aria-label", isOpen ? t("header.closeMenu") : t("header.openMenu"));
 }
 
+export function closeMobileMenu() {
+  if (!elements.menuToggle || !elements.siteNav) {
+    return;
+  }
+
+  if (!elements.siteNav.classList.contains("open")) {
+    return;
+  }
+
+  elements.siteNav.classList.remove("open");
+  elements.menuToggle.setAttribute("aria-expanded", "false");
+  elements.menuToggle.setAttribute("aria-label", t("header.openMenu"));
+}
+
 export function bindNavigation() {
   if (elements.menuToggle) {
     elements.menuToggle.addEventListener("click", toggleMobileMenu);
+  }
+
+  if (elements.siteNav) {
+    elements.siteNav.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) {
+        return;
+      }
+      const link = target.closest("a[href]");
+      if (!link || !elements.siteNav?.contains(link)) {
+        return;
+      }
+      closeMobileMenu();
+    });
   }
 }

@@ -46,8 +46,8 @@ function serviceMatches(sheetValue, selected) {
 export function initSheetBooking() {
   if (!CONFIG.useSheetBooking) {
     document.getElementById("booking")?.classList.add("hidden");
-    for (const a of document.querySelectorAll('a[href="#booking"]')) {
-      a.setAttribute("href", "#contact");
+    for (const a of document.querySelectorAll('a[href="#booking"], a[href="booking.html"]')) {
+      a.setAttribute("href", "index.html#contact");
       if (a.dataset.i18n === "intro.book") {
         a.dataset.i18n = "nav.contact";
       }

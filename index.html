@@ -131,11 +131,11 @@
           <a href="#about" data-i18n="nav.about">About</a>
           <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
           <a href="#prices" data-i18n="nav.prices">Prices</a>
-          <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+          <a href="reviews.html" data-i18n="nav.reviews">Reviews</a>
           <a href="#before-visit" data-i18n="nav.beforeVisit">Before your appointment</a>
-          <a href="#booking" data-i18n="nav.booking">Book</a>
           <a href="#contact" data-i18n="nav.contact">Contact</a>
           <a href="#faq" data-i18n="nav.faq">Q&amp;A</a>
+          <a class="site-nav__booking" href="booking.html" data-i18n="nav.booking">Book</a>
           <div class="lang-switch" role="group" data-i18n-aria="lang.switchAria" aria-label="Language">
             <button type="button" class="lang-switch-btn" data-lang-set="en" aria-pressed="false">EN</button>
             <button type="button" class="lang-switch-btn is-active" data-lang-set="sk" aria-pressed="true">SK</button>
@@ -153,7 +153,7 @@
             Soft glam, timeless bridal looks, and polished beauty experiences — get in touch to plan your visit.
           </p>
           <div class="intro-band-actions">
-            <a class="button" href="#booking" data-i18n="intro.book">Book a slot</a>
+            <a class="button" href="booking.html" data-i18n="intro.book">Book a slot</a>
             <a class="button button-ghost" href="#portfolio" data-i18n="intro.portfolio">View portfolio</a>
           </div>
         </div>
@@ -425,69 +425,6 @@
       </section>
 
       <section
-        id="reviews"
-        class="section portfolio-carousel reviews-carousel"
-        aria-roledescription="carousel"
-        data-i18n-aria="reviews.carouselAria"
-      >
-        <div class="section-heading">
-          <span class="eyebrow" data-i18n="reviews.eyebrow">Reviews</span>
-          <h2 data-i18n="reviews.h2">What clients say</h2>
-        </div>
-        <div class="portfolio-carousel-viewport" id="reviews-carousel-viewport">
-          <div class="portfolio-carousel-track" id="reviews-carousel-track">
-            <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="reviews.c1.pill">Bridal</span>
-              <h3 data-i18n="reviews.c1.h3">Sophia K.</h3>
-              <p data-i18n="reviews.c1.p">Calm, precise, and the makeup lasted perfectly through the whole day and night.</p>
-            </article>
-            <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="reviews.c2.pill">Event</span>
-              <h3 data-i18n="reviews.c2.h3">Nina M.</h3>
-              <p data-i18n="reviews.c2.p">Exactly the soft glam I wanted — natural in person, stunning in photos.</p>
-            </article>
-            <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="reviews.c3.pill">Lesson</span>
-              <h3 data-i18n="reviews.c3.h3">Tereza V.</h3>
-              <p data-i18n="reviews.c3.p">The 1:1 lesson finally made my everyday routine feel doable and elegant.</p>
-            </article>
-            <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="reviews.c4.pill">Trial</span>
-              <h3 data-i18n="reviews.c4.h3">Lucia P.</h3>
-              <p data-i18n="reviews.c4.p">Trial before the wedding gave us time to refine everything — zero stress on the day.</p>
-            </article>
-          </div>
-        </div>
-        <div class="portfolio-carousel-ui">
-          <button
-            type="button"
-            class="portfolio-carousel-arrow portfolio-carousel-arrow--prev"
-            id="reviews-carousel-prev"
-            data-i18n-aria="hero.prevSlide"
-            aria-label="Previous slide"
-          >
-            ‹
-          </button>
-          <div
-            class="portfolio-carousel-dots"
-            id="reviews-carousel-dots"
-            role="tablist"
-            data-i18n-aria="hero.chooseSlide"
-            aria-label="Choose slide"
-          ></div>
-          <button
-            type="button"
-            class="portfolio-carousel-arrow portfolio-carousel-arrow--next"
-            id="reviews-carousel-next"
-            data-i18n-aria="hero.nextSlide"
-            aria-label="Next slide"
-          >
-            ›
-          </button>
-        </div>
-      </section>
-
-      <section
         id="before-visit"
         class="section portfolio-carousel before-visit-carousel"
         aria-roledescription="carousel"
@@ -547,95 +484,6 @@
           >
             ›
           </button>
-        </div>
-      </section>
-
-      <section id="booking" class="section booking-section">
-        <div class="section-heading">
-          <span class="eyebrow" data-i18n="booking.eyebrow">Booking</span>
-          <h2 data-i18n="booking.h2">Choose an available time</h2>
-        </div>
-        <div class="card booking-card">
-          <p class="booking-intro" data-i18n="booking.intro">
-            First choose a service, then pick a date and time. Your booking is saved and that slot is marked busy for others.
-          </p>
-          <form id="booking-form" class="booking-form" autocomplete="on">
-            <div class="booking-service-row">
-              <label>
-                <span data-i18n="booking.serviceFirst">Which service do you want?</span>
-                <select id="booking-service" name="service" required>
-                  <option value="" data-i18n-option="booking.selectService">Select a service</option>
-                  <option value="Signature Makeup" data-i18n-option="service.signature">Signature Makeup</option>
-                  <option value="Bridal Makeup" data-i18n-option="service.bridal">Bridal Makeup</option>
-                  <option value="Trial Session" data-i18n-option="service.trial">Trial Session</option>
-                  <option value="1:1 Makeup Lesson" data-i18n-option="service.lesson">1:1 Makeup Lesson</option>
-                </select>
-              </label>
-            </div>
-            <input type="hidden" name="slotId" id="booking-slot-id" value="">
-            <p id="booking-slots-status" class="booking-slots-status" aria-live="polite"></p>
-            <div id="booking-picker" class="booking-picker hidden">
-            <div class="booking-calendar" id="booking-calendar" aria-hidden="false">
-              <div class="booking-calendar-header">
-                <button
-                  type="button"
-                  class="booking-cal-nav"
-                  id="booking-cal-prev"
-                  data-i18n-aria="booking.calPrev"
-                  aria-label="Previous month"
-                >
-                  ‹
-                </button>
-                <h3 class="booking-cal-month-title" id="booking-cal-month">Month</h3>
-                <button
-                  type="button"
-                  class="booking-cal-nav"
-                  id="booking-cal-next"
-                  data-i18n-aria="booking.calNext"
-                  aria-label="Next month"
-                >
-                  ›
-                </button>
-              </div>
-              <div class="booking-calendar-weekdays" id="booking-cal-weekdays" aria-hidden="true"></div>
-              <div
-                class="booking-calendar-grid"
-                id="booking-cal-grid"
-                role="group"
-                data-i18n-aria="booking.calGridAria"
-                aria-label="Calendar"
-              ></div>
-            </div>
-            <div class="booking-slots-panel">
-              <div
-                id="booking-slots"
-                class="booking-slots"
-                role="group"
-                data-i18n-aria="booking.slotsGroupAria"
-                aria-label="Available time slots"
-              ></div>
-            </div>
-          </div>
-            <div class="booking-form-grid">
-              <label>
-                <span data-i18n="booking.name">Name</span>
-                <input type="text" name="name" data-i18n-placeholder="booking.phName" placeholder="Your name" required>
-              </label>
-              <label>
-                <span data-i18n="booking.email">Email</span>
-                <input type="email" name="email" data-i18n-placeholder="booking.phEmail" placeholder="you@example.com" required>
-              </label>
-              <label>
-                <span data-i18n="booking.phone">Phone</span>
-                <input type="tel" name="phone" data-i18n-placeholder="booking.phPhone" placeholder="+421…" required>
-              </label>
-            </div>
-            <label>
-              <span data-i18n="booking.notes">Notes</span>
-              <textarea name="notes" rows="3" data-i18n-placeholder="booking.phNotes" placeholder="Occasion, style, or preferences"></textarea>
-            </label>
-            <button class="button" type="submit" data-i18n="booking.submit">Send reservation</button>
-          </form>
         </div>
       </section>
 
