@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:site-texts": "node scripts/test-site-text-gas.mjs",
+    "test:site-texts": "node scripts/test-site-text-csv.mjs",
     "export:site-texts": "node scripts/export-site-text-seeds.mjs"
   }
 }

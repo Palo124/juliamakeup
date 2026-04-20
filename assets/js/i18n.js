@@ -1,8 +1,9 @@
 /**
  * Site copy: English and Slovak.
- * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentScriptUrl).
+ * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentCsvUrls / published id).
  */
 import { CONFIG } from "./config.js";
+import { csvRowsToStringMap, parseCsv, resolveSiteTextCsvUrls } from "./site-text-csv.js";
 
 const LANG_STORAGE_KEY = "juliamakeup-lang";
 
@@ -580,36 +581,51 @@ function normalizeStringMap(raw) {
 }
 
 /**
- * Fetches copy from the dedicated Site Texts Apps Script (tabs ENG + SK in the bound sheet).
+ * Loads copy from published/public Google Sheet tabs (CSV: key, text per ENG / SK; IMG optional).
  */
 export async function loadTextsFromGoogleSheet() {
   sheetOverrides = { en: {}, sk: {} };
   sheetImageUrls = {};
 
-  if (!CONFIG.useSheetTexts || !CONFIG.contentScriptUrl?.trim()) {
+  if (!CONFIG.useSheetTexts) {
+    return;
+  }
+
+  const urls = resolveSiteTextCsvUrls(CONFIG);
+  const enUrl = urls.en;
+  const skUrl = urls.sk;
+  const imgUrl = urls.img;
+
+  if (!enUrl || !skUrl) {
     return;
   }
 
   try {
-    const response = await fetch(CONFIG.contentScriptUrl.trim(), {
-      method: "POST",
-      redirect: "follow",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-      body: JSON.stringify({ action: "getSiteTexts" }),
-    });
+    const fetchCsv = async (url) => {
+      const res = await fetch(url, {
+        method: "GET",
+        redirect: "follow",
+        credentials: "omit",
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status} for ${url.slice(0, 80)}…`);
+      }
+      return res.text();
+    };
 
-    const text = await response.text();
-    const data = JSON.parse(text);
+    const [enText, skText, imgText] = await Promise.all([
+      fetchCsv(enUrl),
+      fetchCsv(skUrl),
+      imgUrl ? fetchCsv(imgUrl) : Promise.resolve(""),
+    ]);
 
-    if (data?.ok && data.en && data.sk) {
-      sheetOverrides.en = normalizeStringMap(data.en);
-      sheetOverrides.sk = normalizeStringMap(data.sk);
-      sheetImageUrls = normalizeStringMap(data.img || {});
+    sheetOverrides.en = normalizeStringMap(csvRowsToStringMap(parseCsv(enText)));
+    sheetOverrides.sk = normalizeStringMap(csvRowsToStringMap(parseCsv(skText)));
+    if (imgUrl && imgText.trim()) {
+      sheetImageUrls = normalizeStringMap(csvRowsToStringMap(parseCsv(imgText)));
     }
   } catch (error) {
-    console.warn("[i18n] Could not load texts from Google Sheet; using bundled strings.", error);
+    console.warn("[i18n] Could not load texts from Google Sheet CSV; using bundled strings.", error);
   }
 }
 
