@@ -1,5 +1,5 @@
 /**
- * Writes TSV seed files for the Site Texts spreadsheet (tabs ENG + SK).
+ * Writes CSV seed files for the Site Texts spreadsheet (tabs ENG + SK).
  * Usage: npm run export:site-texts
  */
 import fs from "node:fs";
@@ -10,36 +10,51 @@ import { BUNDLED_STRINGS } from "../assets/js/i18n.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(__dirname, "..", "google-apps-script", "site-texts");
 
-function flattenForTsv(value) {
+/** Single-line cell text (newlines → space) for stable one-row-per-key CSV. */
+function normalizeCell(value) {
   return String(value)
     .replace(/\r\n/g, "\n")
     .replace(/\n/g, " ")
-    .replace(/\t/g, " ");
+    .replace(/\r/g, " ");
 }
 
-function buildTsv(lang) {
-  const lines = ["key\ttext"];
+function csvEscape(value) {
+  const s = String(value);
+  if (/[",\r\n]/.test(s)) {
+    return `"${s.replace(/"/g, '""')}"`;
+  }
+  return s;
+}
+
+function csvRow(fields) {
+  return fields.map(csvEscape).join(",");
+}
+
+/** Third column `imageUrl` is for the SK tab (site reads URLs from SK only); ENG keeps C empty in seeds. */
+function buildCsv(lang) {
+  const lines = [csvRow(["key", "text", "imageUrl"])];
   for (const [k, v] of Object.entries(BUNDLED_STRINGS[lang])) {
-    lines.push(`${k}\t${flattenForTsv(v)}`);
+    lines.push(csvRow([normalizeCell(k), normalizeCell(v), ""]));
   }
   return `${lines.join("\n")}\n`;
 }
 
-const imgSeed = [
-  "key\turl",
-  "hero.slide1\t",
-  "hero.slide2\t",
-  "hero.slide3\t",
-  "# Paste HTTPS image URLs (or leave empty to use bundled files in index.html).",
-  "# Allowed: https://... http://... assets/img/... /absolute-path-from-site-root",
-].join("\n");
-
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, "seed-ENG.tsv"), buildTsv("en"), "utf8");
-fs.writeFileSync(path.join(outDir, "seed-SK.tsv"), buildTsv("sk"), "utf8");
-fs.writeFileSync(path.join(outDir, "seed-IMG.tsv"), `${imgSeed}\n`, "utf8");
+fs.writeFileSync(path.join(outDir, "seed-ENG.csv"), buildCsv("en"), "utf8");
+fs.writeFileSync(path.join(outDir, "seed-SK.csv"), buildCsv("sk"), "utf8");
+
+const imgPath = path.join(outDir, "seed-IMG.csv");
+if (fs.existsSync(imgPath)) {
+  fs.unlinkSync(imgPath);
+}
+
+for (const name of ["seed-ENG.tsv", "seed-SK.tsv", "seed-IMG.tsv"]) {
+  const p = path.join(outDir, name);
+  if (fs.existsSync(p)) {
+    fs.unlinkSync(p);
+  }
+}
 
 console.log("Wrote:");
-console.log(" ", path.join(outDir, "seed-ENG.tsv"));
-console.log(" ", path.join(outDir, "seed-SK.tsv"));
-console.log(" ", path.join(outDir, "seed-IMG.tsv"));
+console.log(" ", path.join(outDir, "seed-ENG.csv"));
+console.log(" ", path.join(outDir, "seed-SK.csv"));

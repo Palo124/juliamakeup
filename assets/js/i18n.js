@@ -3,7 +3,12 @@
  * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentCsvUrls / published id).
  */
 import { CONFIG } from "./config.js";
-import { csvRowsToStringMap, parseCsv, resolveSiteTextCsvUrls } from "./site-text-csv.js";
+import {
+  csvRowsToStringMap,
+  parseCsv,
+  resolveSiteTextCsvUrls,
+  siteImgUrlsFromSkCsvRows,
+} from "./site-text-csv.js";
 
 const LANG_STORAGE_KEY = "juliamakeup-lang";
 
@@ -19,6 +24,8 @@ const BUNDLED_STRINGS = {
     "meta.titleBooking": "Juliere Beauty | Book online",
     "meta.descriptionBooking":
       "Reserve a makeup appointment — choose a service and pick an available time.",
+
+    "sheet.loading": "Loading…",
 
     "hero.carouselAria": "Juliere Beauty",
     "hero.slide1.alt": "Portrait — professional makeup look, Juliere Beauty",
@@ -270,6 +277,9 @@ const BUNDLED_STRINGS = {
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
     "footer.socialX": "X",
+    "footer.socialInstagramUrl": "https://www.instagram.com/",
+    "footer.socialFacebookUrl": "https://www.facebook.com/",
+    "footer.socialXUrl": "https://x.com/",
 
     "lang.switchAria": "Language",
     "lang.en": "English",
@@ -288,6 +298,8 @@ const BUNDLED_STRINGS = {
       "Rezervujte si termín na líčenie — zvoľte službu a voľný čas.",
     "meta.description":
       "Juliere Beauty — elegantné vizážistické štúdio s portfóliom, cenníkom, online rezerváciou a kontaktom.",
+
+    "sheet.loading": "Načítavam…",
 
     "hero.carouselAria": "Juliere Beauty",
     "hero.slide1.alt": "Portrét — profesionálny makeup look, Juliere Beauty",
@@ -540,6 +552,9 @@ const BUNDLED_STRINGS = {
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
     "footer.socialX": "X",
+    "footer.socialInstagramUrl": "https://www.instagram.com/",
+    "footer.socialFacebookUrl": "https://www.facebook.com/",
+    "footer.socialXUrl": "https://x.com/",
 
     "lang.switchAria": "Jazyk",
     "lang.en": "English",
@@ -553,7 +568,7 @@ const BUNDLED_STRINGS = {
 /** Merged from Google Sheet at load; empty values fall back to bundled copy. */
 let sheetOverrides = { en: {}, sk: {} };
 
-/** Optional image URLs from sheet tab IMG (`data-site-img` keys). */
+/** Optional image URLs from SK sheet column C (`data-site-img` keys after alias mapping). */
 let sheetImageUrls = {};
 
 /**
@@ -581,7 +596,7 @@ function normalizeStringMap(raw) {
 }
 
 /**
- * Loads copy from published/public Google Sheet tabs (CSV: key, text per ENG / SK; IMG optional).
+ * Loads copy from published/public Google Sheet tabs (CSV: key, text per ENG / SK; SK optional column C = image URLs).
  */
 export async function loadTextsFromGoogleSheet() {
   sheetOverrides = { en: {}, sk: {} };
@@ -594,7 +609,6 @@ export async function loadTextsFromGoogleSheet() {
   const urls = resolveSiteTextCsvUrls(CONFIG);
   const enUrl = urls.en;
   const skUrl = urls.sk;
-  const imgUrl = urls.img;
 
   if (!enUrl || !skUrl) {
     return;
@@ -613,17 +627,12 @@ export async function loadTextsFromGoogleSheet() {
       return res.text();
     };
 
-    const [enText, skText, imgText] = await Promise.all([
-      fetchCsv(enUrl),
-      fetchCsv(skUrl),
-      imgUrl ? fetchCsv(imgUrl) : Promise.resolve(""),
-    ]);
+    const [enText, skText] = await Promise.all([fetchCsv(enUrl), fetchCsv(skUrl)]);
 
+    const skRows = parseCsv(skText);
     sheetOverrides.en = normalizeStringMap(csvRowsToStringMap(parseCsv(enText)));
-    sheetOverrides.sk = normalizeStringMap(csvRowsToStringMap(parseCsv(skText)));
-    if (imgUrl && imgText.trim()) {
-      sheetImageUrls = normalizeStringMap(csvRowsToStringMap(parseCsv(imgText)));
-    }
+    sheetOverrides.sk = normalizeStringMap(csvRowsToStringMap(skRows));
+    sheetImageUrls = normalizeStringMap(siteImgUrlsFromSkCsvRows(skRows));
   } catch (error) {
     console.warn("[i18n] Could not load texts from Google Sheet CSV; using bundled strings.", error);
   }
@@ -660,7 +669,10 @@ export function extractGoogleDriveFileId(input) {
 
   if (u) {
     const host = u.hostname.replace(/^www\./i, "");
-    const isDriveHost = host === "drive.google.com" || host === "docs.google.com";
+    const isDriveHost =
+      host === "drive.google.com" ||
+      host === "docs.google.com" ||
+      host === "drive.usercontent.google.com";
 
     const filePath = u.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (filePath) {
@@ -685,6 +697,8 @@ export function extractGoogleDriveFileId(input) {
 
 /**
  * Normalizes Drive share links, `?id=` URLs, or a raw file ID to a browser-usable image URL.
+ * Uses `lh3.googleusercontent.com/d/{id}={sz}` — same target as the `/thumbnail` redirect, but
+ * avoids an extra hop that can break `<img>` (Referer / redirect handling) in some browsers.
  * @param {unknown} input
  * @returns {string | null}
  */
@@ -695,12 +709,12 @@ export function toDriveImageUrl(input) {
   }
 
   const sz = (CONFIG.driveImageThumbnailSz || "w1920").trim() || "w1920";
-  return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=${encodeURIComponent(sz)}`;
+  return `https://lh3.googleusercontent.com/d/${id}=${encodeURIComponent(sz)}`;
 }
 
 /**
  * Accepts https/http URLs or same-site paths (`assets/...` or `/...`).
- * Rewrites Google Drive values to thumbnail URLs via {@link toDriveImageUrl}.
+ * Rewrites Google Drive values to public image URLs via {@link toDriveImageUrl}.
  * @param {unknown} raw
  * @returns {string | null}
  */
@@ -758,7 +772,11 @@ export function applySheetImageUrls() {
 
     const resolved = resolveSiteImageUrl(sheetImageUrls[key]);
     if (resolved) {
-      if (resolved.includes("drive.google.com/")) {
+      if (
+        /drive\.google\.com\//i.test(resolved) ||
+        /googleusercontent\.com/i.test(resolved) ||
+        /drive\.usercontent\.google\.com/i.test(resolved)
+      ) {
         img.referrerPolicy = "no-referrer";
       }
 
@@ -822,6 +840,48 @@ export function t(key, vars) {
 
 export function getDateLocale() {
   return getLang() === "sk" ? "sk-SK" : "en-GB";
+}
+
+function normalizeFooterHref(raw) {
+  const s = String(raw ?? "").trim();
+  if (!s || s === "#") {
+    return "";
+  }
+  if (/^https?:\/\//i.test(s)) {
+    return s;
+  }
+  if (s.startsWith("mailto:") || (s.startsWith("/") && !s.startsWith("//"))) {
+    return s;
+  }
+  return "";
+}
+
+/** Footer `<a href>` from Google Sheet (`sheetOverrides`) → `CONFIG.social` → bundled defaults. */
+function applyFooterSocialLinks() {
+  const lang = getLang();
+  const triples = [
+    ["footer-link-instagram", "footer.socialInstagramUrl", CONFIG.social?.instagram],
+    ["footer-link-facebook", "footer.socialFacebookUrl", CONFIG.social?.facebook],
+    ["footer-link-x", "footer.socialXUrl", CONFIG.social?.x],
+  ];
+  for (const [id, urlKey, cfgFallback] of triples) {
+    const a = document.getElementById(id);
+    if (!a) {
+      continue;
+    }
+    const rawSheet = sheetOverrides[lang]?.[urlKey];
+    let href = "";
+    if (rawSheet !== undefined && String(rawSheet).trim() !== "") {
+      href = normalizeFooterHref(rawSheet);
+    }
+    if (!href) {
+      href = normalizeFooterHref(cfgFallback);
+    }
+    if (!href) {
+      href = normalizeFooterHref(BUNDLED_STRINGS[lang]?.[urlKey] ?? BUNDLED_STRINGS.en[urlKey]);
+    }
+    a.href = href || "#";
+  }
 }
 
 export function applyTranslations() {
@@ -888,13 +948,109 @@ export function applyTranslations() {
     btn.classList.toggle("is-active", active);
     btn.setAttribute("aria-pressed", active ? "true" : "false");
   });
+
+  applyFooterSocialLinks();
+}
+
+/** @type {HTMLElement | null} */
+let sheetLoadingOverlayEl = null;
+
+function sheetLoadingLabel() {
+  const lang = getLang();
+  return BUNDLED_STRINGS[lang]?.["sheet.loading"] ?? BUNDLED_STRINGS.en["sheet.loading"] ?? "Loading…";
+}
+
+function shouldShowSheetLoadingOverlay() {
+  if (!CONFIG.useSheetTexts) {
+    return false;
+  }
+  const { en, sk } = resolveSiteTextCsvUrls(CONFIG);
+  return Boolean(en && sk);
+}
+
+function showSheetLoadingOverlay() {
+  document.body.classList.add("is-sheet-loading");
+  if (!sheetLoadingOverlayEl) {
+    const root = document.createElement("div");
+    root.id = "sheet-loading-overlay";
+    root.className = "sheet-loading-overlay";
+    root.setAttribute("role", "status");
+    root.setAttribute("aria-live", "polite");
+    root.setAttribute("aria-busy", "true");
+
+    const ambient = document.createElement("div");
+    ambient.className = "sheet-loading-overlay__ambient";
+    ambient.setAttribute("aria-hidden", "true");
+
+    const inner = document.createElement("div");
+    inner.className = "sheet-loading-overlay__inner";
+
+    const card = document.createElement("div");
+    card.className = "sheet-loading-overlay__card";
+
+    const brand = document.createElement("p");
+    brand.className = "sheet-loading-overlay__brand";
+    brand.setAttribute("aria-hidden", "true");
+    const linePrimary = document.createElement("span");
+    linePrimary.className = "sheet-loading-overlay__brand-line sheet-loading-overlay__brand-line--primary";
+    linePrimary.textContent = "Juliere";
+    const lineSecondary = document.createElement("span");
+    lineSecondary.className = "sheet-loading-overlay__brand-line sheet-loading-overlay__brand-line--secondary";
+    lineSecondary.textContent = "Beauty";
+    brand.append(linePrimary, lineSecondary);
+
+    const mark = document.createElement("div");
+    mark.className = "sheet-loading-overlay__mark";
+    mark.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 3; i += 1) {
+      const dot = document.createElement("span");
+      dot.className = "sheet-loading-overlay__dot";
+      mark.appendChild(dot);
+    }
+
+    const rule = document.createElement("span");
+    rule.className = "sheet-loading-overlay__rule";
+    rule.setAttribute("aria-hidden", "true");
+
+    const label = document.createElement("p");
+    label.className = "sheet-loading-overlay__label";
+
+    card.append(brand, mark, rule, label);
+    inner.appendChild(card);
+    root.append(ambient, inner);
+    document.body.appendChild(root);
+    sheetLoadingOverlayEl = root;
+  }
+  const labelEl = sheetLoadingOverlayEl.querySelector(".sheet-loading-overlay__label");
+  if (labelEl) {
+    labelEl.textContent = sheetLoadingLabel();
+  }
+  sheetLoadingOverlayEl.classList.add("is-visible");
+}
+
+function hideSheetLoadingOverlay() {
+  document.body.classList.remove("is-sheet-loading");
+  if (sheetLoadingOverlayEl) {
+    sheetLoadingOverlayEl.setAttribute("aria-busy", "false");
+    sheetLoadingOverlayEl.classList.remove("is-visible");
+  }
 }
 
 export async function initI18n() {
-  await loadTextsFromGoogleSheet();
-  document.documentElement.lang = getLang() === "sk" ? "sk" : "en";
-  applyTranslations();
-  applySheetImageUrls();
+  const useLoadingOverlay = shouldShowSheetLoadingOverlay();
+  if (useLoadingOverlay) {
+    showSheetLoadingOverlay();
+  }
+  try {
+    await loadTextsFromGoogleSheet();
+    document.documentElement.lang = getLang() === "sk" ? "sk" : "en";
+    applyTranslations();
+    applySheetImageUrls();
+  } finally {
+    if (useLoadingOverlay) {
+      hideSheetLoadingOverlay();
+    }
+  }
   document.querySelectorAll("[data-lang-set]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const next = btn.dataset.langSet;
@@ -905,5 +1061,5 @@ export async function initI18n() {
   });
 }
 
-/** Bundled defaults; use `npm run export:site-texts` to regenerate sheet seeds. */
+/** Bundled defaults; use `npm run export:site-texts` to regenerate sheet seed CSVs. */
 export { BUNDLED_STRINGS };

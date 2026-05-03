@@ -10,16 +10,17 @@ export const CONFIG = {
   useSheetBooking: true,
 
   /**
-   * Site copy + optional image URLs from Google Sheets (no Apps Script).
-   * Tabs: `ENG`, `SK`, optional `IMG` (key → url). Same layout as `google-apps-script/site-texts/TEMPLATE.md`.
+   * Site copy from Google Sheets (no Apps Script). Tabs: **`ENG`**, **`SK`**.
+   * Row layout: `key` | `text` | optional **`imageUrl`** (column C on **SK** only — drives `data-site-img`
+   * URLs; see `site-text-csv.js` → `SK_CSV_ROW_KEY_TO_SITE_IMG_KEY`). Same layout as `google-apps-script/site-texts/TEMPLATE.md`.
    *
    * **Recommended — Publish entire document:** File → Share → **Publish to the web** → publish the
    * **Entire document**. Copy the id from the link (`…/spreadsheets/d/e/THIS_LONG_ID/pubhtml`) into
-   * `contentPublishedSpreadsheetId`. Open each tab (**ENG**, **SK**, **IMG**) in the editor and copy
+   * `contentPublishedSpreadsheetId`. Open each tab (**ENG**, **SK**) in the editor and copy
    * its `gid` from the URL (`…#gid=123456789`) into `contentSheetGids`. The site builds CSV URLs
    * automatically.
    *
-   * **Optional:** set `contentCsvUrls.en` / `.sk` / `.img` to full CSV URLs — they override the
+   * **Optional:** set `contentCsvUrls.en` / `.sk` to full CSV URLs — they override the
    * published id for that tab (e.g. if you use `/export?format=csv` instead).
    */
   contentPublishedSpreadsheetId:
@@ -28,17 +29,15 @@ export const CONFIG = {
   contentSheetGids: {
     en: "1596156131",
     sk: "545201391",
-    img: "1752493226",
   },
   contentCsvUrls: {
     en: "",
     sk: "",
-    img: "",
   },
   useSheetTexts: true,
 
   /**
-   * Google Drive thumbnail `sz=` for sheet-driven images (`/thumbnail?id=…&sz=…`).
+   * Google Drive image `sz=` token for sheet-driven images (`lh3.googleusercontent.com/d/{id}={sz}`).
    * `w256` looks soft on full-width heroes; `w1920` is a better default (more bandwidth).
    */
   driveImageThumbnailSz: "w1920",
@@ -51,7 +50,7 @@ export const CONFIG = {
   googleMapsEmbedUrl:
     "https://maps.google.com/maps?q=Bratislava%2C+Slovakia&t=&z=14&ie=UTF8&iwloc=&output=embed",
 
-  /** Footer social links — replace with your profile URLs. */
+  /** Footer social profile URLs (fallback if ENG/SK sheet keys `footer.social*Url` are empty). */
   social: {
     instagram: "https://www.instagram.com/",
     facebook: "https://www.facebook.com/",

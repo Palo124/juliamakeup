@@ -21,21 +21,6 @@ import {
 import { initPriceServiceDialog, refreshPriceServiceDialogI18n } from "./features/price-service-dialog.js";
 import { initHeaderScroll } from "./features/header-scroll.js";
 import { initSheetBooking } from "./features/sheet-booking.js";
-import { CONFIG } from "./config.js";
-
-function initFooterSocial() {
-  const pairs = [
-    ["footer-link-instagram", CONFIG.social?.instagram],
-    ["footer-link-facebook", CONFIG.social?.facebook],
-    ["footer-link-x", CONFIG.social?.x],
-  ];
-  for (const [id, url] of pairs) {
-    const a = document.getElementById(id);
-    if (a && typeof url === "string" && url.trim()) {
-      a.href = url.trim();
-    }
-  }
-}
 
 function onLanguageChanged() {
   if (elements.menuToggle && elements.siteNav) {
@@ -55,7 +40,6 @@ function onLanguageChanged() {
 async function bootstrap() {
   initContactMap();
   await initI18n();
-  initFooterSocial();
   window.addEventListener("juliamakeup:lang", onLanguageChanged);
 
   bindNavigation();

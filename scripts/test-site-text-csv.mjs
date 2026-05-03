@@ -2,21 +2,24 @@
  * Fetches CSV URLs from config (contentPublishedSpreadsheetId + gids, or contentCsvUrls) and parses rows.
  * Usage: npm run test:site-texts
  *     or node scripts/test-site-text-csv.mjs
- *     or node scripts/test-site-text-csv.mjs "https://…csv…" "https://…csv…" ["https://…img…"]
+ *     or node scripts/test-site-text-csv.mjs "https://…csv…" "https://…csv…"
  */
 import { CONFIG } from "../assets/js/config.js";
-import { csvRowsToStringMap, parseCsv, resolveSiteTextCsvUrls } from "../assets/js/site-text-csv.js";
+import {
+  csvRowsToStringMap,
+  parseCsv,
+  resolveSiteTextCsvUrls,
+  siteImgUrlsFromSkCsvRows,
+} from "../assets/js/site-text-csv.js";
 
 const argv = process.argv.slice(2);
 let enUrl = argv[0];
 let skUrl = argv[1];
-let imgUrl = argv[2];
 
 if (!enUrl) {
   const resolved = resolveSiteTextCsvUrls(CONFIG);
   enUrl = resolved.en;
   skUrl = resolved.sk;
-  imgUrl = resolved.img;
 }
 
 if (!enUrl || !skUrl) {
@@ -46,19 +49,16 @@ async function fetchCsv(url) {
 try {
   const [enText, skText] = await Promise.all([fetchCsv(enUrl), fetchCsv(skUrl)]);
   const enMap = csvRowsToStringMap(parseCsv(enText));
-  const skMap = csvRowsToStringMap(parseCsv(skText));
-  let imgKeys = 0;
-  if (imgUrl) {
-    const imgText = await fetchCsv(imgUrl);
-    imgKeys = Object.keys(csvRowsToStringMap(parseCsv(imgText))).length;
-  }
+  const skRows = parseCsv(skText);
+  const skMap = csvRowsToStringMap(skRows);
+  const imgKeys = Object.keys(siteImgUrlsFromSkCsvRows(skRows)).length;
   console.log(
     JSON.stringify(
       {
         ok: true,
         enKeys: Object.keys(enMap).length,
         skKeys: Object.keys(skMap).length,
-        imgKeys,
+        siteImgKeysFromSk: imgKeys,
       },
       null,
       2,

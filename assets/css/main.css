@@ -2050,3 +2050,175 @@ textarea {
     align-items: flex-start;
   }
 }
+
+/* Full-page veil while Google Sheet CSV is fetched — editorial card + brand */
+body.is-sheet-loading {
+  overflow: hidden;
+}
+
+.sheet-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: min(48px, 6vw);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sheet-loading-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.sheet-loading-overlay__ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 55% at 18% 22%, rgba(224, 197, 186, 0.45), transparent 52%),
+    radial-gradient(ellipse 70% 50% at 88% 78%, rgba(176, 123, 103, 0.18), transparent 48%),
+    radial-gradient(circle at 50% 108%, rgba(255, 253, 251, 0.9), transparent 42%),
+    linear-gradient(165deg, rgba(251, 247, 243, 0.97) 0%, rgba(245, 237, 230, 0.98) 100%);
+}
+
+.sheet-loading-overlay__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+}
+
+.sheet-loading-overlay__card {
+  position: relative;
+  width: min(100%, 340px);
+  padding: clamp(28px, 5vw, 40px) clamp(24px, 4vw, 36px);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, rgba(255, 253, 251, 0.92) 0%, rgba(255, 255, 255, 0.78) 100%);
+  border: 1px solid rgba(36, 28, 24, 0.07);
+  box-shadow:
+    0 4px 1px rgba(255, 255, 255, 0.65) inset,
+    0 28px 80px rgba(55, 34, 23, 0.12),
+    0 12px 32px rgba(55, 34, 23, 0.06);
+  backdrop-filter: blur(14px);
+  text-align: center;
+}
+
+.sheet-loading-overlay__brand {
+  margin: 0 0 22px;
+  padding: 0;
+  border: none;
+  font-family: "Italiana", "Cormorant Garamond", serif;
+  font-weight: 400;
+  font-size: clamp(2.1rem, 8vw, 2.85rem);
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--text);
+}
+
+.sheet-loading-overlay__brand-line {
+  display: block;
+}
+
+.sheet-loading-overlay__brand-line--primary {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent-dark);
+  background: linear-gradient(120deg, var(--text) 0%, var(--accent-dark) 45%, var(--accent) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .sheet-loading-overlay__brand-line--primary {
+    background: none;
+    -webkit-text-fill-color: unset;
+    color: var(--accent-dark);
+  }
+}
+.sheet-loading-overlay__brand-line--secondary {
+  margin-top: 0.2em;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.5em;
+  font-weight: 300;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sheet-loading-overlay__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+
+.sheet-loading-overlay__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.35;
+  animation: sheet-loading-dot 1.05s ease-in-out infinite;
+}
+
+.sheet-loading-overlay__dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.sheet-loading-overlay__dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes sheet-loading-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.08);
+  }
+}
+
+.sheet-loading-overlay__rule {
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin: 0 auto 14px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft), var(--accent), var(--accent-soft), transparent);
+  opacity: 0.85;
+}
+
+.sheet-loading-overlay__label {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-loading-overlay {
+    transition: opacity 0.15s ease;
+  }
+
+  .sheet-loading-overlay__dot {
+    animation: none;
+    opacity: 0.75;
+  }
+}
