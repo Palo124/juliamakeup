@@ -568,7 +568,7 @@ const BUNDLED_STRINGS = {
 /** Merged from Google Sheet at load; empty values fall back to bundled copy. */
 let sheetOverrides = { en: {}, sk: {} };
 
-/** Optional image URLs from SK sheet column C (`data-site-img` keys after alias mapping). */
+/** Optional image URLs from SK sheet column C (`data-site-img` keys, alias targets, and `portfolio.gallery.*` alt keys). */
 let sheetImageUrls = {};
 
 /**
@@ -760,6 +760,23 @@ function resolveSiteImageUrl(raw) {
   }
 
   return null;
+}
+
+/**
+ * Modal gallery images: prefer SK column C URL keyed by `altKey` (e.g. `portfolio.gallery.bridal.1`), else JSON `src`.
+ * @param {string | undefined} altKey
+ * @param {string} jsonSrc
+ * @returns {string}
+ */
+export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
+  const key = String(altKey ?? "").trim();
+  if (key) {
+    const fromSheet = resolveSiteImageUrl(sheetImageUrls[key]);
+    if (fromSheet) {
+      return fromSheet;
+    }
+  }
+  return String(jsonSrc ?? "").trim();
 }
 
 /** Apply `src` from sheet for elements with `data-site-img` (hero and future images). */

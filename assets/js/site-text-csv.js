@@ -92,7 +92,7 @@ export function parseCsv(text) {
 }
 
 /**
- * First row = header; columns A=key, B=text (column C `imageUrl` on SK is used only by {@link siteImgUrlsFromSkCsvRows}).
+ * First row = header; columns A=key, B=text (column C `imageUrl` on SK is used by {@link siteImgUrlsFromSkCsvRows}).
  * @param {string[][]} rows
  * @returns {Record<string, string>}
  */
@@ -165,8 +165,12 @@ const SITE_IMG_DIRECT_KEYS = new Set([
   "portfolio.tile.evening",
 ]);
 
+/** Row key A = alt key for modal gallery stills (`portfolio.gallery.{cat}.{1..n}`), column C = image URL. */
+const PORTFOLIO_GALLERY_IMAGE_ROW_KEY_RE =
+  /^portfolio\.gallery\.[a-z]+\.[1-9]\d*$/;
+
 /**
- * Builds `data-site-img` → url from SK CSV rows (column C). Alias rows first, then direct `hero.slide1`-style keys win.
+ * Builds image URL map from SK CSV column C: `data-site-img` keys (aliases + direct), plus `portfolio.gallery.*.<n>` row keys for the modal.
  * @param {string[][]} rows
  * @returns {Record<string, string>}
  */
@@ -182,6 +186,11 @@ export function siteImgUrlsFromSkCsvRows(rows) {
   }
   for (const [rowKey, url] of Object.entries(urlByRowKey)) {
     if (SITE_IMG_DIRECT_KEYS.has(rowKey)) {
+      out[rowKey] = url;
+    }
+  }
+  for (const [rowKey, url] of Object.entries(urlByRowKey)) {
+    if (PORTFOLIO_GALLERY_IMAGE_ROW_KEY_RE.test(rowKey)) {
       out[rowKey] = url;
     }
   }

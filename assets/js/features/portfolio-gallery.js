@@ -1,4 +1,4 @@
-import { t } from "../i18n.js";
+import { resolvePortfolioGalleryImageSrc, t } from "../i18n.js";
 
 const CATEGORY_LABEL_KEYS = {
   bridal: "portfolio.bridal.label",
@@ -71,7 +71,16 @@ function renderGallery(categoryId) {
     figure.className = "portfolio-gallery__figure";
     const img = document.createElement("img");
     img.className = "portfolio-gallery__img";
-    img.src = item.src;
+    const resolvedSrc = resolvePortfolioGalleryImageSrc(item.altKey, item.src);
+    img.src = resolvedSrc;
+    if (
+      resolvedSrc &&
+      (/drive\.google\.com\//i.test(resolvedSrc) ||
+        /googleusercontent\.com/i.test(resolvedSrc) ||
+        /drive\.usercontent\.google\.com/i.test(resolvedSrc))
+    ) {
+      img.referrerPolicy = "no-referrer";
+    }
     img.alt = item.altKey ? t(item.altKey) : "";
     img.loading = "lazy";
     img.decoding = "async";
