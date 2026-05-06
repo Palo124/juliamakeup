@@ -45,10 +45,10 @@ export const CONFIG = {
   /**
    * Contact section map: paste the full `src` URL from Google Maps
    * (Share → Embed a map → copy HTML). Shows a pin for that place.
-   * Placeholder below centers on Bratislava until you replace it.
+   * Račianska 66, 831 02 Bratislava (same coords as Google Maps place link).
    */
   googleMapsEmbedUrl:
-    "https://maps.google.com/maps?q=Bratislava%2C+Slovakia&t=&z=14&ie=UTF8&iwloc=&output=embed",
+    "https://maps.google.com/maps?q=48.1789721%2C17.1287973&t=&z=18&ie=UTF8&iwloc=&output=embed",
 
   /** Footer social profile URLs (fallback if ENG/SK sheet keys `footer.social*Url` are empty). */
   social: {
