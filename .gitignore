@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Secrets / local overrides
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor swap / backup
+*.swp
+*.swo
+*~
+
+# Generated merges (see scripts/build-merged-eng-from-sk.mjs)
+/merged_ENG.csv
+/merged_SK.csv
+*.gs
