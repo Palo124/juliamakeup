@@ -92,6 +92,11 @@ const BUNDLED_STRINGS = {
 
     "portfolio.gallery.openSuffix": "Open photo gallery",
     "portfolio.gallery.close": "Close gallery",
+    "portfolio.gallery.fullscreenOpen": "Open photo fullscreen",
+    "portfolio.gallery.fullscreenClose": "Close fullscreen photo",
+    "portfolio.gallery.lightboxAria": "Fullscreen photo",
+    "portfolio.gallery.fullscreenPrev": "Previous photo",
+    "portfolio.gallery.fullscreenNext": "Next photo",
     "portfolio.gallery.bridal.1": "Bridal makeup — portrait",
     "portfolio.gallery.bridal.2": "Bridal makeup — soft glam portrait",
     "portfolio.gallery.bridal.3": "Professional makeup products used for bridal looks",
@@ -172,6 +177,12 @@ const BUNDLED_STRINGS = {
     "prices.trial.p": "Test and refine your preferred look before a major event or wedding day.",
     "prices.lesson.h3": "1:1 Makeup Lesson",
     "prices.lesson.p": "Personalized product guidance and a step-by-step routine tailored to you.",
+    "prices.brows.h3": "Brow Shaping & Lamination",
+    "prices.brows.p":
+      "Shaped brows, optional tint, and lamination for fuller arches with minimal daily upkeep.",
+    "prices.shoot.h3": "Photoshoot Makeup",
+    "prices.shoot.p":
+      "Flash-balanced complexion and definition for studio work, branding shots, or portfolio updates.",
     "prices.carouselAria": "Pricing and services — browse packages",
     "reviews.carouselAria": "Client reviews — browse testimonials",
     "beforeVisit.carouselAria": "Before your visit — browse tips",
@@ -181,10 +192,14 @@ const BUNDLED_STRINGS = {
     "prices.bridal.price": "120 EUR",
     "prices.trial.price": "80 EUR",
     "prices.lesson.price": "95 EUR",
+    "prices.brows.price": "45 EUR",
+    "prices.shoot.price": "85 EUR",
     "prices.signature.duration": "Duration: about 75 minutes",
     "prices.bridal.duration": "Duration: about 90–120 minutes",
     "prices.trial.duration": "Duration: about 90 minutes",
     "prices.lesson.duration": "Duration: about 2 hours",
+    "prices.brows.duration": "Duration: about 50 minutes",
+    "prices.shoot.duration": "Duration: about 90 minutes",
     "prices.signature.detail":
       "Signature makeup is a full-face look designed for real life and photos: even skin, balanced color, and finishes that stay polished through the evening.\n\nWe start with skin prep and tailor coverage, eyes, and lips to your outfit and lighting. Bring references if you like — the goal is a refined, confident version of you.",
     "prices.bridal.detail":
@@ -193,6 +208,10 @@ const BUNDLED_STRINGS = {
       "A trial is the best way to lock in your look before a big event or wedding — we test colors, intensity, and wear time without rushing.\n\nYou’ll leave with notes on what worked and small adjustments for the final appointment. If you’re deciding between styles, we can explore more than one direction in the same session when time allows.",
     "prices.lesson.detail":
       "This one-to-one lesson is built around your skin, products, and goals — from quick everyday polish to a more defined evening routine.\n\nWe go step by step: tools, order of application, and how to fix common issues. You’ll get a simple routine you can repeat at home and suggestions for products that fit your budget.",
+    "prices.brows.detail":
+      "We map your natural brow line, then trim, wax, or tweeze as needed, and finish with a tailored tint or lamination so hairs stay lifted and even for weeks.\n\nBring inspiration photos if you have them — the goal is balance with your features and a clean grow-out.",
+    "prices.shoot.detail":
+      "Makeup is calibrated for camera sensors and lighting — coverage reads smooth under flash, eyes stay crisp, and lips photograph true to tone.\n\nAllow buffer before call time for tweaks under your photographer’s lights so nothing surprises on the tether.",
 
     "reviews.eyebrow": "Reviews",
     "reviews.h2": "What clients say",
@@ -243,6 +262,8 @@ const BUNDLED_STRINGS = {
     "service.bridal": "Bridal Makeup",
     "service.trial": "Trial Session",
     "service.lesson": "1:1 Makeup Lesson",
+    "service.brows": "Brow Shaping & Lamination",
+    "service.shoot": "Photoshoot Makeup",
 
     "booking.eyebrow": "Booking",
     "booking.h2": "Choose an available time",
@@ -395,6 +416,11 @@ const BUNDLED_STRINGS = {
 
     "portfolio.gallery.openSuffix": "Otvoriť fotogalériu",
     "portfolio.gallery.close": "Zatvoriť galériu",
+    "portfolio.gallery.fullscreenOpen": "Otvoriť fotku na celú obrazovku",
+    "portfolio.gallery.fullscreenClose": "Zatvoriť zobrazenie na celú obrazovku",
+    "portfolio.gallery.lightboxAria": "Fotografia na celú obrazovku",
+    "portfolio.gallery.fullscreenPrev": "Predchádzajúca fotografia",
+    "portfolio.gallery.fullscreenNext": "Ďalšia fotografia",
     "portfolio.gallery.bridal.1": "Svadobné líčenie — portrét",
     "portfolio.gallery.bridal.2": "Svadobné líčenie — portrét soft glam",
     "portfolio.gallery.bridal.3": "Profesionálne produkty na svadobné líčenie",
@@ -475,6 +501,12 @@ const BUNDLED_STRINGS = {
     "prices.trial.p": "Otestujte a doladte preferovaný look pred veľkou udalosťou alebo svadbou.",
     "prices.lesson.h3": "Individuálna lekcia líčenia 1:1",
     "prices.lesson.p": "Osobné odporúčania produktov a postup kroku za krokom na mieru.",
+    "prices.brows.h3": "Úprava obočia a laminácia",
+    "prices.brows.p":
+      "Tvarované obočie, voliteľné farbenie a laminácia pre plnší oblúk s minimálnou údržbou.",
+    "prices.shoot.h3": "Líčenie na fotenie",
+    "prices.shoot.p":
+      "Vyvážená pleť a líčenie pod svetlá a blesk — štúdio, branding alebo portfólio.",
     "prices.carouselAria": "Cenník a služby — prehľad balíčkov",
     "reviews.carouselAria": "Recenzie klientok — prehľad",
     "beforeVisit.carouselAria": "Pred termínom — tipy",
@@ -484,10 +516,14 @@ const BUNDLED_STRINGS = {
     "prices.bridal.price": "120 EUR",
     "prices.trial.price": "80 EUR",
     "prices.lesson.price": "95 EUR",
+    "prices.brows.price": "45 EUR",
+    "prices.shoot.price": "85 EUR",
     "prices.signature.duration": "Trvanie: cca 75 minút",
     "prices.bridal.duration": "Trvanie: cca 90–120 minút",
     "prices.trial.duration": "Trvanie: cca 90 minút",
     "prices.lesson.duration": "Trvanie: cca 2 hodiny",
+    "prices.brows.duration": "Trvanie: cca 50 minút",
+    "prices.shoot.duration": "Trvanie: cca 90 minút",
     "prices.signature.detail":
       "Signature makeup je kompletný look na bežný život aj fotky: súmerná pleť, vyvážená farba a finiš, ktorý vydrží večer.\n\nZačíname prípravou pleti a prispôsobíme krytie, oči a pery outfitu a svetlu. Môžete priniesť inšpiráciu — cieľ je sebavedomá, upravená verzia vás.",
     "prices.bridal.detail":
@@ -496,6 +532,10 @@ const BUNDLED_STRINGS = {
       "Skúška je najlepší spôsob, ako pred veľkou udalosťou alebo svadbou doladiť look — farby, intenzitu a výdrž bez náhlenia.\n\nOdídete s poznámkami, čo fungovalo, a drobnými úpravami na finálnu vizitku. Ak váhate medzi štýlmi, vieme v rámci času vyskúšať viac smerov.",
     "prices.lesson.detail":
       "Lekcia 1:1 je postavená na vašej pleti, produktoch a cieľoch — od rýchleho denného líčenia po výraznejší večerný postup.\n\nIdeme krok za krokom: nástroje, poradie aplikácie a ako rýchlo opraviť typické problémy. Získate jednoduchú rutinu na doma a tipy na produkty podľa rozpočtu.",
+    "prices.brows.detail":
+      "Najprv zmapujeme prirodzenú líniu obočia, potom úprava pinzetou alebo voskom a na záver farba alebo laminácia, aby boli chĺpky zdvihnuté a rovnomerne usporiadané týždne.\n\nMôžete priniesť inšpiráciu — cieľ je súlad s rysmi tváre a čistý grow-out.",
+    "prices.shoot.detail":
+      "Líčenie počítame s fotoaparátom a svetlom — krytie pôsobí jemne pri blesku, oči ostávajú čitateľné a pery verné farbe na snímke.\n\nNechajte rezervu pred nástupom na drobné úpravy pod svetlami fotografa.",
 
     "reviews.eyebrow": "Recenzie",
     "reviews.h2": "Čo hovoria klientky",
@@ -546,6 +586,8 @@ const BUNDLED_STRINGS = {
     "service.bridal": "Svadobné líčenie",
     "service.trial": "Skúšobné líčenie",
     "service.lesson": "Individuálna lekcia 1:1",
+    "service.brows": "Úprava obočia a laminácia",
+    "service.shoot": "Líčenie na fotenie",
 
     "booking.eyebrow": "Rezervácia",
     "booking.h2": "Vyberte voľný termín",

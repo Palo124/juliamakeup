@@ -1,14 +1,16 @@
 import { t } from "../i18n.js";
 
-/** @typedef {"signature"|"bridal"|"trial"|"lesson"} PriceServiceId */
+/** @typedef {"signature"|"bridal"|"trial"|"lesson"|"brows"|"shoot"} PriceServiceId */
 
-const SERVICE_IDS = /** @type {const} */ (["signature", "bridal", "trial", "lesson"]);
+const SERVICE_IDS = /** @type {const} */ (["signature", "bridal", "trial", "lesson", "brows", "shoot"]);
 
 const TITLE_KEYS = {
   signature: "prices.signature.h3",
   bridal: "prices.bridal.h3",
   trial: "prices.trial.h3",
   lesson: "prices.lesson.h3",
+  brows: "prices.brows.h3",
+  shoot: "prices.shoot.h3",
 };
 
 const PRICE_KEYS = {
@@ -16,6 +18,8 @@ const PRICE_KEYS = {
   bridal: "prices.bridal.price",
   trial: "prices.trial.price",
   lesson: "prices.lesson.price",
+  brows: "prices.brows.price",
+  shoot: "prices.shoot.price",
 };
 
 const DETAIL_KEYS = {
@@ -23,6 +27,8 @@ const DETAIL_KEYS = {
   bridal: "prices.bridal.detail",
   trial: "prices.trial.detail",
   lesson: "prices.lesson.detail",
+  brows: "prices.brows.detail",
+  shoot: "prices.shoot.detail",
 };
 
 const DURATION_KEYS = {
@@ -30,6 +36,8 @@ const DURATION_KEYS = {
   bridal: "prices.bridal.duration",
   trial: "prices.trial.duration",
   lesson: "prices.lesson.duration",
+  brows: "prices.brows.duration",
+  shoot: "prices.shoot.duration",
 };
 
 /** @type {HTMLDialogElement | null} */

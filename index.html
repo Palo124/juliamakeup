@@ -394,6 +394,26 @@
               <strong data-i18n="prices.lesson.price">95 EUR</strong>
               <p data-i18n="prices.lesson.p">Personalized product guidance and a step-by-step routine tailored to you.</p>
             </article>
+            <article
+              class="price-card price-card--clickable portfolio-carousel-slide"
+              data-price-service="brows"
+              role="button"
+              tabindex="0"
+            >
+              <h3 data-i18n="prices.brows.h3">Brow Shaping &amp; Lamination</h3>
+              <strong data-i18n="prices.brows.price">45 EUR</strong>
+              <p data-i18n="prices.brows.p">Shaped brows, optional tint, and lamination for fuller arches with minimal daily upkeep.</p>
+            </article>
+            <article
+              class="price-card price-card--clickable portfolio-carousel-slide"
+              data-price-service="shoot"
+              role="button"
+              tabindex="0"
+            >
+              <h3 data-i18n="prices.shoot.h3">Photoshoot Makeup</h3>
+              <strong data-i18n="prices.shoot.price">85 EUR</strong>
+              <p data-i18n="prices.shoot.p">Flash-balanced skin and definition for studio, branding, or portfolio sessions.</p>
+            </article>
           </div>
         </div>
         <div class="portfolio-carousel-ui">
@@ -623,6 +643,43 @@
         </button>
       </header>
       <div id="portfolio-gallery-grid" class="portfolio-gallery-dialog__grid"></div>
+    </div>
+    <div
+      id="portfolio-gallery-lightbox"
+      class="portfolio-gallery-lightbox"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label=""
+      data-i18n-aria="portfolio.gallery.lightboxAria"
+    >
+      <button
+        type="button"
+        id="portfolio-gallery-lightbox-close"
+        class="portfolio-gallery-lightbox__close"
+        data-i18n-aria="portfolio.gallery.fullscreenClose"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+      <button
+        type="button"
+        id="portfolio-gallery-lightbox-prev"
+        class="portfolio-gallery-lightbox__arrow portfolio-gallery-lightbox__arrow--prev"
+        data-i18n-aria="portfolio.gallery.fullscreenPrev"
+        aria-label="Previous photo"
+      >
+        <span aria-hidden="true">‹</span>
+      </button>
+      <img id="portfolio-gallery-lightbox-img" class="portfolio-gallery-lightbox__img" alt="" />
+      <button
+        type="button"
+        id="portfolio-gallery-lightbox-next"
+        class="portfolio-gallery-lightbox__arrow portfolio-gallery-lightbox__arrow--next"
+        data-i18n-aria="portfolio.gallery.fullscreenNext"
+        aria-label="Next photo"
+      >
+        <span aria-hidden="true">›</span>
+      </button>
     </div>
   </dialog>
 
