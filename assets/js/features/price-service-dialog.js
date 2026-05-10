@@ -126,7 +126,10 @@ function setCardAriaLabels() {
       return;
     }
     const sid = /** @type {PriceServiceId} */ (id);
-    el.setAttribute("aria-label", `${t(TITLE_KEYS[sid])} — ${t("prices.detail.openSuffix")}`);
+    el.setAttribute(
+      "aria-label",
+      `${t(TITLE_KEYS[sid])}. ${t(DURATION_KEYS[sid])} — ${t("prices.detail.openSuffix")}`,
+    );
   });
 }
 

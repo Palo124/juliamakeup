@@ -880,7 +880,7 @@ p {
 }
 
 .price-carousel .portfolio-carousel-slide.price-card {
-  min-height: 260px;
+  min-height: 288px;
   box-sizing: border-box;
 }
 
@@ -1441,9 +1441,18 @@ p {
 
 .price-card strong {
   display: block;
-  margin: 14px 0 12px;
+  margin: 14px 0 6px;
   font-size: 2rem;
   font-family: "Cormorant Garamond", serif;
+}
+
+.price-card-duration {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  line-height: 1.4;
 }
 
 .price-card--clickable {
