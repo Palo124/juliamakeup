@@ -18,6 +18,18 @@
         "altKey": "portfolio.gallery.bridal.3",
         "tagKey": "portfolio.gallery.bridal.tag3",
         "captionKey": "portfolio.gallery.bridal.caption3"
+      },
+      {
+        "src": "assets/img/IMG_5886.jpeg",
+        "altKey": "portfolio.gallery.bridal.4",
+        "tagKey": "portfolio.gallery.bridal.tag4",
+        "captionKey": "portfolio.gallery.bridal.caption4"
+      },
+      {
+        "src": "assets/img/product_used.jpg",
+        "altKey": "portfolio.gallery.bridal.5",
+        "tagKey": "portfolio.gallery.bridal.tag5",
+        "captionKey": "portfolio.gallery.bridal.caption5"
       }
     ]
   },
@@ -40,6 +52,18 @@
         "altKey": "portfolio.gallery.soft.3",
         "tagKey": "portfolio.gallery.soft.tag3",
         "captionKey": "portfolio.gallery.soft.caption3"
+      },
+      {
+        "src": "assets/img/IMG_7567.jpeg",
+        "altKey": "portfolio.gallery.soft.4",
+        "tagKey": "portfolio.gallery.soft.tag4",
+        "captionKey": "portfolio.gallery.soft.caption4"
+      },
+      {
+        "src": "assets/img/IMG_5886.jpeg",
+        "altKey": "portfolio.gallery.soft.5",
+        "tagKey": "portfolio.gallery.soft.tag5",
+        "captionKey": "portfolio.gallery.soft.caption5"
       }
     ]
   },
@@ -56,6 +80,24 @@
         "altKey": "portfolio.gallery.editorial.2",
         "tagKey": "portfolio.gallery.editorial.tag2",
         "captionKey": "portfolio.gallery.editorial.caption2"
+      },
+      {
+        "src": "assets/img/IMG_7567.jpeg",
+        "altKey": "portfolio.gallery.editorial.3",
+        "tagKey": "portfolio.gallery.editorial.tag3",
+        "captionKey": "portfolio.gallery.editorial.caption3"
+      },
+      {
+        "src": "assets/img/product_used.jpg",
+        "altKey": "portfolio.gallery.editorial.4",
+        "tagKey": "portfolio.gallery.editorial.tag4",
+        "captionKey": "portfolio.gallery.editorial.caption4"
+      },
+      {
+        "src": "assets/img/IMG_5886.jpeg",
+        "altKey": "portfolio.gallery.editorial.5",
+        "tagKey": "portfolio.gallery.editorial.tag5",
+        "captionKey": "portfolio.gallery.editorial.caption5"
       }
     ]
   },
@@ -78,6 +120,18 @@
         "altKey": "portfolio.gallery.evening.3",
         "tagKey": "portfolio.gallery.evening.tag3",
         "captionKey": "portfolio.gallery.evening.caption3"
+      },
+      {
+        "src": "assets/img/IMG_7567.jpeg",
+        "altKey": "portfolio.gallery.evening.4",
+        "tagKey": "portfolio.gallery.evening.tag4",
+        "captionKey": "portfolio.gallery.evening.caption4"
+      },
+      {
+        "src": "assets/img/IMG_5886.jpeg",
+        "altKey": "portfolio.gallery.evening.5",
+        "tagKey": "portfolio.gallery.evening.tag5",
+        "captionKey": "portfolio.gallery.evening.caption5"
       }
     ]
   }
