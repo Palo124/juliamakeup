@@ -69,8 +69,9 @@
         </div>
         <div class="card booking-card">
           <p class="booking-intro" data-i18n="booking.intro">
-            First choose a service, then pick a date and time. Your booking is saved and that slot is marked busy for others.
+            First choose a service, then pick a date and time. You will verify your email; the studio approves before the slot is confirmed.
           </p>
+          <p id="booking-action-result" class="booking-action-result hidden" role="status" aria-live="polite"></p>
           <form id="booking-form" class="booking-form" autocomplete="on">
             <div class="booking-service-row">
               <label>
@@ -130,6 +131,12 @@
               ></div>
             </div>
           </div>
+            <div class="booking-honeypot-wrap" aria-hidden="true">
+              <label>
+                Website
+                <input type="text" name="website" id="booking-website" value="" tabindex="-1" autocomplete="off">
+              </label>
+            </div>
             <div class="booking-form-grid">
               <label>
                 <span data-i18n="booking.name">Name</span>

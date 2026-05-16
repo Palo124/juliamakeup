@@ -1661,6 +1661,38 @@ textarea {
   line-height: 1.6;
 }
 
+.booking-action-result {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.65);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.booking-action-result.is-error {
+  border-color: rgba(180, 80, 70, 0.45);
+  background: rgba(255, 245, 242, 0.85);
+}
+
+.booking-action-result.is-success {
+  border-color: rgba(80, 140, 100, 0.4);
+  background: rgba(242, 252, 246, 0.9);
+}
+
+.booking-honeypot-wrap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .booking-picker {
   display: grid;
   grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);

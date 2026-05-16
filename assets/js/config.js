@@ -3,10 +3,10 @@
  */
 export const CONFIG = {
   /**
-   * Booking API (same spreadsheet as `Availability` + `Reservations` tabs — see `backend/google-apps-script.gs`).
+   * Booking API (same spreadsheet as `Availability` + `Reservations` tabs — see `backend/apps-script-booking/`).
    * Deploy the script as a Web app and paste the `/exec` URL here.
    */
-  bookingScriptUrl: "https://script.google.com/macros/s/AKfycbyBD6yoLQo9tOnWuHahaeFgjhNQRIlxfFTcNP4TV5DMIPK3q0fNG_nevVfwSE5ku3Wt/exec",
+  bookingScriptUrl: "https://script.google.com/macros/s/AKfycbyA_pNpz54su07W_C1j2Df2mdu2_6qrmWWsnlXImz3LVcigdXOm8KOaYVsLLZ7qoVaL/exec",
   useSheetBooking: true,
 
   /**

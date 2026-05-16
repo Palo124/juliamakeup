@@ -43,6 +43,128 @@ function serviceMatches(sheetValue, selected) {
   );
 }
 
+/**
+ * @param {string} result
+ * @param {string} code
+ */
+function messageForBookingUrlOutcome(result, code) {
+  const r = String(result || "").trim();
+  const c = String(code || "").trim();
+  if (r === "email_verified") {
+    return t("booking.resultEmailVerified");
+  }
+  if (r === "confirmed") {
+    return t("booking.resultConfirmed");
+  }
+  if (r === "rejected") {
+    return t("booking.resultRejected");
+  }
+  if (r === "cancelled") {
+    return t("booking.resultCancelled");
+  }
+  if (r === "already_cancelled") {
+    return t("booking.resultAlreadyCancelled");
+  }
+  if (r === "error") {
+    if (c === "EXPIRED_VERIFICATION") {
+      return t("booking.expiredVerification");
+    }
+    if (c === "TOKEN_USED") {
+      return t("booking.tokenUsed");
+    }
+    if (c === "INVALID_TOKEN") {
+      return t("booking.invalidToken");
+    }
+    if (c === "SLOT_TAKEN") {
+      return t("booking.slotTaken");
+    }
+    if (c === "CONFIG") {
+      return t("booking.serverConfig");
+    }
+    if (c === "BUSY") {
+      return t("booking.errBusy");
+    }
+    if (c === "MAIL_ERROR") {
+      return t("booking.mailError");
+    }
+    return t("booking.resultLinkError");
+  }
+  return t("booking.resultLinkError");
+}
+
+/**
+ * @param {HTMLElement | null} resultEl
+ * @param {string} result
+ * @param {string} code
+ */
+function renderBookingOutcomeBanner(resultEl, result, code) {
+  if (!resultEl) {
+    return;
+  }
+  const r = String(result || "").trim();
+  resultEl.textContent = messageForBookingUrlOutcome(result, code);
+  resultEl.classList.remove("hidden", "is-error", "is-success");
+  resultEl.dataset.bookingResult = r;
+  resultEl.dataset.bookingCode = String(code || "").trim();
+  if (r === "error" || r === "rejected") {
+    resultEl.classList.add("is-error");
+  } else if (r) {
+    resultEl.classList.add("is-success");
+  }
+}
+
+/**
+ * @param {HTMLElement | null} resultEl
+ */
+function consumeBookingUrlParams_(resultEl) {
+  if (!resultEl) {
+    return;
+  }
+  try {
+    const u = new URL(window.location.href);
+    const br = u.searchParams.get("bookingResult");
+    if (!br) {
+      return;
+    }
+    const bc = u.searchParams.get("bookingCode") || "";
+    u.searchParams.delete("bookingResult");
+    u.searchParams.delete("bookingCode");
+    const qs = u.searchParams.toString();
+    const clean = u.pathname + (qs ? `?${qs}` : "") + u.hash;
+    window.history.replaceState({}, "", clean);
+    renderBookingOutcomeBanner(resultEl, br, bc);
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * @param {string | undefined} code
+ */
+function toastForReservationErrorCode(code) {
+  const c = String(code || "").trim();
+  switch (c) {
+    case "TAKEN":
+      return t("booking.slotTaken");
+    case "SERVICE_MISMATCH":
+      return t("booking.serviceMismatch");
+    case "NOT_FOUND":
+      return t("booking.notFound");
+    case "CONFIG":
+      return t("booking.serverConfig");
+    case "MAIL_ERROR":
+      return t("booking.mailError");
+    case "EXPIRED_VERIFICATION":
+      return t("booking.expiredVerification");
+    case "TOKEN_USED":
+      return t("booking.tokenUsed");
+    case "INVALID_TOKEN":
+      return t("booking.invalidToken");
+    default:
+      return "";
+  }
+}
+
 export function initSheetBooking() {
   if (!CONFIG.useSheetBooking) {
     document.getElementById("booking")?.classList.add("hidden");
@@ -72,10 +194,13 @@ export function initSheetBooking() {
   const calGrid = document.getElementById("booking-cal-grid");
   const bookingPicker = document.getElementById("booking-picker");
 
+  const resultBanner = document.getElementById("booking-action-result");
+
   if (!section || !statusEl || !slotsEl || !form || !slotIdInput || !submitBtn || !serviceSelect) {
     return;
   }
 
+  consumeBookingUrlParams_(resultBanner);
   if (!CONFIG.bookingScriptUrl?.trim()) {
     statusEl.textContent = t("booking.configNeeded");
     form.classList.add("hidden");
@@ -369,6 +494,7 @@ export function initSheetBooking() {
       phone: String(formData.get("phone") || "").trim(),
       service: String(formData.get("service") || "").trim(),
       notes: String(formData.get("notes") || "").trim(),
+      website: String(formData.get("website") || "").trim(),
     };
 
     form.setAttribute("aria-busy", "true");
@@ -393,7 +519,11 @@ export function initSheetBooking() {
     }
 
     if (result.ok) {
-      showToast(t("booking.success"), "success");
+      if (result.pendingVerification) {
+        showToast(t("booking.successPending"), "success");
+      } else {
+        showToast(t("booking.success"), "success");
+      }
       form.reset();
       slotIdInput.value = "";
       selectedSlotId = "";
@@ -401,13 +531,16 @@ export function initSheetBooking() {
       return;
     }
 
-    if (result.code === "TAKEN") {
-      showToast(t("booking.slotTaken"), "error");
-      await loadSlots();
-      return;
+    const mappedErr = toastForReservationErrorCode(result.code);
+    if (mappedErr) {
+      showToast(mappedErr, "error");
+    } else {
+      showToast(result.message || t("booking.error"), "error");
     }
 
-    showToast(result.message || t("booking.error"), "error");
+    if (result.code === "TAKEN") {
+      await loadSlots();
+    }
   });
 
   void loadSlots();
@@ -437,5 +570,13 @@ export function initSheetBooking() {
     }
 
     renderCalendar();
+
+    if (resultBanner?.dataset.bookingResult) {
+      renderBookingOutcomeBanner(
+        resultBanner,
+        resultBanner.dataset.bookingResult,
+        resultBanner.dataset.bookingCode || "",
+      );
+    }
   });
 }

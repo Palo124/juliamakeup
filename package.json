@@ -4,6 +4,14 @@
   "type": "module",
   "scripts": {
     "test:site-texts": "node scripts/test-site-text-csv.mjs",
-    "export:site-texts": "node scripts/export-site-text-seeds.mjs"
+    "export:site-texts": "node scripts/export-site-text-seeds.mjs",
+    "booking:clasp:login": "cd backend/apps-script-booking && clasp login",
+    "booking:clasp:push": "cd backend/apps-script-booking && clasp push",
+    "booking:clasp:pull": "cd backend/apps-script-booking && clasp pull",
+    "booking:clasp:open": "cd backend/apps-script-booking && clasp open",
+    "booking:clasp:status": "cd backend/apps-script-booking && clasp status"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.0.6"
   }
 }
