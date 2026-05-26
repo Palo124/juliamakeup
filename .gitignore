@@ -27,5 +27,5 @@ backend/apps-script-booking/.clasp.json
 # Generated merges (see scripts/build-merged-eng-from-sk.mjs)
 /merged_ENG.csv
 /merged_SK.csv
-
+/backend
 README.md
