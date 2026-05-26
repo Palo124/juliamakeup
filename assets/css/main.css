@@ -1661,6 +1661,31 @@ textarea {
   line-height: 1.6;
 }
 
+.booking-rules {
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid rgba(176, 123, 103, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(176, 123, 103, 0.1);
+}
+
+.booking-rules h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.booking-rules ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.booking-rules li + li {
+  margin-top: 4px;
+}
+
 .booking-action-result {
   margin: 0 0 1rem;
   padding: 0.85rem 1rem;

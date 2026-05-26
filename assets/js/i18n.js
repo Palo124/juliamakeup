@@ -269,6 +269,11 @@ const BUNDLED_STRINGS = {
     "booking.h2": "Choose an available time",
     "booking.intro":
       "First choose a service, then pick a date and time. You will verify your email; the studio approves before the slot is confirmed.",
+    "booking.rulesTitle": "Reservation rules",
+    "booking.ruleVerify": "Your reservation is only a request until you verify your email and the studio approves it.",
+    "booking.ruleEmailExpiry": "The email verification link expires after 30 minutes.",
+    "booking.ruleContact": "Use a real email and phone number so we can confirm details if needed.",
+    "booking.ruleCancel": "Confirmed reservations can be cancelled from the email link up to 24 hours before the appointment.",
     "booking.serviceFirst": "Which service do you want?",
     "booking.chooseServiceFirst": "Choose a service to see available dates and times.",
     "booking.noSlotsForService": "There are no open slots for this service yet — try another service or contact us.",
@@ -608,6 +613,11 @@ const BUNDLED_STRINGS = {
     "booking.h2": "Vyberte voľný termín",
     "booking.intro":
       "Najprv zvoľte službu, potom dátum a čas. E-mailom overíte žiadosť; štúdio ju schváli skôr, než sa termín definitívne potvrdí.",
+    "booking.rulesTitle": "Pravidlá rezervácie",
+    "booking.ruleVerify": "Rezervácia je iba žiadosť, kým neoveríte e-mail a štúdio ju neschváli.",
+    "booking.ruleEmailExpiry": "Overovací odkaz v e-maile je platný 30 minút.",
+    "booking.ruleContact": "Použite skutočný e-mail a telefónne číslo, aby sme vás vedeli kontaktovať.",
+    "booking.ruleCancel": "Potvrdenú rezerváciu môžete zrušiť cez odkaz v e-maile najneskôr 24 hodiny pred termínom.",
     "booking.serviceFirst": "Ktorú službu chcete?",
     "booking.chooseServiceFirst": "Vyberte službu, aby sa zobrazili voľné dátumy a časy.",
     "booking.noSlotsForService": "Pre túto službu zatiaľ nie sú voľné termíny — skúste inú službu alebo nás kontaktujte.",

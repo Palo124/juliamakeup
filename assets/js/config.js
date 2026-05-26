@@ -6,7 +6,7 @@ export const CONFIG = {
    * Booking API (same spreadsheet as `Availability` + `Reservations` tabs — see `backend/apps-script-booking/`).
    * Deploy the script as a Web app and paste the `/exec` URL here.
    */
-  bookingScriptUrl: "https://script.google.com/macros/s/AKfycbxckoMjhDQ6I0tcQpLp-xDhYFWJ9s5eIELuehYI1HULbPRQUCjjlA411yh3p_Wa8BKf/exec",
+  bookingScriptUrl: "https://script.google.com/macros/s/AKfycbytkWLV8DYon0-_4OXeR6o_4Sp6HxUbvbeRwaxVBD3zDpd5wb89g1XJrGnz71nf_bsM/exec",
   useSheetBooking: true,
 
   /**
