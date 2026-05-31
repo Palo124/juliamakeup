@@ -102,6 +102,10 @@
             <p id="booking-slots-status" class="booking-slots-status" aria-live="polite"></p>
             <div id="booking-picker" class="booking-picker hidden">
             <div class="booking-calendar" id="booking-calendar" aria-hidden="false">
+              <div class="booking-calendar-loading hidden" id="booking-calendar-loading" aria-hidden="true">
+                <span class="booking-calendar-loading__spinner" aria-hidden="true"></span>
+                <span class="booking-calendar-loading__text" data-i18n="booking.slotsLoading">Loading available times…</span>
+              </div>
               <div class="booking-calendar-header">
                 <button
                   type="button"
