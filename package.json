@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test:site-texts": "node scripts/test-site-text-csv.mjs",
-    "export:site-texts": "node scripts/export-site-text-seeds.mjs",
+    "sync:locale-pages": "node scripts/sync-locale-pages.mjs",
     "booking:clasp:login": "cd backend/apps-script-booking && clasp login",
     "booking:clasp:push": "cd backend/apps-script-booking && clasp push",
     "booking:clasp:pull": "cd backend/apps-script-booking && clasp pull",

@@ -7,7 +7,8 @@ import {
   todayDateKey,
 } from "../core/booking-dates.js";
 import { CONFIG } from "../config.js";
-import { applyTranslations, getDateLocale, t } from "../i18n.js";
+import { pagePath } from "../core/locale-urls.js";
+import { applyTranslations, getDateLocale, getLang, t } from "../i18n.js";
 import { fetchAvailability, postReservation } from "../services/booking-api.js";
 import { showToast } from "../ui/toast.js";
 
@@ -186,7 +187,7 @@ export function initSheetBooking() {
   if (!CONFIG.useSheetBooking) {
     document.getElementById("booking")?.classList.add("hidden");
     for (const a of document.querySelectorAll('a[href="#booking"], a[href="booking.html"]')) {
-      a.setAttribute("href", "index.html#contact");
+      a.setAttribute("href", `${pagePath("home", getLang())}#contact`);
       if (a.dataset.i18n === "intro.book") {
         a.dataset.i18n = "nav.contact";
       }

@@ -1,8 +1,9 @@
 /**
- * Canonical URLs, Open Graph / Twitter meta, and JSON-LD structured data.
+ * Canonical URLs, Open Graph / Twitter meta, hreflang, and JSON-LD structured data.
  */
 import { CONFIG } from "../config.js";
-import { t, getLang } from "../i18n.js";
+import { getPageId, getSiteOrigin, pagePath, pageUrl as localePageUrl } from "../core/locale-urls.js";
+import { getLang, resolveSiteImageUrl, t } from "../i18n.js";
 
 /** @typedef {"home" | "booking"} SeoPage */
 
@@ -12,49 +13,56 @@ const JSON_LD_ID = "juliamakeup-json-ld";
 /** @type {SeoPage | null} */
 let activePage = null;
 
-function siteOrigin() {
-  return (CONFIG.siteUrl || "").replace(/\/$/, "");
-}
-
-function absoluteUrl(path) {
-  const origin = siteOrigin();
-  if (!origin) {
-    return path.startsWith("/") ? path : `/${path}`;
-  }
-  const clean = path.replace(/^\//, "");
-  return `${origin}/${clean}`;
-}
-
 function ogImageUrl() {
-  return absoluteUrl(CONFIG.seoOgImage || "assets/img/favicon_juliere.png");
+  return resolveSiteImageUrl(CONFIG.seoOgImage || "assets/img/favicon_juliere.png") ?? "";
 }
 
 /**
  * @param {SeoPage} page
- * @returns {{ path: string, titleKey: string, descriptionKey: string }}
+ * @returns {{ titleKey: string, descriptionKey: string }}
  */
-function pageMeta(page) {
+function pageMetaKeys(page) {
   if (page === "booking") {
     return {
-      path: "booking.html",
       titleKey: "meta.titleBooking",
       descriptionKey: "meta.descriptionBooking",
     };
   }
   return {
-    path: "",
     titleKey: "meta.title",
     descriptionKey: "meta.description",
   };
 }
 
-function pageUrl(page) {
-  const { path } = pageMeta(page);
-  const origin = siteOrigin();
-  if (!origin) {
-    return path || "/";
+function currentPageUrl(page) {
+  const lang = getLang();
+  return localePageUrl(page, lang);
+}
+
+function setLinkRel(rel, href, hreflang) {
+  const selector = hreflang
+    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+    : `link[rel="${rel}"]:not([hreflang])`;
+  let el = document.querySelector(selector);
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", rel);
+    if (hreflang) {
+      el.setAttribute("hreflang", hreflang);
+    }
+    document.head.appendChild(el);
   }
-  return path ? `${origin}/${path}` : `${origin}/`;
+  if (el instanceof HTMLLinkElement) {
+    el.href = href;
+  }
+}
+
+function applyHreflang(page) {
+  const skUrl = localePageUrl(page, "sk");
+  const enUrl = localePageUrl(page, "en");
+  setLinkRel("alternate", skUrl, "sk");
+  setLinkRel("alternate", enUrl, "en");
+  setLinkRel("alternate", skUrl, "x-default");
 }
 
 function setMetaByName(name, content) {
@@ -104,9 +112,11 @@ function openingHoursSpecification() {
 }
 
 function buildJsonLd(page) {
-  const origin = siteOrigin() || "";
+  const origin = getSiteOrigin() || "";
   const image = ogImageUrl();
-  const url = pageUrl(page);
+  const url = currentPageUrl(page);
+  const lang = getLang();
+  const inLanguage = lang === "sk" ? "sk-SK" : "en-GB";
   const graph = [];
 
   graph.push({
@@ -114,7 +124,7 @@ function buildJsonLd(page) {
     "@id": `${origin}/#website`,
     name: "Juliere Beauty",
     url: origin || url,
-    inLanguage: ["sk", "en"],
+    inLanguage: ["sk-SK", "en-GB"],
   });
 
   if (page === "home") {
@@ -144,7 +154,8 @@ function buildJsonLd(page) {
 
     graph.push({
       "@type": "FAQPage",
-      "@id": `${origin}/#faq`,
+      "@id": `${url}#faq`,
+      inLanguage,
       mainEntity: Array.from({ length: FAQ_COUNT }, (_, i) => {
         const n = i + 1;
         return {
@@ -167,7 +178,7 @@ function buildJsonLd(page) {
       description: t("meta.descriptionBooking"),
       url,
       isPartOf: { "@id": `${origin}/#website` },
-      inLanguage: getLang() === "sk" ? "sk-SK" : "en-GB",
+      inLanguage,
     });
   }
 
@@ -190,10 +201,10 @@ function applyJsonLd(page) {
 
 export function applySeo(page = activePage || "home") {
   activePage = page;
-  const { titleKey, descriptionKey } = pageMeta(page);
+  const { titleKey, descriptionKey } = pageMetaKeys(page);
   const title = t(titleKey);
   const description = t(descriptionKey);
-  const url = pageUrl(page);
+  const url = currentPageUrl(page);
   const image = ogImageUrl();
   const lang = getLang();
   const ogLocale = lang === "sk" ? "sk_SK" : "en_GB";
@@ -203,6 +214,8 @@ export function applySeo(page = activePage || "home") {
   if (canonical instanceof HTMLLinkElement) {
     canonical.href = url;
   }
+
+  applyHreflang(page);
 
   setMetaByProperty("og:site_name", "Juliere Beauty");
   setMetaByProperty("og:type", "website");
@@ -227,7 +240,12 @@ export function applySeo(page = activePage || "home") {
 export function initSeo(page = "home") {
   activePage = page;
   applySeo(page);
-  window.addEventListener("juliamakeup:lang", () => {
-    applySeo(activePage || page);
-  });
 }
+
+/** @param {string} [pathname] */
+export function detectSeoPage(pathname = window.location.pathname) {
+  return getPageId(pathname) === "booking" ? "booking" : "home";
+}
+
+/** Exported for sitemap tooling / tests. */
+export { pagePath, localePageUrl };

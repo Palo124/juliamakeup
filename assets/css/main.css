@@ -118,22 +118,32 @@ textarea {
 }
 
 .lang-switch {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 0;
   padding: 3px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.45);
   flex-shrink: 0;
+  line-height: 0;
+  align-self: center;
 }
 
 .lang-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
   border: 0;
   border-radius: 999px;
-  padding: 6px 12px;
+  min-height: 28px;
+  padding: 0 12px;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
+  line-height: 1;
   color: var(--muted);
   background: transparent;
   cursor: pointer;
@@ -151,7 +161,7 @@ textarea {
 .lang-switch-btn.is-active {
   color: #fff;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-  box-shadow: 0 4px 12px rgba(176, 123, 103, 0.25);
+  box-shadow: 0 1px 5px rgba(176, 123, 103, 0.28);
 }
 
 .site-nav .lang-switch {
@@ -2242,11 +2252,23 @@ textarea {
   }
 
   .site-nav .lang-switch {
+    position: relative;
     margin-top: 18px;
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-    align-self: stretch;
+    padding: 3px;
+    border-top: none;
+    align-self: flex-start;
     justify-content: flex-start;
+    line-height: 0;
+  }
+
+  .site-nav .lang-switch::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--line);
+    pointer-events: none;
   }
 
   .site-header--hero .site-nav.open {

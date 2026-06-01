@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://julierebeauty.com/</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://julierebeauty.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://julierebeauty.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://julierebeauty.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://julierebeauty.com/booking.html</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://julierebeauty.com/booking.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/booking.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/booking.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://julierebeauty.com/en/booking.html</loc>
+    <xhtml:link rel="alternate" hreflang="sk" href="https://julierebeauty.com/booking.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/booking.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/booking.html"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

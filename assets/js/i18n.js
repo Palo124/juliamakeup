@@ -3,14 +3,13 @@
  * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentCsvUrls / published id).
  */
 import { CONFIG } from "./config.js";
+import { getLangFromPath, switchLocaleHref } from "./core/locale-urls.js";
 import {
   csvRowsToStringMap,
   parseCsv,
   resolveSiteTextCsvUrls,
   siteImgUrlsFromSkCsvRows,
 } from "./site-text-csv.js";
-
-const LANG_STORAGE_KEY = "juliamakeup-lang";
 
 /** @type {Record<string, Record<string, string>>} */
 const BUNDLED_STRINGS = {
@@ -42,9 +41,9 @@ const BUNDLED_STRINGS = {
     "header.navMain": "Main",
     "nav.about": "About",
     "nav.portfolio": "Portfolio",
-    "nav.prices": "Services + pricing",
+    "nav.prices": "Services",
     "nav.reviews": "Reviews",
-    "nav.beforeVisit": "Before your appointment",
+    "nav.beforeVisit": "Recommendations",
     "nav.contact": "Contact",
     "nav.booking": "Book",
     "nav.faq": "Q&A",
@@ -145,13 +144,15 @@ const BUNDLED_STRINGS = {
     "prices.h2": "Services",
     "prices.signature.tag": "Most requested",
     "prices.signature.h3": "Event makeup",
-    "prices.signature.p": "Event makeup is ideal for balls, proms, parties and other special occasions. I'll tailor it to your vision so it enhances your natural beauty and works with your outfit and the event. The result is long-wearing, elegant glam. Duration: 1h",
-    "prices.bridal.h3": "Bridal Makeup",
-    "prices.bridal.p": "Feel exceptional on your big day! We'll shape bridal makeup to your vision so it fits your style and lasts all day and into the night. Duration: 1h 20m",
+    "prices.signature.p":
+      "Event makeup is ideal for balls, proms, celebrations and other special occasions.",
+    "prices.bridal.h3": "Bridal makeup",
+    "prices.bridal.p": "Feel exceptional on your big day!",
     "prices.trial.h3": "Makeup trial",
-    "prices.trial.p": "We'll refine the look exactly to your expectations so on the day you're sure of a flawless result — stress-free. Duration: 2h",
-    "prices.lesson.h3": "Makeup course ",
-    "prices.lesson.p": "We'll enhance your natural brow shape or use lamination to add volume and a polished look for weeks. Duration: 50 min",
+    "prices.trial.p":
+      "Together we'll refine the makeup exactly to your expectations, so on the day you can be sure of a flawless result stress-free.",
+    "prices.lesson.h3": "Self-makeup course",
+    "prices.lesson.p": "Coming soon",
     "prices.brows.h3": "Brow Shaping & Lamination",
     "prices.brows.p": "Shaped brows, optional tint, and lamination for fuller arches with minimal daily upkeep.",
     "prices.shoot.h3": "Photoshoot Makeup",
@@ -161,22 +162,25 @@ const BUNDLED_STRINGS = {
     "beforeVisit.carouselAria": "Before your visit — browse tips",
     "prices.detail.openSuffix": "Open service details",
     "prices.detail.close": "Close details",
-    "prices.signature.price": "43 EUR",
-    "prices.bridal.price": "43 EUR",
-    "prices.trial.price": "43 EUR",
+    "prices.signature.price": "40 EUR",
+    "prices.bridal.price": "45 EUR",
+    "prices.trial.price": "45 EUR",
     "prices.lesson.price": "75 EUR",
     "prices.brows.price": "45 EUR",
     "prices.shoot.price": "85 EUR",
-    "prices.signature.duration": "Duration: about 75 minutes",
-    "prices.bridal.duration": "Duration: about 90–120 minutes",
+    "prices.signature.duration": "Duration: about 60 minutes",
+    "prices.bridal.duration": "Duration: about 75 minutes",
     "prices.trial.duration": "Duration: about 90 minutes",
-    "prices.lesson.duration": "Duration: about 2 hours",
+    "prices.lesson.duration": "Duration: about 4 hours",
     "prices.brows.duration": "Duration: about 50 minutes",
     "prices.shoot.duration": "Duration: about 90 minutes",
-    "prices.signature.detail": "Signature makeup is a complete look for everyday life and photos: even skin, balanced colour and a finish that lasts into the evening. We start with skin prep and tailor coverage, eyes and lips to your outfit and lighting. Bring inspiration if you like — the goal is a confident, polished you.",
-    "prices.bridal.detail": "Bridal makeup includes a consultation, long-wear application and a clear timeline plan for the wedding day so you stay calm and camera-ready. We'll cover trials, touch-ups and coordination with your dress, veil and photographer. On the day it's about glowing skin, staying power and a look that still feels like you.",
-    "prices.trial.detail": "A trial is the best way to lock in your look before a major event or wedding — colours, intensity and wear time without rushing. You'll leave with notes on what worked and small tweaks for the final appointment. If you're torn between styles, we can try more than one direction within the time.",
-    "prices.lesson.detail": "The 1:1 lesson is built around your skin, products and goals — from a quick daytime routine to a bolder evening look. We go step by step: tools, application order and how to fix typical issues. You'll get a simple at-home routine and product tips that fit your budget.",
+    "prices.signature.detail":
+      "Event makeup for balls, proms, celebrations and other special occasions — tailored to your outfit, the venue and how long you need it to last. We prep the skin and build a polished, long-wearing look that still feels like you.",
+    "prices.bridal.detail":
+      "Bridal makeup shaped to your style so you feel exceptional on your big day — refined, long-wearing and camera-ready from ceremony through the evening.",
+    "prices.trial.detail":
+      "We refine the look together ahead of your event so on the day you're confident in a flawless result no last-minute stress.",
+    "prices.lesson.detail": "Coming soon.",
     "prices.brows.detail":
       "We map your natural brow line, then trim, wax, or tweeze as needed, and finish with a tailored tint or lamination so hairs stay lifted and even for weeks.\n\nBring inspiration photos if you have them — the goal is balance with your features and a clean grow-out.",
     "prices.shoot.detail":
@@ -202,27 +206,31 @@ const BUNDLED_STRINGS = {
     "beforeVisit.t1.p": "Arrive without makeup if you can, and skip heavy creams right before the session.",
     "beforeVisit.t2.pill": "References",
     "beforeVisit.t2.h3": "Bring inspiration",
-    "beforeVisit.t2.p": "Save a few photos you like — it helps align on tone, intensity, and finish.",
+    "beforeVisit.t2.p": "Save a few photos you like it helps align on tone, intensity, and finish.",
     "beforeVisit.t3.pill": "Outfit",
     "beforeVisit.t3.h3": "Neckline & jewelry",
     "beforeVisit.t3.p": "Wear or bring something close to your event neckline so the look feels cohesive.",
     "beforeVisit.t4.pill": "Timing",
     "beforeVisit.t4.h3": "Plan a little buffer",
-    "beforeVisit.t4.p": "Artistry takes time — allow a few extra minutes so we never have to rush the details.",
+    "beforeVisit.t4.p": "Artistry takes time allow a few extra minutes so we never have to rush the details.",
     "faq.eyebrow": "Q&A",
     "faq.h2": "Common questions",
     "faq.q1": "How do I book?",
-    "faq.a1": "Use the booking page to pick an open slot, or reach out by email or phone. Julia will confirm the details.",
+    "faq.a1":
+      "You can book an appointment using the online booking system directly on the website, or you can contact me through my social media channels or by phone. If you use the booking system, please wait for your appointment to be confirmed.",
     "faq.q2": "Can I change or cancel?",
-    "faq.a2": "Contact the studio as soon as your plans shift and we will adjust the appointment together.",
+    "faq.a2":
+      "Have your plans changed? No problem. If you need to reschedule or cancel your appointment, please let me know as soon as possible and we'll arrange the necessary changes together.\n\nPlease note: If an appointment is cancelled less than 24 hours before the scheduled time, 100% of the makeup service fee will be charged.",
     "faq.q3": "Do I need a trial for bridal makeup?",
-    "faq.a3": "A trial is recommended so the look is locked in before the big day — but it is optional depending on your timeline.",
-    "faq.q4": "What if I have sensitive skin?",
-    "faq.a4": "Mention it when you reach out. Julia uses professional products and can adjust the routine to your needs.",
-    "service.signature": "Signature Makeup",
-    "service.bridal": "Bridal Makeup",
-    "service.trial": "Trial Session",
-    "service.lesson": "1:1 Makeup Lesson",
+    "faq.a3":
+      "A trial is recommended so the look is locked in before the big day — but it is optional depending on your timeline.",
+    "faq.q4": "Do you travel to clients?",
+    "faq.a4":
+      "Yes, I do travel to clients, but only for bookings involving a minimum of four people. Travel fees can be found in my price list. Otherwise, I'll be happy to welcome you to my studio at Račianska 66.",
+    "service.signature": "Event makeup",
+    "service.bridal": "Bridal makeup",
+    "service.trial": "Makeup trial",
+    "service.lesson": "Self-makeup course",
     "service.brows": "Brow Shaping & Lamination",
     "service.shoot": "Photoshoot Makeup",
     "booking.eyebrow": "Booking",
@@ -769,7 +777,7 @@ export function toDriveImageUrl(input) {
  * @param {unknown} raw
  * @returns {string | null}
  */
-function resolveSiteImageUrl(raw) {
+export function resolveSiteImageUrl(raw) {
   if (raw === undefined || raw === null) {
     return null;
   }
@@ -802,8 +810,12 @@ function resolveSiteImageUrl(raw) {
     }
   }
 
+  if (/^\.\.\/assets\//i.test(s)) {
+    return `/${s.replace(/^\.\.\//, "")}`;
+  }
+
   if (/^assets\//i.test(s)) {
-    return s;
+    return `/${s}`;
   }
 
   if (s.startsWith("/") && !s.startsWith("//")) {
@@ -827,7 +839,7 @@ export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
       return fromSheet;
     }
   }
-  return String(jsonSrc ?? "").trim();
+  return resolveSiteImageUrl(jsonSrc) ?? "";
 }
 
 /** Apply `src` from sheet for elements with `data-site-img` (hero and future images). */
@@ -857,15 +869,7 @@ export function applySheetImageUrls() {
  * @returns {"en" | "sk"}
  */
 export function getLang() {
-  try {
-    const stored = localStorage.getItem(LANG_STORAGE_KEY);
-    if (stored === "sk" || stored === "en") {
-      return stored;
-    }
-  } catch {
-    /* ignore */
-  }
-  return "sk";
+  return getLangFromPath();
 }
 
 /**
@@ -875,14 +879,14 @@ export function setLang(lang) {
   if (lang !== "en" && lang !== "sk") {
     return;
   }
-  try {
-    localStorage.setItem(LANG_STORAGE_KEY, lang);
-  } catch {
-    /* ignore */
+  const current = getLangFromPath();
+  if (lang === current) {
+    document.documentElement.lang = lang === "sk" ? "sk" : "en";
+    applyTranslations();
+    window.dispatchEvent(new CustomEvent("juliamakeup:lang", { detail: { lang } }));
+    return;
   }
-  document.documentElement.lang = lang === "sk" ? "sk" : "en";
-  applyTranslations();
-  window.dispatchEvent(new CustomEvent("juliamakeup:lang", { detail: { lang } }));
+  window.location.assign(switchLocaleHref(lang));
 }
 
 /**
@@ -1105,6 +1109,9 @@ function hideSheetLoadingOverlay() {
 }
 
 export async function initI18n() {
+  const lang = getLangFromPath();
+  document.documentElement.lang = lang === "sk" ? "sk" : "en";
+
   const useLoadingOverlay = shouldShowSheetLoadingOverlay();
   if (useLoadingOverlay) {
     showSheetLoadingOverlay();
