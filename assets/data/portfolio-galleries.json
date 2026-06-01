@@ -2,31 +2,31 @@
   "bridal": {
     "images": [
       {
-        "src": "/assets/img/IMG_5886.jpeg",
+        "src": "https://drive.google.com/file/d/1zpPOVSkMdypIdToZJQzigpec5VMtCrDA/view?usp=sharing",
         "altKey": "portfolio.gallery.bridal.1",
         "tagKey": "portfolio.gallery.bridal.tag1",
         "captionKey": "portfolio.gallery.bridal.caption1"
       },
       {
-        "src": "/assets/img/product_used.jpg",
+        "src": "https://drive.google.com/file/d/1bZWc17K_qsCKQFhjst5esNFP8NzDxx_A/view?usp=sharing",
         "altKey": "portfolio.gallery.bridal.2",
         "tagKey": "portfolio.gallery.bridal.tag2",
         "captionKey": "portfolio.gallery.bridal.caption2"
       },
       {
-        "src": "/assets/img/IMG_7567.jpeg",
+        "src": "https://drive.google.com/file/d/1ussgwj9p905-5tJ1rkw3PldiUmNi2odN/view?usp=sharing",
         "altKey": "portfolio.gallery.bridal.3",
         "tagKey": "portfolio.gallery.bridal.tag3",
         "captionKey": "portfolio.gallery.bridal.caption3"
       },
       {
-        "src": "/assets/img/IMG_5886.jpeg",
+        "src": "https://drive.google.com/file/d/1SnFfisChl-kzhiICKsZqn_LYEYXRuySu/view?usp=sharing",
         "altKey": "portfolio.gallery.bridal.4",
         "tagKey": "portfolio.gallery.bridal.tag4",
         "captionKey": "portfolio.gallery.bridal.caption4"
       },
       {
-        "src": "/assets/img/product_used.jpg",
+        "src": "https://drive.google.com/file/d/1yBFtWr_IgjjWWBKEeGgzqrAxo1PRNn-s/view?usp=sharing",
         "altKey": "portfolio.gallery.bridal.5",
         "tagKey": "portfolio.gallery.bridal.tag5",
         "captionKey": "portfolio.gallery.bridal.caption5"
@@ -36,102 +36,72 @@
   "soft": {
     "images": [
       {
-        "src": "/assets/img/IMG_7567.jpeg",
+        "src": "https://drive.google.com/file/d/1IYpnZXwjGM1ovFUB40xfqwerOdJ35jOg/view?usp=sharing",
         "altKey": "portfolio.gallery.soft.1",
         "tagKey": "portfolio.gallery.soft.tag1",
         "captionKey": "portfolio.gallery.soft.caption1"
       },
       {
-        "src": "/assets/img/IMG_5886.jpeg",
+        "src": "https://drive.google.com/file/d/1G003Khi-YHj_ixCGyFCiOxEUj515SLSc/view?usp=sharing",
         "altKey": "portfolio.gallery.soft.2",
         "tagKey": "portfolio.gallery.soft.tag2",
         "captionKey": "portfolio.gallery.soft.caption2"
       },
       {
-        "src": "/assets/img/product_used.jpg",
+        "src": "https://drive.google.com/file/d/16RIZ-I4k3SI1jDBOx834FB5R-JIOMeXu/view?usp=sharing",
         "altKey": "portfolio.gallery.soft.3",
         "tagKey": "portfolio.gallery.soft.tag3",
         "captionKey": "portfolio.gallery.soft.caption3"
       },
       {
-        "src": "/assets/img/IMG_7567.jpeg",
+        "src": "https://drive.google.com/file/d/1UZs9Z3Q9DAiYmYUCo4krl1oaMabgGhLJ/view?usp=sharing",
         "altKey": "portfolio.gallery.soft.4",
         "tagKey": "portfolio.gallery.soft.tag4",
         "captionKey": "portfolio.gallery.soft.caption4"
-      },
-      {
-        "src": "/assets/img/IMG_5886.jpeg",
-        "altKey": "portfolio.gallery.soft.5",
-        "tagKey": "portfolio.gallery.soft.tag5",
-        "captionKey": "portfolio.gallery.soft.caption5"
       }
     ]
   },
   "editorial": {
     "images": [
       {
-        "src": "/assets/img/product_used.jpg",
+        "src": "https://drive.google.com/file/d/1iDRY6Wrx4DTpt4HtRVbikSDEJ-Gdizrw/view?usp=sharing",
         "altKey": "portfolio.gallery.editorial.1",
         "tagKey": "portfolio.gallery.editorial.tag1",
         "captionKey": "portfolio.gallery.editorial.caption1"
       },
       {
-        "src": "/assets/img/IMG_5886.jpeg",
+        "src": "https://drive.google.com/file/d/1eKKjD7x-hCKojU9VIJCZBu2IkaM_9LCU/view?usp=sharing",
         "altKey": "portfolio.gallery.editorial.2",
         "tagKey": "portfolio.gallery.editorial.tag2",
         "captionKey": "portfolio.gallery.editorial.caption2"
       },
       {
-        "src": "/assets/img/IMG_7567.jpeg",
+        "src": "https://drive.google.com/file/d/1UO9MZ2kt5BwI5sJ9YonFqg3fWKjFV8ce/view?usp=sharing",
         "altKey": "portfolio.gallery.editorial.3",
         "tagKey": "portfolio.gallery.editorial.tag3",
         "captionKey": "portfolio.gallery.editorial.caption3"
       },
       {
-        "src": "/assets/img/product_used.jpg",
+        "src": "https://drive.google.com/file/d/1oi6t9ECfGYToWPCjhzW8cosoLP6tyRLn/view?usp=sharing",
         "altKey": "portfolio.gallery.editorial.4",
         "tagKey": "portfolio.gallery.editorial.tag4",
         "captionKey": "portfolio.gallery.editorial.caption4"
-      },
-      {
-        "src": "/assets/img/IMG_5886.jpeg",
-        "altKey": "portfolio.gallery.editorial.5",
-        "tagKey": "portfolio.gallery.editorial.tag5",
-        "captionKey": "portfolio.gallery.editorial.caption5"
       }
     ]
   },
   "evening": {
     "images": [
       {
-        "src": "/assets/img/IMG_7567.jpeg",
+        "src": "https://drive.google.com/file/d/1bZWc17K_qsCKQFhjst5esNFP8NzDxx_A/view?usp=sharing",
         "altKey": "portfolio.gallery.evening.1",
         "tagKey": "portfolio.gallery.evening.tag1",
         "captionKey": "portfolio.gallery.evening.caption1"
       },
       {
-        "src": "/assets/img/IMG_5886.jpeg",
+        "src": "https://drive.google.com/file/d/1bZWc17K_qsCKQFhjst5esNFP8NzDxx_A/view?usp=sharing",
         "altKey": "portfolio.gallery.evening.2",
         "tagKey": "portfolio.gallery.evening.tag2",
         "captionKey": "portfolio.gallery.evening.caption2"
-      },
-      {
-        "src": "/assets/img/product_used.jpg",
-        "altKey": "portfolio.gallery.evening.3",
-        "tagKey": "portfolio.gallery.evening.tag3",
-        "captionKey": "portfolio.gallery.evening.caption3"
-      },
-      {
-        "src": "/assets/img/IMG_7567.jpeg",
-        "altKey": "portfolio.gallery.evening.4",
-        "tagKey": "portfolio.gallery.evening.tag4",
-        "captionKey": "portfolio.gallery.evening.caption4"
-      },
-      {
-        "src": "/assets/img/IMG_5886.jpeg",
-        "altKey": "portfolio.gallery.evening.5",
-        "tagKey": "portfolio.gallery.evening.tag5",
-        "captionKey": "portfolio.gallery.evening.caption5"
       }
     ]
   }
