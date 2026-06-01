@@ -5,8 +5,9 @@ export const CONFIG = {
   /** Public site origin (no trailing slash). Used for canonical URLs, Open Graph, sitemap. */
   siteUrl: "https://julierebeauty.com",
 
-  /** Default share image — path relative to site root (1200×630+ recommended; hero portrait works). */
-  seoOgImage: "assets/img/IMG_5886.jpeg",
+  /** Default share image — same source as `about.portrait` (Drive → lh3 thumbnail). */
+  seoOgImage:
+    "https://drive.google.com/file/d/1M2SYG3WTJjP0mbKm1NRF6RmLeXj2aKRI/view?usp=sharing",
 
   /**
    * Booking API (same spreadsheet as `Availability` + `Reservations` tabs — see `backend/apps-script-booking/`).
