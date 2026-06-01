@@ -344,6 +344,7 @@ const BUNDLED_STRINGS = {
     "contact.mapTitle": "Google Map — studio location",
 
     "footer.brand": "Juliere Beauty",
+    "footer.address": "Račianska 66, 831 02 Bratislava",
     "footer.socialAria": "Social media",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
@@ -690,6 +691,7 @@ const BUNDLED_STRINGS = {
     "contact.mapTitle": "Google mapa — poloha štúdia",
 
     "footer.brand": "Juliere Beauty",
+    "footer.address": "Račianska 66, 831 02 Bratislava",
     "footer.socialAria": "Sociálne siete",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",

@@ -22,13 +22,6 @@ const WEEKDAY_KEYS = [
 ];
 
 /**
- * @param {{ service?: string, label?: string }} slot
- */
-function slotService(slot) {
-  return String(slot.service ?? slot.label ?? "").trim();
-}
-
-/**
  * @param {string} sheetValue
  * @param {string} selected
  */
@@ -41,6 +34,30 @@ function serviceMatches(sheetValue, selected) {
       .trim()
       .toLowerCase()
   );
+}
+
+/**
+ * @param {{ allowedServices?: string[], service?: string, label?: string }} slot
+ * @returns {string[]}
+ */
+function slotAllowedServices(slot) {
+  if (Array.isArray(slot.allowedServices) && slot.allowedServices.length) {
+    return slot.allowedServices.map((s) => String(s).trim()).filter(Boolean);
+  }
+  const legacy = String(slot.service ?? slot.label ?? "").trim();
+  return legacy ? [legacy] : [];
+}
+
+/**
+ * @param {{ allowedServices?: string[], service?: string, label?: string }} slot
+ * @param {string} selected
+ */
+function slotAllowsService(slot, selected) {
+  const svc = String(selected ?? "").trim();
+  if (!svc) {
+    return false;
+  }
+  return slotAllowedServices(slot).some((name) => serviceMatches(name, svc));
 }
 
 /**
@@ -244,7 +261,7 @@ export function initSheetBooking() {
       return [];
     }
     return allSlotsRaw.filter(
-      (s) => normalizeDateKey(s.date) && serviceMatches(slotService(s), svc),
+      (s) => normalizeDateKey(s.date) && slotAllowsService(s, svc),
     );
   }
 

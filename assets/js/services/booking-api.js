@@ -18,7 +18,7 @@ export function getAvailabilityRequestUrl() {
 }
 
 /**
- * @returns {Promise<{ ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string }>}
+ * @returns {Promise<{ ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string }>}
  */
 export async function fetchAvailability() {
   const url = getAvailabilityRequestUrl();
