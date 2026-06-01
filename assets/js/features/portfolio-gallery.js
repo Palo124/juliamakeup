@@ -140,24 +140,6 @@ function parseGalleryFromHash() {
   return id && typeof id === "string" ? id : null;
 }
 
-function formatModelTag(raw) {
-  const s = String(raw).trim();
-  if (!s) {
-    return "";
-  }
-  return s.startsWith("@") ? s : `@${s}`;
-}
-
-function resolveTagText(item) {
-  if (item.tagKey) {
-    return formatModelTag(t(item.tagKey));
-  }
-  if (typeof item.tag === "string" && item.tag.trim()) {
-    return formatModelTag(item.tag);
-  }
-  return "";
-}
-
 function setGalleryHash(categoryId) {
   const base = `${window.location.pathname}${window.location.search}`;
   if (categoryId) {
@@ -211,26 +193,6 @@ function renderGallery(categoryId) {
     });
 
     figure.appendChild(hit);
-
-    const tagText = resolveTagText(item);
-    if (tagText) {
-      const tagEl = document.createElement("span");
-      tagEl.className = "portfolio-gallery__tag";
-      tagEl.textContent = tagText;
-      figure.appendChild(tagEl);
-    }
-
-    const captionText = item.captionKey
-      ? t(item.captionKey)
-      : typeof item.caption === "string"
-        ? item.caption
-        : "";
-    if (captionText) {
-      const cap = document.createElement("figcaption");
-      cap.className = "portfolio-gallery__caption";
-      cap.textContent = captionText;
-      figure.appendChild(cap);
-    }
 
     gridEl.appendChild(figure);
   });
