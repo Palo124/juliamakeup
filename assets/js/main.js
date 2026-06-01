@@ -21,6 +21,16 @@ import {
 import { initPriceServiceDialog, refreshPriceServiceDialogI18n } from "./features/price-service-dialog.js";
 import { initHeaderScroll } from "./features/header-scroll.js";
 import { initSheetBooking } from "./features/sheet-booking.js";
+import { initSeo } from "./features/seo.js";
+
+/** @returns {"home" | "booking"} */
+function detectSeoPage() {
+  const fromBody = document.body?.dataset.seoPage;
+  if (fromBody === "booking" || fromBody === "home") {
+    return fromBody;
+  }
+  return /booking\.html$/i.test(window.location.pathname) ? "booking" : "home";
+}
 
 function onLanguageChanged() {
   if (elements.menuToggle && elements.siteNav) {
@@ -40,6 +50,7 @@ function onLanguageChanged() {
 async function bootstrap() {
   initContactMap();
   await initI18n();
+  initSeo(detectSeoPage());
   window.addEventListener("juliamakeup:lang", onLanguageChanged);
 
   bindNavigation();

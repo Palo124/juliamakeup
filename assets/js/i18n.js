@@ -17,13 +17,13 @@ const BUNDLED_STRINGS = {
   en: {
     "meta.title": "Juliere Beauty | Modern Beauty Studio",
     "meta.description":
-      "Juliere Beauty — elegant makeup studio with portfolio, pricing, online booking, and contact.",
+      "Juliere Beauty — makeup studio in Bratislava. Portfolio, pricing, online booking, bridal and event makeup.",
     "meta.titleReviews": "Juliere Beauty | Reviews",
     "meta.descriptionReviews":
       "Client reviews and testimonials — Juliere Beauty makeup studio.",
     "meta.titleBooking": "Juliere Beauty | Book online",
     "meta.descriptionBooking":
-      "Request a makeup appointment — pick a service and time, verify your email, then wait for studio approval.",
+      "Book makeup in Bratislava — choose a service and time, verify your email, studio approval before confirmation.",
 
     "sheet.loading": "Loading…",
 
@@ -367,9 +367,9 @@ const BUNDLED_STRINGS = {
       "Recenzie a referencie klientov — kozmetické štúdio Juliere Beauty.",
     "meta.titleBooking": "Juliere Beauty | Online rezervácia",
     "meta.descriptionBooking":
-      "Požiadajte o termín na líčenie — zvoľte službu a čas, overte e-mail a počkajte na schválenie štúdiom.",
+      "Rezervácia líčenia v Bratislave — zvoľte službu a čas, overte e-mail, štúdio schváli termín pred potvrdením.",
     "meta.description":
-      "Juliere Beauty — elegantné vizážistické štúdio s portfóliom, cenníkom, online rezerváciou a kontaktom.",
+      "Juliere Beauty — vizážistické štúdio v Bratislave. Portfólio, cenník, online rezervácia, svadobné a event líčenie.",
 
     "sheet.loading": "Načítavam…",
 

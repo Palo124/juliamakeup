@@ -2,6 +2,12 @@
  * Environment and integration settings. Edit here (not in app logic).
  */
 export const CONFIG = {
+  /** Public site origin (no trailing slash). Used for canonical URLs, Open Graph, sitemap. */
+  siteUrl: "https://julierebeauty.com",
+
+  /** Default share image — path relative to site root (1200×630+ recommended; hero portrait works). */
+  seoOgImage: "assets/img/IMG_5886.jpeg",
+
   /**
    * Booking API (same spreadsheet as `Availability` + `Reservations` tabs — see `backend/apps-script-booking/`).
    * Deploy the script as a Web app and paste the `/exec` URL here.
@@ -52,7 +58,7 @@ export const CONFIG = {
 
   /** Footer social profile URLs (fallback if ENG/SK sheet keys `footer.social*Url` are empty). */
   social: {
-    instagram: "https://www.instagram.com/",
+    instagram: "https://www.instagram.com/julierebeauty/",
     facebook: "https://www.facebook.com/",
     x: "https://x.com/",
   },
