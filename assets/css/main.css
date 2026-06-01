@@ -773,7 +773,7 @@ p {
 }
 
 .stats-grid {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .section-heading {
@@ -835,7 +835,7 @@ p {
 .about-stat-bubble {
   display: grid;
   gap: 8px;
-  align-content: start;
+  align-content: center;
   padding: 22px 24px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
