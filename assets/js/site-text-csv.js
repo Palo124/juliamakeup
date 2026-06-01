@@ -196,3 +196,29 @@ export function siteImgUrlsFromSkCsvRows(rows) {
   }
   return out;
 }
+
+/**
+ * Fetches a published site-text CSV tab.
+ * @param {string} url
+ * @returns {Promise<string>}
+ */
+export async function fetchSiteTextCsv(url) {
+  const trimmed = String(url ?? "").trim();
+  if (!trimmed) {
+    throw new Error("Empty CSV URL");
+  }
+
+  const res = await fetch(trimmed, {
+    method: "GET",
+    redirect: "follow",
+    credentials: "omit",
+  });
+  const text = await res.text();
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status} for ${trimmed.slice(0, 80)}…`);
+  }
+  if (text.includes("<!DOCTYPE") && text.includes("html")) {
+    throw new Error("Got HTML instead of CSV — check publish settings and tab gid.");
+  }
+  return text;
+}

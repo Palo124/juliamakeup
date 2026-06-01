@@ -8,6 +8,7 @@ import {
   csvRowsToStringMap,
   parseCsv,
   resolveSiteTextCsvUrls,
+  fetchSiteTextCsv,
   siteImgUrlsFromSkCsvRows,
 } from "./site-text-csv.js";
 
@@ -655,7 +656,8 @@ function normalizeStringMap(raw) {
 }
 
 /**
- * Loads copy from published/public Google Sheet tabs (CSV: key, text per ENG / SK; SK optional column C = image URLs).
+ * Loads copy from published/public Google Sheet tabs (CSV: key, text; SK optional column C = image URLs).
+ * SK tab is required when sheet texts are enabled; EN tab is optional (bundled EN strings used if missing).
  */
 export async function loadTextsFromGoogleSheet() {
   sheetOverrides = { en: {}, sk: {} };
@@ -669,31 +671,31 @@ export async function loadTextsFromGoogleSheet() {
   const enUrl = urls.en;
   const skUrl = urls.sk;
 
-  if (!enUrl || !skUrl) {
+  if (!skUrl) {
+    return;
+  }
+
+  let skText;
+  try {
+    skText = await fetchSiteTextCsv(skUrl);
+  } catch (error) {
+    console.warn("[i18n] Could not load SK sheet CSV; using bundled strings.", error);
+    return;
+  }
+
+  const skRows = parseCsv(skText);
+  sheetOverrides.sk = normalizeStringMap(csvRowsToStringMap(skRows));
+  sheetImageUrls = normalizeStringMap(siteImgUrlsFromSkCsvRows(skRows));
+
+  if (!enUrl) {
     return;
   }
 
   try {
-    const fetchCsv = async (url) => {
-      const res = await fetch(url, {
-        method: "GET",
-        redirect: "follow",
-        credentials: "omit",
-      });
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status} for ${url.slice(0, 80)}…`);
-      }
-      return res.text();
-    };
-
-    const [enText, skText] = await Promise.all([fetchCsv(enUrl), fetchCsv(skUrl)]);
-
-    const skRows = parseCsv(skText);
+    const enText = await fetchSiteTextCsv(enUrl);
     sheetOverrides.en = normalizeStringMap(csvRowsToStringMap(parseCsv(enText)));
-    sheetOverrides.sk = normalizeStringMap(csvRowsToStringMap(skRows));
-    sheetImageUrls = normalizeStringMap(siteImgUrlsFromSkCsvRows(skRows));
   } catch (error) {
-    console.warn("[i18n] Could not load texts from Google Sheet CSV; using bundled strings.", error);
+    console.warn("[i18n] Could not load EN sheet CSV; using bundled EN strings.", error);
   }
 }
 
@@ -1036,8 +1038,8 @@ function shouldShowSheetLoadingOverlay() {
   if (!CONFIG.useSheetTexts) {
     return false;
   }
-  const { en, sk } = resolveSiteTextCsvUrls(CONFIG);
-  return Boolean(en && sk);
+  const { sk } = resolveSiteTextCsvUrls(CONFIG);
+  return Boolean(sk);
 }
 
 function showSheetLoadingOverlay() {

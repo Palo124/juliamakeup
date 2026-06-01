@@ -2,69 +2,61 @@
  * Fetches CSV URLs from config (contentPublishedSpreadsheetId + gids, or contentCsvUrls) and parses rows.
  * Usage: npm run test:site-texts
  *     or node scripts/test-site-text-csv.mjs
- *     or node scripts/test-site-text-csv.mjs "https://…csv…" "https://…csv…"
+ *     or node scripts/test-site-text-csv.mjs [SK_CSV_URL] [EN_CSV_URL]
  */
 import { CONFIG } from "../assets/js/config.js";
 import {
   csvRowsToStringMap,
+  fetchSiteTextCsv,
   parseCsv,
   resolveSiteTextCsvUrls,
   siteImgUrlsFromSkCsvRows,
 } from "../assets/js/site-text-csv.js";
 
 const argv = process.argv.slice(2);
-let enUrl = argv[0];
-let skUrl = argv[1];
+let skUrl = argv[0];
+let enUrl = argv[1];
 
-if (!enUrl) {
+if (!skUrl) {
   const resolved = resolveSiteTextCsvUrls(CONFIG);
-  enUrl = resolved.en;
   skUrl = resolved.sk;
+  enUrl = resolved.en;
 }
 
-if (!enUrl || !skUrl) {
+if (!skUrl) {
   console.error(
-    "Set contentPublishedSpreadsheetId + contentSheetGids (en, sk), or contentCsvUrls, in assets/js/config.js — or pass two CSV URLs (EN, SK) as arguments.",
+    "Set contentPublishedSpreadsheetId + contentSheetGids.sk (or contentCsvUrls.sk) in assets/js/config.js — or pass SK CSV URL as first argument.",
   );
   process.exit(1);
 }
 
-const headers = {
-  Accept: "text/csv,text/plain,*/*",
-  "User-Agent": "juliamakeup-site-texts-test/1.0",
-};
-
-async function fetchCsv(url) {
-  const res = await fetch(url, { method: "GET", redirect: "follow", headers });
-  const text = await res.text();
-  if (!res.ok) {
-    throw new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
-  }
-  if (text.includes("<!DOCTYPE") && text.includes("html")) {
-    throw new Error("Got HTML instead of CSV — check sharing / publish settings and URL.");
-  }
-  return text;
-}
-
 try {
-  const [enText, skText] = await Promise.all([fetchCsv(enUrl), fetchCsv(skUrl)]);
-  const enMap = csvRowsToStringMap(parseCsv(enText));
+  const skText = await fetchSiteTextCsv(skUrl);
   const skRows = parseCsv(skText);
   const skMap = csvRowsToStringMap(skRows);
   const imgKeys = Object.keys(siteImgUrlsFromSkCsvRows(skRows)).length;
-  console.log(
-    JSON.stringify(
-      {
-        ok: true,
-        enKeys: Object.keys(enMap).length,
-        skKeys: Object.keys(skMap).length,
-        siteImgKeysFromSk: imgKeys,
-      },
-      null,
-      2,
-    ),
-  );
+
+  /** @type {Record<string, unknown>} */
+  const report = {
+    ok: true,
+    skKeys: Object.keys(skMap).length,
+    siteImgKeysFromSk: imgKeys,
+  };
+
+  if (enUrl) {
+    try {
+      const enText = await fetchSiteTextCsv(enUrl);
+      report.enKeys = Object.keys(csvRowsToStringMap(parseCsv(enText))).length;
+    } catch (e) {
+      report.enSkipped = true;
+      report.enError = String(e?.message ?? e);
+    }
+  } else {
+    report.enSkipped = true;
+  }
+
+  console.log(JSON.stringify(report, null, 2));
 } catch (e) {
-  console.error(String(e && e.message ? e.message : e));
+  console.error(String(e?.message ?? e));
   process.exit(1);
 }
