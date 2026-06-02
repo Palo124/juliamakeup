@@ -163,7 +163,7 @@ const BUNDLED_STRINGS = {
     "prices.lesson.h3": "Self-makeup course",
     "prices.lesson.p": "Coming soon",
     "prices.travel.h3": "Travel fee",
-    "prices.travel.p": "On-location makeup — charged by distance from the studio at Račianska 66.",
+    "prices.travel.p": "On location makeup charged by distance from the studio at Račianska 66.",
     "prices.brows.h3": "Brow Shaping & Lamination",
     "prices.brows.p": "Shaped brows, optional tint, and lamination for fuller arches with minimal daily upkeep.",
     "prices.shoot.h3": "Photoshoot Makeup",
@@ -177,7 +177,7 @@ const BUNDLED_STRINGS = {
     "prices.bridal.price": "45 EUR",
     "prices.trial.price": "45 EUR",
     "prices.lesson.price": "75 EUR",
-    "prices.travel.price": "0.30 EUR/km",
+    "prices.travel.price": "0.25 EUR/km",
     "prices.brows.price": "45 EUR",
     "prices.shoot.price": "85 EUR",
     "prices.signature.duration": "Duration: about 60 minutes",
@@ -195,7 +195,7 @@ const BUNDLED_STRINGS = {
       "We refine the look together ahead of your event so on the day you're confident in a flawless result no last-minute stress.",
     "prices.lesson.detail": "Coming soon.",
     "prices.travel.detail":
-      "Travel is available for on-location bookings with a minimum of four people. The fee is calculated from the studio at Račianska 66 to your venue and back.\n\nContact me with the address and headcount before booking so I can confirm the total.",
+      "Travel is available for on location bookings with a minimum of four people. The fee is calculated from the studio at Račianska 66 to your venue and back.\n\nContact me with the address and headcount before booking so I can confirm the total.",
     "prices.brows.detail":
       "We map your natural brow line, then trim, wax, or tweeze as needed, and finish with a tailored tint or lamination so hairs stay lifted and even for weeks.\n\nBring inspiration photos if you have them  the goal is balance with your features and a clean grow-out.",
     "prices.shoot.detail":
@@ -477,7 +477,7 @@ const BUNDLED_STRINGS = {
     "prices.lesson.h3": "Kurz sebalíčenia",
     "prices.lesson.p": "Coming soon",
     "prices.travel.h3": "Cestovné náklady",
-    "prices.travel.p": "Dojazd k vám — cena podľa vzdialenosti od salónu na Račianskej 66.",
+    "prices.travel.p": "Dojazd k vám cena podľa vzdialenosti od salónu na Račianskej 66.",
     "prices.brows.h3": "Úprava obočia a laminácia",
     "prices.brows.p": "Tvarované obočie, voliteľné farbenie a laminácia pre plnší oblúk s minimálnou údržbou.",
     "prices.shoot.h3": "Líčenie na fotenie",
@@ -506,7 +506,7 @@ const BUNDLED_STRINGS = {
     "prices.trial.detail": "  ",
     "prices.lesson.detail": "  ",
     "prices.travel.detail":
-      "Cestujem za klientkami pri objednávkach minimálne pre 4 osoby. Cestovné sa počíta z môjho salónu na Račianskej 66 k vám a späť.\n\nPred rezerváciou mi napíšte adresu a počet osôb — potvrdím celkovú sumu.",
+      "Cestujem za klientkami pri objednávkach minimálne pre 4 osoby. Cestovné sa počíta z môjho salónu na Račianskej 66 k vám a späť.\n\nPred rezerváciou mi napíšte adresu a počet osôb potvrdím celkovú sumu.",
     "prices.brows.detail": "",
     "prices.shoot.detail": "",
     "reviews.eyebrow": "",

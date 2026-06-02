@@ -50,7 +50,7 @@ async function bootstrap() {
   initPriceCarousel();
   initReviewsCarousel();
   initBeforeVisitCarousel();
-  await initPortfolioGallery();
+  void initPortfolioGallery();
   initPriceServiceDialog();
   initHeaderScroll();
   initSheetBooking();

@@ -8,6 +8,8 @@ const CATEGORY_LABEL_KEYS = {
 };
 
 let galleries = null;
+/** @type {Promise<void> | null} */
+let galleriesLoadPromise = null;
 /** @type {HTMLDialogElement | null} */
 let dialog = null;
 /** @type {HTMLElement | null} */
@@ -198,8 +200,13 @@ function renderGallery(categoryId) {
   });
 }
 
-export function openPortfolioGallery(categoryId) {
-  if (!dialog || !galleries || !galleries[categoryId]) {
+export async function openPortfolioGallery(categoryId) {
+  if (!dialog) {
+    return;
+  }
+
+  await ensureGalleriesLoaded();
+  if (!galleries?.[categoryId]) {
     return;
   }
 
@@ -247,6 +254,13 @@ async function loadGalleries() {
   galleries = await res.json();
 }
 
+function ensureGalleriesLoaded() {
+  if (!galleriesLoadPromise) {
+    galleriesLoadPromise = loadGalleries();
+  }
+  return galleriesLoadPromise;
+}
+
 function onDialogClick(event) {
   if (event.target !== dialog) {
     return;
@@ -259,8 +273,6 @@ function onDialogClick(event) {
 }
 
 export async function initPortfolioGallery() {
-  await loadGalleries();
-
   dialog = document.getElementById("portfolio-gallery-dialog");
   titleEl = document.getElementById("portfolio-gallery-title");
   gridEl = document.getElementById("portfolio-gallery-grid");
@@ -278,7 +290,7 @@ export async function initPortfolioGallery() {
       event.preventDefault();
       const id = el.getAttribute("data-portfolio-category");
       if (id) {
-        openPortfolioGallery(id);
+        void openPortfolioGallery(id);
       }
     });
     el.addEventListener("keydown", (event) => {
@@ -286,7 +298,7 @@ export async function initPortfolioGallery() {
         event.preventDefault();
         const id = el.getAttribute("data-portfolio-category");
         if (id) {
-          openPortfolioGallery(id);
+          void openPortfolioGallery(id);
         }
       }
     });
@@ -411,19 +423,25 @@ export async function initPortfolioGallery() {
       }
       return;
     }
-    if (galleries?.[id]) {
+    void ensureGalleriesLoaded().then(() => {
+      if (!galleries?.[id]) {
+        return;
+      }
       renderGallery(id);
       if (!dialog.open) {
         dialog.showModal();
       }
-    }
+    });
   });
 
   setCardAriaLabels();
 
   const initial = parseGalleryFromHash();
-  if (initial && galleries?.[initial]) {
-    renderGallery(initial);
-    dialog.showModal();
+  if (initial) {
+    await ensureGalleriesLoaded();
+    if (galleries?.[initial]) {
+      renderGallery(initial);
+      dialog.showModal();
+    }
   }
 }
