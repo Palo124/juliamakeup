@@ -44,8 +44,8 @@ export const CONFIG = {
   useSheetTexts: true,
 
   /**
-   * Google Drive image `sz=` token for sheet-driven images (`lh3.googleusercontent.com/d/{id}={sz}`).
-   * `w256` looks soft on full-width heroes; `w1920` is a better default (more bandwidth).
+   * Legacy default width when no `data-site-img-profile` is used (gallery/lightbox fallbacks).
+   * Page images use profile widths in `assets/js/site-image-delivery.js` instead of this global size.
    */
   driveImageThumbnailSz: "w1920",
 

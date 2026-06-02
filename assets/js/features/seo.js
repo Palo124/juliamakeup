@@ -3,7 +3,7 @@
  */
 import { CONFIG } from "../config.js";
 import { getPageId, getSiteOrigin, pagePath, pageUrl as localePageUrl } from "../core/locale-urls.js";
-import { getLang, resolveSiteImageUrl, t } from "../i18n.js";
+import { getLang, resolveSiteImageUrl, siteImageSrcForProfile, t } from "../i18n.js";
 
 /** @typedef {"home" | "booking"} SeoPage */
 
@@ -14,7 +14,8 @@ const JSON_LD_ID = "juliamakeup-json-ld";
 let activePage = null;
 
 function ogImageUrl() {
-  return resolveSiteImageUrl(CONFIG.seoOgImage || "assets/img/favicon_juliere.png") ?? "";
+  const resolved = resolveSiteImageUrl(CONFIG.seoOgImage || "assets/img/favicon_juliere.png");
+  return resolved ? siteImageSrcForProfile(resolved, "og") : "";
 }
 
 /**

@@ -5,6 +5,7 @@
   "scripts": {
     "test:site-texts": "node scripts/test-site-text-csv.mjs",
     "sync:locale-pages": "node scripts/sync-locale-pages.mjs",
+    "optimize:site-images": "node scripts/optimize-site-images.mjs",
     "booking:clasp:login": "cd backend/apps-script-booking && clasp login",
     "booking:clasp:push": "cd backend/apps-script-booking && clasp push",
     "booking:clasp:pull": "cd backend/apps-script-booking && clasp pull",

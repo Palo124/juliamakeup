@@ -3,6 +3,14 @@
  * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentCsvUrls / published id).
  */
 import { CONFIG } from "./config.js";
+import {
+  applySiteImageDeliveryToElement,
+  buildSiteImageDelivery,
+  driveImageUrl,
+  extractGoogleDriveFileId,
+  normalizeSiteImageProfile,
+  siteImageSrcForProfile,
+} from "./site-image-delivery.js";
 import { getLangFromPath, switchLocaleHref } from "./core/locale-urls.js";
 import {
   csvRowsToStringMap,
@@ -699,78 +707,26 @@ export async function loadTextsFromGoogleSheet() {
   }
 }
 
-const DRIVE_FILE_ID_RE = /^[a-zA-Z0-9_-]+$/;
-
-/**
- * Extracts a Google Drive file ID from a share URL, `?id=…` link, or a raw ID string.
- * @param {unknown} input
- * @returns {string | null}
- */
-export function extractGoogleDriveFileId(input) {
-  const s = String(input).trim();
-  if (!s) {
-    return null;
-  }
-
-  // Raw file ID: no URL markers (colon slash query)
-  if (!/[\/:?#]/.test(s) && DRIVE_FILE_ID_RE.test(s) && s.length >= 10) {
-    return s;
-  }
-
-  let u;
-  try {
-    u = new URL(s);
-  } catch {
-    try {
-      u = new URL(s.startsWith("http") ? s : `https://${s}`);
-    } catch {
-      u = null;
-    }
-  }
-
-  if (u) {
-    const host = u.hostname.replace(/^www\./i, "");
-    const isDriveHost =
-      host === "drive.google.com" ||
-      host === "docs.google.com" ||
-      host === "drive.usercontent.google.com";
-
-    const filePath = u.pathname.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-    if (filePath) {
-      return filePath[1];
-    }
-
-    const idParam = u.searchParams.get("id");
-    if (idParam && DRIVE_FILE_ID_RE.test(idParam) && isDriveHost) {
-      return idParam;
-    }
-  }
-
-  if (/drive\.google\.com|docs\.google\.com/i.test(s)) {
-    const q = s.match(/[?&#]id=([a-zA-Z0-9_-]+)/i);
-    if (q) {
-      return q[1];
-    }
-  }
-
-  return null;
-}
+export { extractGoogleDriveFileId } from "./site-image-delivery.js";
 
 /**
  * Normalizes Drive share links, `?id=` URLs, or a raw file ID to a browser-usable image URL.
- * Uses `lh3.googleusercontent.com/d/{id}={sz}`  same target as the `/thumbnail` redirect, but
- * avoids an extra hop that can break `<img>` (Referer / redirect handling) in some browsers.
+ * Uses `lh3.googleusercontent.com/d/{id}=w{width}`.
  * @param {unknown} input
+ * @param {number} [width]
  * @returns {string | null}
  */
-export function toDriveImageUrl(input) {
+export function toDriveImageUrl(input, width) {
   const id = extractGoogleDriveFileId(input);
   if (!id) {
     return null;
   }
 
-  const sz = (CONFIG.driveImageThumbnailSz || "w1920").trim() || "w1920";
-  return `https://lh3.googleusercontent.com/d/${id}=${encodeURIComponent(sz)}`;
+  const szToken = String(CONFIG.driveImageThumbnailSz || "w1920").trim() || "w1920";
+  const parsed = Number.parseInt(szToken.replace(/^w/i, ""), 10);
+  const fallbackWidth = Number.isFinite(parsed) && parsed > 0 ? parsed : 1920;
+  const w = width && width > 0 ? width : fallbackWidth;
+  return driveImageUrl(id, w);
 }
 
 /**
@@ -835,37 +791,39 @@ export function resolveSiteImageUrl(raw) {
  */
 export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
   const key = String(altKey ?? "").trim();
+  let resolved = "";
   if (key) {
-    const fromSheet = resolveSiteImageUrl(sheetImageUrls[key]);
-    if (fromSheet) {
-      return fromSheet;
-    }
+    resolved = resolveSiteImageUrl(sheetImageUrls[key]) ?? "";
   }
-  return resolveSiteImageUrl(jsonSrc) ?? "";
+  if (!resolved) {
+    resolved = resolveSiteImageUrl(jsonSrc) ?? "";
+  }
+  if (!resolved) {
+    return "";
+  }
+  return siteImageSrcForProfile(resolved, "gallery");
 }
 
-/** Apply `src` from sheet for elements with `data-site-img` (hero and future images). */
+/** Apply sheet URLs and responsive delivery for elements with `data-site-img`. */
 export function applySheetImageUrls() {
   document.querySelectorAll("img[data-site-img]").forEach((img) => {
-    const key = img.dataset.siteImg?.trim();
-    if (!key) {
+    if (!(img instanceof HTMLImageElement)) {
       return;
     }
 
-    const resolved = resolveSiteImageUrl(sheetImageUrls[key]);
-    if (resolved) {
-      if (
-        /drive\.google\.com\//i.test(resolved) ||
-        /googleusercontent\.com/i.test(resolved) ||
-        /drive\.usercontent\.google\.com/i.test(resolved)
-      ) {
-        img.referrerPolicy = "no-referrer";
-      }
-
-      img.src = resolved;
+    const key = img.dataset.siteImg?.trim();
+    const profile = normalizeSiteImageProfile(img.dataset.siteImgProfile);
+    const fromSheet = key ? resolveSiteImageUrl(sheetImageUrls[key]) : null;
+    const resolved = fromSheet || resolveSiteImageUrl(img.getAttribute("src") || "");
+    if (!resolved) {
+      return;
     }
+
+    applySiteImageDeliveryToElement(img, resolved, profile);
   });
 }
+
+export { buildSiteImageDelivery, normalizeSiteImageProfile, siteImageSrcForProfile };
 
 /**
  * @returns {"en" | "sk"}
