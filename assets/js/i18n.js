@@ -3,6 +3,7 @@
  * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentCsvUrls / published id).
  */
 import { CONFIG } from "./config.js";
+import { getLangFromPath, switchLocaleHref } from "./core/locale-urls.js";
 import {
   applySiteImageDeliveryToElement,
   buildSiteImageDelivery,
@@ -11,14 +12,6 @@ import {
   normalizeSiteImageProfile,
   siteImageSrcForProfile,
 } from "./site-image-delivery.js";
-import { getLangFromPath, switchLocaleHref } from "./core/locale-urls.js";
-import {
-  csvRowsToStringMap,
-  parseCsv,
-  resolveSiteTextCsvUrls,
-  fetchSiteTextCsv,
-  siteImgUrlsFromSkCsvRows,
-} from "./site-text-csv.js";
 
 /** @type {Record<string, Record<string, string>>} */
 const BUNDLED_STRINGS = {
@@ -687,6 +680,14 @@ export async function loadTextsFromGoogleSheet() {
     return;
   }
 
+  const {
+    csvRowsToStringMap,
+    parseCsv,
+    resolveSiteTextCsvUrls,
+    fetchSiteTextCsv,
+    siteImgUrlsFromSkCsvRows,
+  } = await import("./site-text-csv.js");
+
   const urls = resolveSiteTextCsvUrls(CONFIG);
   const enUrl = urls.en;
   const skUrl = urls.sk;
@@ -1004,12 +1005,58 @@ function sheetLoadingLabel() {
   return BUNDLED_STRINGS[lang]?.["sheet.loading"] ?? BUNDLED_STRINGS.en["sheet.loading"] ?? "Loading…";
 }
 
-function shouldShowSheetLoadingOverlay() {
-  if (!CONFIG.useSheetTexts) {
-    return false;
+function hideSheetLoadingOverlay() {
+  document.body.classList.remove("is-sheet-loading");
+  if (sheetLoadingOverlayEl) {
+    sheetLoadingOverlayEl.setAttribute("aria-busy", "false");
+    sheetLoadingOverlayEl.classList.remove("is-visible");
   }
+}
+
+async function hydrateTextsFromGoogleSheet() {
+  if (!CONFIG.useSheetTexts) {
+    return;
+  }
+
+  const { resolveSiteTextCsvUrls } = await import("./site-text-csv.js");
   const { sk } = resolveSiteTextCsvUrls(CONFIG);
-  return Boolean(sk);
+  if (!sk) {
+    return;
+  }
+
+  /** Only veil the page if the sheet is still loading after a beat — avoids blocking LCP. */
+  let overlayTimer = window.setTimeout(() => {
+    showSheetLoadingOverlay();
+  }, 450);
+
+  try {
+    await loadTextsFromGoogleSheet();
+    document.documentElement.lang = getLang() === "sk" ? "sk" : "en";
+    applyTranslations();
+    applySheetImageUrls();
+    window.dispatchEvent(
+      new CustomEvent("juliamakeup:lang", { detail: { lang: getLang(), source: "sheet" } }),
+    );
+  } finally {
+    window.clearTimeout(overlayTimer);
+    hideSheetLoadingOverlay();
+  }
+}
+
+export function initI18n() {
+  const lang = getLangFromPath();
+  document.documentElement.lang = lang === "sk" ? "sk" : "en";
+  applyTranslations();
+  void hydrateTextsFromGoogleSheet();
+
+  document.querySelectorAll("[data-lang-set]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = btn.dataset.langSet;
+      if (next === "en" || next === "sk") {
+        setLang(next);
+      }
+    });
+  });
 }
 
 function showSheetLoadingOverlay() {
@@ -1070,42 +1117,6 @@ function showSheetLoadingOverlay() {
     labelEl.textContent = sheetLoadingLabel();
   }
   sheetLoadingOverlayEl.classList.add("is-visible");
-}
-
-function hideSheetLoadingOverlay() {
-  document.body.classList.remove("is-sheet-loading");
-  if (sheetLoadingOverlayEl) {
-    sheetLoadingOverlayEl.setAttribute("aria-busy", "false");
-    sheetLoadingOverlayEl.classList.remove("is-visible");
-  }
-}
-
-export async function initI18n() {
-  const lang = getLangFromPath();
-  document.documentElement.lang = lang === "sk" ? "sk" : "en";
-
-  const useLoadingOverlay = shouldShowSheetLoadingOverlay();
-  if (useLoadingOverlay) {
-    showSheetLoadingOverlay();
-  }
-  try {
-    await loadTextsFromGoogleSheet();
-    document.documentElement.lang = getLang() === "sk" ? "sk" : "en";
-    applyTranslations();
-    applySheetImageUrls();
-  } finally {
-    if (useLoadingOverlay) {
-      hideSheetLoadingOverlay();
-    }
-  }
-  document.querySelectorAll("[data-lang-set]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const next = btn.dataset.langSet;
-      if (next === "en" || next === "sk") {
-        setLang(next);
-      }
-    });
-  });
 }
 
 /** Bundled defaults; use `npm run export:site-texts` to regenerate sheet seed CSVs. */

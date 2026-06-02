@@ -11,17 +11,34 @@ import { initContactMap } from "./features/contact-map.js";
 import { bindNavigation } from "./features/navigation.js";
 import { initHeroCarousel, updateCarouselDotsI18n } from "./features/hero-carousel.js";
 import { initPortfolioCarousel, updatePortfolioCarouselDotsI18n } from "./features/portfolio-carousel.js";
-import { initPortfolioGallery, refreshPortfolioGalleryI18n } from "./features/portfolio-gallery.js";
 import { initPriceCarousel, updatePriceCarouselDotsI18n } from "./features/price-carousel.js";
 import { initReviewsCarousel, updateReviewsCarouselDotsI18n } from "./features/reviews-carousel.js";
 import {
   initBeforeVisitCarousel,
   updateBeforeVisitCarouselDotsI18n,
 } from "./features/before-visit-carousel.js";
-import { initPriceServiceDialog, refreshPriceServiceDialogI18n } from "./features/price-service-dialog.js";
 import { initHeaderScroll } from "./features/header-scroll.js";
-import { initSheetBooking } from "./features/sheet-booking.js";
 import { initSeo, detectSeoPage } from "./features/seo.js";
+
+/** @type {Promise<typeof import("./features/portfolio-gallery.js")> | null} */
+let portfolioGalleryModule = null;
+
+/** @type {Promise<typeof import("./features/price-service-dialog.js")> | null} */
+let priceServiceDialogModule = null;
+
+function loadPortfolioGalleryModule() {
+  if (!portfolioGalleryModule) {
+    portfolioGalleryModule = import("./features/portfolio-gallery.js");
+  }
+  return portfolioGalleryModule;
+}
+
+function loadPriceServiceDialogModule() {
+  if (!priceServiceDialogModule) {
+    priceServiceDialogModule = import("./features/price-service-dialog.js");
+  }
+  return priceServiceDialogModule;
+}
 
 function onLanguageChanged() {
   if (elements.menuToggle && elements.siteNav) {
@@ -34,26 +51,48 @@ function onLanguageChanged() {
   updatePriceCarouselDotsI18n();
   updateReviewsCarouselDotsI18n();
   updateBeforeVisitCarouselDotsI18n();
-  refreshPortfolioGalleryI18n();
-  refreshPriceServiceDialogI18n();
+  void loadPortfolioGalleryModule().then((mod) => mod.refreshPortfolioGalleryI18n());
+  void loadPriceServiceDialogModule().then((mod) => mod.refreshPriceServiceDialogI18n());
 }
 
-async function bootstrap() {
-  initContactMap();
-  await initI18n();
-  initSeo(detectSeoPage());
-  window.addEventListener("juliamakeup:lang", onLanguageChanged);
-
+function initCriticalFeatures() {
   bindNavigation();
   initHeroCarousel();
+  initHeaderScroll();
+}
+
+function initBelowFoldFeatures() {
   initPortfolioCarousel();
   initPriceCarousel();
   initReviewsCarousel();
   initBeforeVisitCarousel();
-  void initPortfolioGallery();
-  initPriceServiceDialog();
-  initHeaderScroll();
-  initSheetBooking();
+  void loadPortfolioGalleryModule().then((mod) => mod.initPortfolioGallery());
+  void loadPriceServiceDialogModule().then((mod) => mod.initPriceServiceDialog());
+}
+
+function scheduleBelowFoldFeatures() {
+  const run = () => initBelowFoldFeatures();
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(run, { timeout: 2500 });
+  } else {
+    setTimeout(run, 1);
+  }
+}
+
+async function bootstrap() {
+  initContactMap();
+  initI18n();
+  const page = detectSeoPage();
+  initSeo(page);
+  window.addEventListener("juliamakeup:lang", onLanguageChanged);
+
+  initCriticalFeatures();
+  scheduleBelowFoldFeatures();
+
+  if (page === "booking") {
+    const { initSheetBooking } = await import("./features/sheet-booking.js");
+    initSheetBooking();
+  }
 }
 
 void bootstrap();

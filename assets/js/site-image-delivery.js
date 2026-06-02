@@ -171,6 +171,16 @@ export function buildSiteImageDelivery(resolvedUrl, profileKey) {
  */
 export function applySiteImageDeliveryToElement(img, resolvedUrl, profileKey) {
   const { src, srcset, sizes } = buildSiteImageDelivery(resolvedUrl, normalizeSiteImageProfile(profileKey));
+  const existingSrcset = img.getAttribute("srcset") || "";
+  const existingSrc = img.getAttribute("src") || "";
+
+  if (srcset && existingSrcset === srcset) {
+    return;
+  }
+  if (!srcset && existingSrc && (existingSrc === src || img.src.endsWith(src))) {
+    return;
+  }
+
   img.src = src;
 
   if (srcset) {
