@@ -18,25 +18,46 @@ const BUNDLED_STRINGS = {
   en: {
     "meta.title": "Juliére Beauty | Modern makeup studio",
     "meta.description": "Juliére Beauty an elegant makeup studio.",
-    "meta.titleReviews": "Juliere Beauty | Reviews",
-    "meta.descriptionReviews": "Client reviews and testimonials  Juliere Beauty makeup studio.",
-    "meta.titleBooking": "Juliere Beauty | Book online",
+    "meta.titleReviews": "Juliére Beauty | Reviews",
+    "meta.descriptionReviews": "Client reviews and testimonials  Juliére Beauty makeup studio.",
+    "meta.titleBooking": "Juliére Beauty | Book online",
     "meta.descriptionBooking": "Reserve a makeup appointment  choose a service and pick an available time.",
+    "meta.titleBridalLanding": "Bridal Makeup Bratislava | Juliére Beauty",
+    "meta.descriptionBridalLanding":
+      "Professional bridal makeup in Bratislava — tailored looks, long-wear products and optional trial. Book at Juliére Beauty studio.",
+    "bridalLanding.faq.q1": "How much does bridal makeup cost in Bratislava?",
+    "bridalLanding.faq.a1":
+      "Bridal makeup at Juliére Beauty is 45 EUR (about 75 minutes in the studio). A separate trial session is also 45 EUR (about 90 minutes). Travel for on-location work is charged per km — see the full price list on the homepage.",
+    "bridalLanding.faq.q2": "When should I book my wedding makeup appointment?",
+    "bridalLanding.faq.a2":
+      "For popular wedding dates I recommend booking several months ahead. If you want a trial, schedule it roughly 4–8 weeks before the wedding so we have time to adjust the look. The wedding-day slot is planned around your ceremony and photos.",
+    "bridalLanding.faq.q3": "Is a bridal makeup trial necessary?",
+    "bridalLanding.faq.a3":
+      "It is not mandatory, but I recommend it — you will see the exact colours, finish and wear on your skin, and we can fine-tune details without stress on the wedding day.",
+    "bridalLanding.faq.q4": "How long does wedding makeup last?",
+    "bridalLanding.faq.a4":
+      "With professional long-wear products and proper prep, the look is built to last from preparation through the ceremony, photos and celebration. I focus on skin that photographs well and makeup that stays fresh with minimal touch-ups.",
+    "bridalLanding.faq.q5": "Do you travel outside Bratislava?",
+    "bridalLanding.faq.a5":
+      "Yes — I can come to you for on-location bridal makeup when booking makeup for at least four people. Travel is charged per kilometre from the studio on Račianska 66. For individual appointments I welcome you at the Bratislava studio.",
+    "bridalLanding.faq.q6": "What products do you use?",
+    "bridalLanding.faq.a6":
+      "I work with professional brands chosen for longevity, comfort and a natural finish on camera — foundations, powders, setting sprays and pigments suited to long wedding days. Products are selected individually for your skin type and preferences.",
     "sheet.loading": "Loading…",
     "hero.carouselAria": "Juliére Beauty",
-    "hero.slide1.alt": "Portrait  professional makeup look, Juliere Beauty",
-    "hero.slide1.caption": "Featured portrait for Juliere Beauty",
-    "hero.slide2.alt": "Luxury makeup products  Juliere Beauty studio",
+    "hero.slide1.alt": "Portrait  professional makeup look, Juliére Beauty",
+    "hero.slide1.caption": "Featured portrait for Juliére Beauty",
+    "hero.slide2.alt": "Luxury makeup products  Juliére Beauty studio",
     "hero.slide2.caption": "",
-    "hero.slide3.alt": "Portrait  soft glam makeup, Juliere Beauty",
+    "hero.slide3.alt": "Portrait  soft glam makeup, Juliére Beauty",
     "hero.slide3.caption": "Portrait with professional makeup look",
     "hero.tagline": "Modern beauty studio",
     "hero.prevSlide": "Previous slide",
     "hero.nextSlide": "Next slide",
     "hero.chooseSlide": "Choose slide",
     "hero.scroll": "Scroll",
-    "header.brandAria": "Juliere Beauty home",
-    "header.brandPrimary": "Juliere",
+    "header.brandAria": "Juliére Beauty home",
+    "header.brandPrimary": "Juliére",
     "header.brandSecondary": "Beauty",
     "header.openMenu": "Open menu",
     "header.closeMenu": "Close menu",
@@ -61,7 +82,7 @@ const BUNDLED_STRINGS = {
     "about.eyebrow": "About me",
     "about.h2": "Minimalist makeup tailored to what makes you unique.",
     "about.statsAria": "About highlights",
-    "about.photoAlt": "Julia  Juliere Beauty makeup artist",
+    "about.photoAlt": "Julia  Juliére Beauty makeup artist",
     "about.p1": "Welcome! I'm Julia and makeup has been my passion for over 8 years. I specialize in wedding makeup but I can do all the types of occasional glam.  ",
     "about.p2": "I believe every woman is beautiful, and my goal is to gently enhance that beauty so you feel confident and still yourself. I look forward to seeing you!",
     "portfolio.eyebrow": "Portfolio",
@@ -87,6 +108,7 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.3": "Professional makeup products used for bridal looks",
     "portfolio.gallery.bridal.4": "",
     "portfolio.gallery.bridal.5": "",
+    "portfolio.gallery.bridal.6": "Bridal makeup  portrait finish",
     "portfolio.gallery.soft.1": "Soft glam makeup  portrait",
     "portfolio.gallery.soft.2": "Soft glam  beauty portrait",
     "portfolio.gallery.soft.3": "Makeup products  soft glam session",
@@ -107,6 +129,7 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.caption3": "Romantic definition that stays fresh from vows to the last dance.",
     "portfolio.gallery.bridal.caption4": "Close-up finish that reads beautifully in natural daylight.",
     "portfolio.gallery.bridal.caption5": "Gentle contour and luminous skin for an effortless aisle moment.",
+    "portfolio.gallery.bridal.caption6": "Soft definition and a natural glow that photographs beautifully all day.",
     "portfolio.gallery.soft.caption1": "Balanced soft glam  polished in person, stunning on camera.",
     "portfolio.gallery.soft.caption2": "Even light and gentle contour for a refined everyday glow.",
     "portfolio.gallery.soft.caption3": "Texture and tone matched to your skin and the occasion.",
@@ -127,6 +150,7 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.tag3": "@sophia",
     "portfolio.gallery.bridal.tag4": "@lucia.p",
     "portfolio.gallery.bridal.tag5": "@tereza.v",
+    "portfolio.gallery.bridal.tag6": "@nina.m",
     "portfolio.gallery.soft.tag1": "@tereza.v",
     "portfolio.gallery.soft.tag2": "@lucia.p",
     "portfolio.gallery.soft.tag3": "@nina.m",
@@ -333,26 +357,47 @@ const BUNDLED_STRINGS = {
   },
   sk: {
     "meta.title": "Juliére Beauty | Moderné kozmetické štúdio",
-    "meta.titleReviews": "Juliere Beauty | Recenzie",
-    "meta.descriptionReviews": "Recenzie a referencie klientov  kozmetické štúdio Juliere Beauty.",
-    "meta.titleBooking": "Juliere Beauty | Online rezervácia",
+    "meta.titleReviews": "Juliére Beauty | Recenzie",
+    "meta.descriptionReviews": "Recenzie a referencie klientov  kozmetické štúdio Juliére Beauty.",
+    "meta.titleBooking": "Juliére Beauty | Online rezervácia",
     "meta.descriptionBooking": "Rezervujte si termín na líčenie  zvoľte službu a voľný čas.",
+    "meta.titleBridalLanding": "Svadobné líčenie Bratislava | Juliére Beauty",
+    "meta.descriptionBridalLanding":
+      "Svadobné líčenie v Bratislave od vizážistky Julia — individuálny look, profesionálna kozmetika a dlhá výdrž. Voliteľná skúška. Štúdio Juliére Beauty, Račianska 66.",
+    "bridalLanding.faq.q1": "Koľko stojí svadobné líčenie v Bratislave?",
+    "bridalLanding.faq.a1":
+      "Svadobné líčenie v štúdiu Juliére Beauty stojí 45 EUR (trvanie približne 75 minút). Samostatná skúška svadobného líčenia je tiež za 45 EUR (cca 90 minút). Pri dojazde k vám sa účtuje cestovné podľa km — kompletný cenník nájdete na hlavnej stránke v sekcii Služby.",
+    "bridalLanding.faq.q2": "Kedy si rezervovať termín?",
+    "bridalLanding.faq.a2":
+      "Pri obľúbených svadobných termínoch odporúčam rezerváciu niekoľko mesiacov vopred. Ak chcete skúšku, naplánujte ju približne 4–8 týždňov pred svadbou, aby sme stihli doladiť detaily. Termín v deň svadby zladíme s prípravou, obradom a fotením.",
+    "bridalLanding.faq.q3": "Je skúška svadobného líčenia potrebná?",
+    "bridalLanding.faq.a3":
+      "Nie je povinná, no odporúčam ju — uvidíte presné odtiene, finiš a výdrž na svojej pleti a v deň D už len doladíme detaily bez zbytočného stresu.",
+    "bridalLanding.faq.q4": "Ako dlho vydrží svadobný makeup?",
+    "bridalLanding.faq.a4":
+      "S profesionálnou dlhotrvácou kozmetikou a správnou prípravou pleti je look nastavený na celý deň — od prípravy cez obrad a fotenie až po večernú zábavu. Dôraz kladiem na pleť, ktorá dobre vyzerá na fotkách, a na líčenie, ktoré zostáva svieže s minimálnymi úpravami.",
+    "bridalLanding.faq.q5": "Dochádzate aj mimo Bratislavy?",
+    "bridalLanding.faq.a5":
+      "Áno — pri líčení minimálne štyroch osôb viem prísť aj k vám. Cestovné sa účtuje podľa vzdialenosti od štúdia na Račianskej 66 v Bratislave. Pri individuálnych termínoch sa teším na vás priamo v štúdiu.",
+    "bridalLanding.faq.q6": "Aké produkty používate?",
+    "bridalLanding.faq.a6":
+      "Pracujem s profesionálnou kozmetikou zameranou na výdrž, komfort a prirodzený vzhľad pred objektívom — podklady, púdra, fixátory a pigmenty vhodné na dlhý svadobný deň. Výber prispôsobím typu pleti a vašim preferenciám.",
     "meta.description": "Juliére Beauty  elegantné vizážistické štúdio.",
     "sheet.loading": "Načítavam…",
     "hero.carouselAria": "Juliére Beauty",
-    "hero.slide1.alt": "Portrét  profesionálny makeup look, Juliere Beauty",
-    "hero.slide1.caption": "Vybraný portrét pre Juliere Beauty",
-    "hero.slide2.alt": "Luxusné produkty na líčenie  štúdio Juliere Beauty",
+    "hero.slide1.alt": "Portrét  profesionálny makeup look, Juliére Beauty",
+    "hero.slide1.caption": "Vybraný portrét pre Juliére Beauty",
+    "hero.slide2.alt": "Luxusné produkty na líčenie  štúdio Juliére Beauty",
     "hero.slide2.caption": "",
-    "hero.slide3.alt": "Portrét  soft glam makeup, Juliere Beauty",
+    "hero.slide3.alt": "Portrét  soft glam makeup, Juliére Beauty",
     "hero.slide3.caption": "Portrét s profesionálnym makeup lookom",
     "hero.tagline": "Moderné kozmetické štúdio",
     "hero.prevSlide": "Predchádzajúci snímok",
     "hero.nextSlide": "Ďalší snímok",
     "hero.chooseSlide": "Výber snímku",
     "hero.scroll": "Scroll",
-    "header.brandAria": "Domov Juliere Beauty",
-    "header.brandPrimary": "Juliere",
+    "header.brandAria": "Domov Juliére Beauty",
+    "header.brandPrimary": "Juliére",
     "header.brandSecondary": "Beauty",
     "header.openMenu": "Otvoriť menu",
     "header.closeMenu": "Zavrieť menu",
@@ -377,7 +422,7 @@ const BUNDLED_STRINGS = {
     "about.eyebrow": "O mne",
     "about.h2": "Minimalistické a prispôsobené Vašej jedinečnosti.",
     "about.statsAria": "Prehľad",
-    "about.photoAlt": "Julia  vizážistka Juliere Beauty",
+    "about.photoAlt": "Julia  vizážistka Juliére Beauty",
     "about.p1": "Vitajte! Volám sa Julia a makeup je moja vášeň už viac ako 8 rokov. Líčim svadby, plesy, stužkové, fotenia aj špeciálne príležitosti.",
     "about.p2": "Verím, že každá žena je krásna a mojím cieľom je túto krásu len jemne zvýrazniť, aby ste sa cítili sebavedomo a sama sebou. Budem sa na Vás tešiť!",
     "portfolio.eyebrow": "Portfólio",
@@ -403,16 +448,17 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.3": "Profesionálne produkty na svadobné líčenie",
     "portfolio.gallery.bridal.4": "Svadobné líčenie  portrét",
     "portfolio.gallery.bridal.5": "Svadobné líčenie  portrét soft glam",
+    "portfolio.gallery.bridal.6": "Svadobné líčenie  portrét",
     "portfolio.gallery.soft.1": "Soft glam  portrét",
     "portfolio.gallery.soft.2": "Soft glam  beauty portrét",
     "portfolio.gallery.soft.3": "Produkty na soft glam",
     "portfolio.gallery.soft.4": "",
-    "portfolio.gallery.soft.5": "",
+    "portfolio.gallery.soft.5": "Soft glam  portrét",
     "portfolio.gallery.editorial.1": "Editoriálna krása  produkty",
     "portfolio.gallery.editorial.2": "Editoriálne čisté líčenie  portrét",
     "portfolio.gallery.editorial.3": "",
     "portfolio.gallery.editorial.4": "",
-    "portfolio.gallery.editorial.5": "",
+    "portfolio.gallery.editorial.5": "Extravagantné líčenie  portrét",
     "portfolio.gallery.evening.1": "Večerné líčenie  portrét",
     "portfolio.gallery.evening.2": "Večerný luxus  portrét",
     "portfolio.gallery.evening.3": "Večerný look  produkty",
@@ -423,6 +469,7 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.caption3": "",
     "portfolio.gallery.bridal.caption4": "Detailný finiš, ktorý pôsobí prirodzene v dennom svetle.",
     "portfolio.gallery.bridal.caption5": "Jemná kontúra a žiariaca pleť na pokojný okamih pri oltári.",
+    "portfolio.gallery.bridal.caption6": "Jemná definícia a prirodzený lesk, ktorý sa celý deň krásne fotí.",
     "portfolio.gallery.soft.caption1": "",
     "portfolio.gallery.soft.caption2": "",
     "portfolio.gallery.soft.caption3": "",
@@ -443,6 +490,7 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.tag3": "",
     "portfolio.gallery.bridal.tag4": "@lucia.p",
     "portfolio.gallery.bridal.tag5": "@tereza.v",
+    "portfolio.gallery.bridal.tag6": "@nina.m",
     "portfolio.gallery.soft.tag1": "",
     "portfolio.gallery.soft.tag2": "",
     "portfolio.gallery.soft.tag3": "",
@@ -797,13 +845,21 @@ export function resolveSiteImageUrl(raw) {
 }
 
 /**
- * Modal gallery images: prefer SK column C URL keyed by `altKey` (e.g. `portfolio.gallery.bridal.1`), else JSON `src`.
+ * Modal gallery images: when sheet copy is enabled, only SK column C URLs keyed by `altKey`
+ * (e.g. `portfolio.gallery.bridal.1`) are used — no JSON fallback. Otherwise JSON `src` is the fallback.
  * @param {string | undefined} altKey
  * @param {string} jsonSrc
  * @returns {string}
  */
-export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
+export function resolvePortfolioGalleryImageBase(altKey, jsonSrc) {
   const key = String(altKey ?? "").trim();
+  if (CONFIG.useSheetTexts) {
+    if (!key) {
+      return "";
+    }
+    return resolveSiteImageUrl(sheetImageUrls[key]) ?? "";
+  }
+
   let resolved = "";
   if (key) {
     resolved = resolveSiteImageUrl(sheetImageUrls[key]) ?? "";
@@ -811,6 +867,11 @@ export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
   if (!resolved) {
     resolved = resolveSiteImageUrl(jsonSrc) ?? "";
   }
+  return resolved;
+}
+
+export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
+  const resolved = resolvePortfolioGalleryImageBase(altKey, jsonSrc);
   if (!resolved) {
     return "";
   }
@@ -1084,7 +1145,7 @@ function showSheetLoadingOverlay() {
     brand.setAttribute("aria-hidden", "true");
     const linePrimary = document.createElement("span");
     linePrimary.className = "sheet-loading-overlay__brand-line sheet-loading-overlay__brand-line--primary";
-    linePrimary.textContent = "Juliere";
+    linePrimary.textContent = "Juliére";
     const lineSecondary = document.createElement("span");
     lineSecondary.className = "sheet-loading-overlay__brand-line sheet-loading-overlay__brand-line--secondary";
     lineSecondary.textContent = "Beauty";

@@ -1,4 +1,5 @@
-import { resolvePortfolioGalleryImageSrc, t } from "../i18n.js";
+import { applySiteImageDeliveryToElement } from "../site-image-delivery.js";
+import { resolvePortfolioGalleryImageBase, t } from "../i18n.js";
 
 const CATEGORY_LABEL_KEYS = {
   bridal: "portfolio.bridal.label",
@@ -37,6 +38,62 @@ let suppressLightboxBackdropCloseUntil = 0;
 const SWIPE_MIN_PX = 48;
 const SWIPE_VERTICAL_DOMINANCE = 0.78;
 
+/** @typedef {{ src?: string, altKey?: string, tagKey?: string, captionKey?: string }} PortfolioGalleryItem */
+
+let pageScrollLocked = false;
+let savedScrollY = 0;
+
+function lockPageScroll() {
+  if (pageScrollLocked) {
+    return;
+  }
+  pageScrollLocked = true;
+  savedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  document.documentElement.classList.add("is-portfolio-gallery-open");
+  document.body.classList.add("is-portfolio-gallery-open");
+  document.body.style.top = `-${savedScrollY}px`;
+}
+
+function unlockPageScroll() {
+  if (!pageScrollLocked) {
+    return;
+  }
+  const y = savedScrollY;
+  pageScrollLocked = false;
+  document.documentElement.classList.remove("is-portfolio-gallery-open");
+  document.body.classList.remove("is-portfolio-gallery-open");
+  document.body.style.top = "";
+
+  const restore = () => {
+    window.scrollTo({ top: y, left: 0, behavior: "instant" });
+    document.documentElement.scrollTop = y;
+    document.body.scrollTop = y;
+  };
+
+  document.documentElement.classList.add("is-portfolio-gallery-restoring");
+  restore();
+  requestAnimationFrame(() => {
+    restore();
+    document.documentElement.classList.remove("is-portfolio-gallery-restoring");
+  });
+}
+
+function openPortfolioGalleryDialog() {
+  if (!dialog || dialog.open) {
+    return;
+  }
+  lockPageScroll();
+  dialog.showModal();
+}
+
+function visibleGalleryImages(/** @type {string} */ categoryId) {
+  const images = galleries?.[categoryId]?.images;
+  if (!Array.isArray(images)) {
+    return [];
+  }
+  return images.filter((item) => resolvePortfolioGalleryImageBase(item.altKey, item.src));
+}
+
 function referrerPolicyForResolvedSrc(/** @type {string} */ resolvedSrc) {
   if (
     resolvedSrc &&
@@ -53,14 +110,18 @@ function applyLightboxImage() {
   if (!lightboxImg || !lightboxCategoryId || !galleries?.[lightboxCategoryId]) {
     return;
   }
-  const images = galleries[lightboxCategoryId].images;
+  const images = visibleGalleryImages(lightboxCategoryId);
   const item = images[lightboxIndex];
   if (!item) {
     return;
   }
-  const resolvedSrc = resolvePortfolioGalleryImageSrc(item.altKey, item.src);
-  lightboxImg.src = resolvedSrc;
+  const imageBase = resolvePortfolioGalleryImageBase(item.altKey, item.src);
+  if (!imageBase) {
+    return;
+  }
+  applySiteImageDeliveryToElement(lightboxImg, imageBase, "gallery");
   lightboxImg.alt = item.altKey ? t(item.altKey) : "";
+  const resolvedSrc = lightboxImg.currentSrc || lightboxImg.src;
   const ref = referrerPolicyForResolvedSrc(resolvedSrc);
   if (ref) {
     lightboxImg.referrerPolicy = ref;
@@ -81,7 +142,7 @@ function updateLightboxNav() {
     next.disabled = true;
     return;
   }
-  const images = galleries[lightboxCategoryId].images;
+  const images = visibleGalleryImages(lightboxCategoryId);
   const n = images.length;
   prev.disabled = lightboxIndex <= 0;
   next.disabled = lightboxIndex >= n - 1;
@@ -91,7 +152,7 @@ function lightboxStep(/** @type {number} */ delta) {
   if (!lightboxCategoryId || !galleries?.[lightboxCategoryId]) {
     return;
   }
-  const images = galleries[lightboxCategoryId].images;
+  const images = visibleGalleryImages(lightboxCategoryId);
   const next = lightboxIndex + delta;
   if (next < 0 || next >= images.length) {
     return;
@@ -122,7 +183,7 @@ function closeGalleryLightbox() {
 }
 
 function openGalleryLightbox(/** @type {string} */ categoryId, /** @type {number} */ imageIndex) {
-  if (!lightboxEl || !lightboxImg || !galleries?.[categoryId]?.images?.[imageIndex]) {
+  if (!lightboxEl || !lightboxImg || !visibleGalleryImages(categoryId)[imageIndex]) {
     return;
   }
   lightboxCategoryId = categoryId;
@@ -167,7 +228,12 @@ function renderGallery(categoryId) {
   titleEl.textContent = labelKey ? t(labelKey) : categoryId;
 
   gridEl.innerHTML = "";
-  data.images.forEach((item, imageIndex) => {
+  visibleGalleryImages(categoryId).forEach((item, imageIndex) => {
+    const imageBase = resolvePortfolioGalleryImageBase(item.altKey, item.src);
+    if (!imageBase) {
+      return;
+    }
+
     const figure = document.createElement("figure");
     figure.className = "portfolio-gallery__figure";
 
@@ -178,14 +244,24 @@ function renderGallery(categoryId) {
 
     const img = document.createElement("img");
     img.className = "portfolio-gallery__img";
-    const resolvedSrc = resolvePortfolioGalleryImageSrc(item.altKey, item.src);
-    img.src = resolvedSrc;
+    applySiteImageDeliveryToElement(img, imageBase, "gallery");
+    const resolvedSrc = img.currentSrc || img.src;
     if (referrerPolicyForResolvedSrc(resolvedSrc)) {
       img.referrerPolicy = "no-referrer";
     }
     img.alt = item.altKey ? t(item.altKey) : "";
     img.loading = "lazy";
     img.decoding = "async";
+
+    if (item.tagKey) {
+      const tagText = t(item.tagKey).trim();
+      if (tagText) {
+        const tag = document.createElement("span");
+        tag.className = "portfolio-gallery__tag";
+        tag.textContent = tagText;
+        figure.appendChild(tag);
+      }
+    }
 
     hit.appendChild(img);
     hit.addEventListener("click", (event) => {
@@ -195,6 +271,16 @@ function renderGallery(categoryId) {
     });
 
     figure.appendChild(hit);
+
+    if (item.captionKey) {
+      const captionText = t(item.captionKey).trim();
+      if (captionText) {
+        const caption = document.createElement("p");
+        caption.className = "portfolio-gallery__caption";
+        caption.textContent = captionText;
+        figure.appendChild(caption);
+      }
+    }
 
     gridEl.appendChild(figure);
   });
@@ -206,24 +292,22 @@ export async function openPortfolioGallery(categoryId) {
   }
 
   await ensureGalleriesLoaded();
-  if (!galleries?.[categoryId]) {
+  if (!galleries?.[categoryId] || visibleGalleryImages(categoryId).length === 0) {
     return;
   }
 
   renderGallery(categoryId);
   setGalleryHash(categoryId);
-  if (!dialog.open) {
-    dialog.showModal();
-  }
+  openPortfolioGalleryDialog();
 }
 
 export function closePortfolioGallery() {
   closeGalleryLightbox();
-  if (!dialog?.open) {
-    return;
+  if (dialog?.open) {
+    dialog.close();
   }
-  dialog.close();
   setGalleryHash(null);
+  unlockPageScroll();
 }
 
 function setCardAriaLabels() {
@@ -240,6 +324,10 @@ export function refreshPortfolioGalleryI18n() {
   setCardAriaLabels();
   const id = parseGalleryFromHash();
   if (dialog?.open && id && galleries?.[id]) {
+    if (visibleGalleryImages(id).length === 0) {
+      closePortfolioGallery();
+      return;
+    }
     renderGallery(id);
   }
 }
@@ -417,20 +505,15 @@ export async function initPortfolioGallery() {
   window.addEventListener("hashchange", () => {
     const id = parseGalleryFromHash();
     if (!id) {
-      closeGalleryLightbox();
-      if (dialog.open) {
-        dialog.close();
-      }
+      closePortfolioGallery();
       return;
     }
     void ensureGalleriesLoaded().then(() => {
-      if (!galleries?.[id]) {
+      if (!galleries?.[id] || visibleGalleryImages(id).length === 0) {
         return;
       }
       renderGallery(id);
-      if (!dialog.open) {
-        dialog.showModal();
-      }
+      openPortfolioGalleryDialog();
     });
   });
 
@@ -439,9 +522,9 @@ export async function initPortfolioGallery() {
   const initial = parseGalleryFromHash();
   if (initial) {
     await ensureGalleriesLoaded();
-    if (galleries?.[initial]) {
+    if (galleries?.[initial] && visibleGalleryImages(initial).length > 0) {
       renderGallery(initial);
-      dialog.showModal();
+      openPortfolioGalleryDialog();
     }
   }
 }

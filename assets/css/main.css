@@ -1,5 +1,5 @@
 /**
- * Global styles for Juliere Beauty (single file; group related rules when editing).
+ * Global styles for Juliére Beauty (single file; group related rules when editing).
  * Layout: tokens → base → header/hero → sections → components (forms, calendar, toast).
  */
 :root {
@@ -1012,6 +1012,25 @@ p {
   outline-offset: 3px;
 }
 
+.portfolio-card--link {
+  display: block;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.portfolio-card--link:hover,
+.portfolio-card--link:focus-visible {
+  border-color: rgba(176, 123, 103, 0.4);
+  box-shadow: 0 12px 36px rgba(36, 28, 24, 0.08);
+  transform: translateY(-2px);
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .portfolio-card__media {
   position: absolute;
   inset: 0;
@@ -1090,6 +1109,22 @@ p {
   margin: auto;
   background: transparent;
   color: var(--text);
+}
+
+html.is-portfolio-gallery-open,
+body.is-portfolio-gallery-open {
+  overflow: hidden;
+}
+
+body.is-portfolio-gallery-open {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+html.is-portfolio-gallery-restoring {
+  scroll-behavior: auto !important;
 }
 
 .portfolio-gallery-dialog::backdrop {
@@ -1478,6 +1513,21 @@ p {
 }
 
 .price-card--clickable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.price-card--link {
+  display: block;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.price-card--link:hover,
+.price-card--link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 70px rgba(55, 34, 23, 0.14);
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
@@ -2510,5 +2560,184 @@ body.is-sheet-loading {
   .sheet-loading-overlay__dot {
     animation: none;
     opacity: 0.75;
+  }
+}
+
+/* Bridal landing (/svadobne-licenie-bratislava/) */
+.landing-hero {
+  padding-top: 8px;
+}
+
+.landing-hero__grid {
+  display: grid;
+  gap: 28px;
+  padding: 28px 32px;
+  align-items: center;
+}
+
+.landing-hero__lead {
+  margin: 16px 0 0;
+  max-width: 52ch;
+  font-size: 1.08rem;
+  color: var(--text);
+}
+
+.landing-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.landing-hero__card {
+  margin: 0;
+  min-height: min(420px, 72vw);
+  width: 100%;
+}
+
+.landing-prose__body {
+  display: grid;
+  gap: 18px;
+  padding: 28px 32px;
+}
+
+.landing-prose__body p {
+  color: var(--text);
+}
+
+.landing-included {
+  list-style: none;
+  margin: 0;
+  padding: 24px 28px;
+  display: grid;
+  gap: 20px;
+}
+
+.landing-included li {
+  display: grid;
+  gap: 8px;
+}
+
+.landing-included h3 {
+  font-size: 1.35rem;
+}
+
+.landing-process {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.landing-process__step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 18px;
+  padding: 22px 26px;
+}
+
+.landing-process__num {
+  grid-row: 1 / span 2;
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  background: rgba(176, 123, 103, 0.15);
+  color: var(--accent-dark);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.landing-process__step h3 {
+  font-size: 1.35rem;
+}
+
+.landing-process__step p {
+  grid-column: 2;
+}
+
+.landing-pricing__grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.landing-pricing__note {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.landing-pricing__note a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--accent-dark);
+}
+
+.landing-gallery-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.landing-gallery-grid .portfolio-card--gallery {
+  min-height: 300px;
+  width: 100%;
+  max-width: none;
+}
+
+.landing-gallery__more {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.landing-gallery__more a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--accent-dark);
+}
+
+.landing-cta-band__inner {
+  display: grid;
+  gap: 16px;
+  padding: 32px 36px;
+  text-align: center;
+  justify-items: center;
+}
+
+.landing-cta-band__inner p {
+  max-width: 52ch;
+  color: var(--text);
+}
+
+.landing-cta-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.lang-switch-btn.is-active[aria-current="true"] {
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .landing-hero__grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .landing-included {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-process {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-gallery-grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }

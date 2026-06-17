@@ -80,11 +80,19 @@ function scheduleBelowFoldFeatures() {
 }
 
 async function bootstrap() {
-  initContactMap();
-  initI18n();
   const page = detectSeoPage();
+  if (page !== "bridalLanding") {
+    initContactMap();
+  }
+  initI18n();
   initSeo(page);
   window.addEventListener("juliamakeup:lang", onLanguageChanged);
+
+  if (page === "bridalLanding") {
+    bindNavigation();
+    initHeaderScroll();
+    return;
+  }
 
   initCriticalFeatures();
   scheduleBelowFoldFeatures();

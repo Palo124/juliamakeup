@@ -5,16 +5,22 @@ import { CONFIG } from "../config.js";
 import { getPageId, getSiteOrigin, pagePath, pageUrl as localePageUrl } from "../core/locale-urls.js";
 import { getLang, resolveSiteImageUrl, siteImageSrcForProfile, t } from "../i18n.js";
 
-/** @typedef {"home" | "booking"} SeoPage */
+/** @typedef {"home" | "booking" | "bridalLanding"} SeoPage */
 
 const FAQ_COUNT = 4;
+const BRIDAL_LANDING_FAQ_COUNT = 6;
 const JSON_LD_ID = "juliamakeup-json-ld";
 
 /** @type {SeoPage | null} */
 let activePage = null;
 
-function ogImageUrl() {
-  const resolved = resolveSiteImageUrl(CONFIG.seoOgImage || "assets/img/favicon_juliere.png");
+/** @param {SeoPage} [page] */
+function ogImageUrl(page) {
+  const source =
+    page === "bridalLanding"
+      ? "https://drive.google.com/file/d/1zpPOVSkMdypIdToZJQzigpec5VMtCrDA/view?usp=sharing"
+      : CONFIG.seoOgImage || "assets/img/favicon_juliere.png";
+  const resolved = resolveSiteImageUrl(source);
   return resolved ? siteImageSrcForProfile(resolved, "og") : "";
 }
 
@@ -27,6 +33,12 @@ function pageMetaKeys(page) {
     return {
       titleKey: "meta.titleBooking",
       descriptionKey: "meta.descriptionBooking",
+    };
+  }
+  if (page === "bridalLanding") {
+    return {
+      titleKey: "meta.titleBridalLanding",
+      descriptionKey: "meta.descriptionBridalLanding",
     };
   }
   return {
@@ -60,6 +72,11 @@ function setLinkRel(rel, href, hreflang) {
 
 function applyHreflang(page) {
   const skUrl = localePageUrl(page, "sk");
+  if (page === "bridalLanding") {
+    setLinkRel("alternate", skUrl, "sk");
+    setLinkRel("alternate", skUrl, "x-default");
+    return;
+  }
   const enUrl = localePageUrl(page, "en");
   setLinkRel("alternate", skUrl, "sk");
   setLinkRel("alternate", enUrl, "en");
@@ -114,7 +131,7 @@ function openingHoursSpecification() {
 
 function buildJsonLd(page) {
   const origin = getSiteOrigin() || "";
-  const image = ogImageUrl();
+  const image = ogImageUrl(page);
   const url = currentPageUrl(page);
   const lang = getLang();
   const inLanguage = lang === "sk" ? "sk-SK" : "en-GB";
@@ -123,7 +140,7 @@ function buildJsonLd(page) {
   graph.push({
     "@type": "WebSite",
     "@id": `${origin}/#website`,
-    name: "Juliere Beauty",
+    name: "Juliére Beauty",
     url: origin || url,
     inLanguage: ["sk-SK", "en-GB"],
   });
@@ -132,7 +149,7 @@ function buildJsonLd(page) {
     graph.push({
       "@type": "BeautySalon",
       "@id": `${origin}/#business`,
-      name: "Juliere Beauty",
+      name: "Juliére Beauty",
       url: origin || url,
       image,
       telephone: t("contact.phone"),
@@ -183,6 +200,36 @@ function buildJsonLd(page) {
     });
   }
 
+  if (page === "bridalLanding") {
+    graph.push({
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: t("meta.titleBridalLanding"),
+      description: t("meta.descriptionBridalLanding"),
+      url,
+      isPartOf: { "@id": `${origin}/#website` },
+      about: { "@id": `${origin}/#business` },
+      inLanguage: "sk-SK",
+    });
+
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      inLanguage: "sk-SK",
+      mainEntity: Array.from({ length: BRIDAL_LANDING_FAQ_COUNT }, (_, i) => {
+        const n = i + 1;
+        return {
+          "@type": "Question",
+          name: t(`bridalLanding.faq.q${n}`),
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: t(`bridalLanding.faq.a${n}`),
+          },
+        };
+      }),
+    });
+  }
+
   return {
     "@context": "https://schema.org",
     "@graph": graph,
@@ -206,7 +253,7 @@ export function applySeo(page = activePage || "home") {
   const title = t(titleKey);
   const description = t(descriptionKey);
   const url = currentPageUrl(page);
-  const image = ogImageUrl();
+  const image = ogImageUrl(page);
   const lang = getLang();
   const ogLocale = lang === "sk" ? "sk_SK" : "en_GB";
   const ogLocaleAlt = lang === "sk" ? "en_GB" : "sk_SK";
@@ -218,7 +265,7 @@ export function applySeo(page = activePage || "home") {
 
   applyHreflang(page);
 
-  setMetaByProperty("og:site_name", "Juliere Beauty");
+  setMetaByProperty("og:site_name", "Juliére Beauty");
   setMetaByProperty("og:type", "website");
   setMetaByProperty("og:url", url);
   setMetaByProperty("og:title", title);
@@ -245,7 +292,14 @@ export function initSeo(page = "home") {
 
 /** @param {string} [pathname] */
 export function detectSeoPage(pathname = window.location.pathname) {
-  return getPageId(pathname) === "booking" ? "booking" : "home";
+  const pageId = getPageId(pathname);
+  if (pageId === "booking") {
+    return "booking";
+  }
+  if (pageId === "bridalLanding") {
+    return "bridalLanding";
+  }
+  return "home";
 }
 
 /** Exported for sitemap tooling / tests. */
