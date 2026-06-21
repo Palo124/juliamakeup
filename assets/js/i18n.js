@@ -43,6 +43,13 @@ const BUNDLED_STRINGS = {
     "bridalLanding.faq.q6": "What products do you use?",
     "bridalLanding.faq.a6":
       "I work with professional brands chosen for longevity, comfort and a natural finish on camera — foundations, powders, setting sprays and pigments suited to long wedding days. Products are selected individually for your skin type and preferences.",
+    "home.instagram.eyebrow": "Instagram",
+    "home.instagram.h2": "On Instagram",
+    "home.instagram.followLink": "Follow @julierebeauty",
+    "home.instagram.carouselAria": "Instagram posts — swipe horizontally",
+    "home.instagram.embed.1": "https://www.instagram.com/julierebeauty/reel/DZp7beuMw3U/",
+    "home.instagram.embed.2": "",
+    "home.instagram.embed.3": "",
     "sheet.loading": "Loading…",
     "hero.carouselAria": "Juliére Beauty",
     "hero.slide1.alt": "Portrait  professional makeup look, Juliére Beauty",
@@ -382,6 +389,13 @@ const BUNDLED_STRINGS = {
     "bridalLanding.faq.q6": "Aké produkty používate?",
     "bridalLanding.faq.a6":
       "Pracujem s profesionálnou kozmetikou zameranou na výdrž, komfort a prirodzený vzhľad pred objektívom — podklady, púdra, fixátory a pigmenty vhodné na dlhý svadobný deň. Výber prispôsobím typu pleti a vašim preferenciám.",
+    "home.instagram.eyebrow": "Instagram",
+    "home.instagram.h2": "Juliére Beauty na Instagrame",
+    "home.instagram.followLink": "Sledovať @julierebeauty",
+    "home.instagram.carouselAria": "Instagram príspevky — posúvajte vodorovne",
+    "home.instagram.embed.1": "https://www.instagram.com/julierebeauty/reel/DZp7beuMw3U/",
+    "home.instagram.embed.2": "",
+    "home.instagram.embed.3": "",
     "meta.description": "Juliére Beauty  elegantné vizážistické štúdio.",
     "sheet.loading": "Načítavam…",
     "hero.carouselAria": "Juliére Beauty",
@@ -944,6 +958,42 @@ export function t(key, vars) {
   return str;
 }
 
+const HOME_INSTAGRAM_EMBED_KEY_RE = /^home\.instagram\.embed\.(\d+)$/;
+const LEGACY_BRIDAL_INSTAGRAM_EMBED_KEY_RE = /^bridalLanding\.instagram\.embed\.(\d+)$/;
+
+/** Post/reel permalinks for homepage Instagram embeds (sheet column B → `home.instagram.embed.N`). */
+export function getHomeInstagramEmbedPermalinks() {
+  const lang = getLang();
+  /** @type {Map<number, string>} */
+  const byOrder = new Map();
+
+  const put = (key, raw) => {
+    const match = key.match(HOME_INSTAGRAM_EMBED_KEY_RE) ?? key.match(LEGACY_BRIDAL_INSTAGRAM_EMBED_KEY_RE);
+    if (!match) {
+      return;
+    }
+    const url = String(raw ?? "").trim();
+    if (!url) {
+      return;
+    }
+    byOrder.set(Number(match[1]), url);
+  };
+
+  for (const [key, val] of Object.entries(BUNDLED_STRINGS.en ?? {})) {
+    put(key, val);
+  }
+  for (const [key, val] of Object.entries(BUNDLED_STRINGS[lang] ?? {})) {
+    put(key, val);
+  }
+  for (const [key, val] of Object.entries(sheetOverrides[lang] ?? {})) {
+    put(key, val);
+  }
+
+  return [...byOrder.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([, url]) => url);
+}
+
 export function getDateLocale() {
   return getLang() === "sk" ? "sk-SK" : "en-GB";
 }
@@ -987,6 +1037,14 @@ function applyFooterSocialLinks() {
       href = normalizeFooterHref(BUNDLED_STRINGS[lang]?.[urlKey] ?? BUNDLED_STRINGS.en[urlKey]);
     }
     a.href = href || "#";
+  }
+
+  const landingInstagramLink = document.getElementById("home-instagram-profile-link");
+  if (landingInstagramLink) {
+    const footerInstagram = document.getElementById("footer-link-instagram");
+    if (footerInstagram?.href && footerInstagram.href !== "#") {
+      landingInstagramLink.href = footerInstagram.href;
+    }
   }
 }
 

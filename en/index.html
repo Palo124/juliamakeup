@@ -10,7 +10,7 @@
     content="Juliére Beauty an elegant makeup studio."
   >
   <meta name="robots" content="index, follow">
-                              <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/">
+                                  <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/">
   <link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/">
   <link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/">
 <link rel="canonical" id="canonical-link" href="https://julierebeauty.com/en/">
@@ -44,6 +44,7 @@
   <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1M2SYG3WTJjP0mbKm1NRF6RmLeXj2aKRI=w1200">
   <link rel="icon" href="/assets/img/favicon_juliere.png" type="image/png">
   <link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://www.instagram.com" crossorigin>
   <link
     rel="preload"
     as="image"
@@ -277,9 +278,11 @@
                 <p data-i18n="portfolio.bridal.p">Makeup transformations.</p>
               </div>
             </article>
-            <a
-              href="/svadobne-licenie-bratislava/"
-              class="portfolio-card portfolio-carousel-slide portfolio-card--gallery portfolio-card--link rosy"
+            <article
+              class="portfolio-card portfolio-carousel-slide portfolio-card--gallery rosy"
+              data-portfolio-category="soft"
+              role="button"
+              tabindex="0"
             >
               <div class="portfolio-card__media" aria-hidden="true">
                 <img
@@ -298,7 +301,7 @@
                 <div class="portfolio-label" data-i18n="portfolio.soft.label">Brides</div>
                 <p data-i18n="portfolio.soft.p">Bridal makeup.</p>
               </div>
-            </a>
+            </article>
             <article
               class="portfolio-card portfolio-carousel-slide portfolio-card--gallery nude"
               data-portfolio-category="editorial"
@@ -562,6 +565,29 @@
             ›
           </button>
         </div>
+      </section>
+
+      <section id="home-instagram" class="section home-instagram" aria-labelledby="home-instagram-title">
+        <div class="section-heading">
+          <span class="eyebrow" data-i18n="home.instagram.eyebrow">Instagram</span>
+          <h2 id="home-instagram-title" data-i18n="home.instagram.h2">On Instagram</h2>
+        </div>
+        <div
+          id="home-instagram-embeds"
+          class="home-instagram-grid"
+          tabindex="0"
+          data-i18n-aria="home.instagram.carouselAria"
+          aria-label="Instagram posts — swipe horizontally"
+        ></div>
+        <p class="home-instagram__more">
+          <a
+            id="home-instagram-profile-link"
+            href="https://www.instagram.com/julierebeauty/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n="home.instagram.followLink"
+          >Follow @julierebeauty</a>
+        </p>
       </section>
 
       <section id="contact" class="section contact-section">

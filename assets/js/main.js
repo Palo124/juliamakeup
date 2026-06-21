@@ -68,6 +68,7 @@ function initBelowFoldFeatures() {
   initBeforeVisitCarousel();
   void loadPortfolioGalleryModule().then((mod) => mod.initPortfolioGallery());
   void loadPriceServiceDialogModule().then((mod) => mod.initPriceServiceDialog());
+  void import("./features/instagram-embed.js").then((mod) => mod.initInstagramEmbeds());
 }
 
 function scheduleBelowFoldFeatures() {
