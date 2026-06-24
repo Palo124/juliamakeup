@@ -163,8 +163,8 @@ function buildJsonLd(page) {
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 48.1789721,
-        longitude: 17.1287973,
+        latitude: 48.1791114,
+        longitude: 17.1289502,
       },
       openingHoursSpecification: openingHoursSpecification(),
       sameAs: socialProfileUrls(),

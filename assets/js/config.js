@@ -50,12 +50,11 @@ export const CONFIG = {
   driveImageThumbnailSz: "w1920",
 
   /**
-   * Contact section map: paste the full `src` URL from Google Maps
-   * (Share → Embed a map → copy HTML). Shows a pin for that place.
-   * Račianska 66, 831 02 Bratislava (same coords as Google Maps place link).
+   * Contact section map: embed `src` (Share → Embed a map in Google Maps, or lat/lng from the place pin).
+   * Place: Juliére Beauty — https://maps.app.goo.gl/Ukzo9ACBMrebJvbVA
    */
   googleMapsEmbedUrl:
-    "https://maps.google.com/maps?q=48.1789721%2C17.1287973&t=&z=18&ie=UTF8&iwloc=&output=embed",
+    "https://maps.google.com/maps?q=48.1791114%2C17.1289502&t=&z=17&ie=UTF8&iwloc=&output=embed",
 
   /** Footer social profile URLs (fallback if ENG/SK sheet keys `footer.social*Url` are empty). */
   social: {
