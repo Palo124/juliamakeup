@@ -2845,3 +2845,55 @@ body.is-sheet-loading {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.text-cleaner__lead {
+  margin: 12px 0 0;
+  max-width: 52ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.text-cleaner__card {
+  display: grid;
+  gap: 20px;
+}
+
+.text-cleaner__panes {
+  display: grid;
+  gap: 18px;
+}
+
+.text-cleaner__pane {
+  display: grid;
+  gap: 8px;
+}
+
+.text-cleaner__label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.text-cleaner__textarea {
+  min-height: 280px;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.text-cleaner__textarea--output {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.text-cleaner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .text-cleaner__panes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Čistič textu | Juliére Beauty</title>
+  <link rel="icon" href="/assets/img/favicon_juliere.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="page-shell page-shell--sub">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Domov Juliére Beauty">
+        <span class="brand-lockup">
+          <span class="brand-lockup-primary">Juliére</span>
+          <span class="brand-lockup-secondary">Beauty</span>
+        </span>
+      </a>
+    </header>
+
+    <main>
+      <section class="section text-cleaner">
+        <div class="section-heading">
+          <span class="eyebrow">Nástroj</span>
+          <h1>Čistič textu</h1>
+          <p class="text-cleaner__lead">
+            Vložte text so slovenskými diakritikami. Výstup zachová medzery aj prázdne riadky.
+          </p>
+        </div>
+
+        <div class="card text-cleaner__card">
+          <div class="text-cleaner__panes">
+            <label class="text-cleaner__pane">
+              <span class="text-cleaner__label">Vstupný text</span>
+              <textarea
+                id="text-cleaner-input"
+                class="text-cleaner__textarea"
+                rows="14"
+                spellcheck="false"
+                placeholder="Sem vložte text…"
+              ></textarea>
+            </label>
+
+            <label class="text-cleaner__pane">
+              <span class="text-cleaner__label">Text bez diakritiky</span>
+              <textarea
+                id="text-cleaner-output"
+                class="text-cleaner__textarea text-cleaner__textarea--output"
+                rows="14"
+                readonly
+                spellcheck="false"
+                aria-live="polite"
+              ></textarea>
+            </label>
+          </div>
+
+          <div class="text-cleaner__actions">
+            <button id="text-cleaner-copy" class="button" type="button">Kopírovať výstup</button>
+            <button id="text-cleaner-clear" class="button button-ghost" type="button">Vymazať</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { initTextCleaner } from "/assets/js/features/text-cleaner.js";
+    initTextCleaner();
+  </script>
+</body>
+</html>
