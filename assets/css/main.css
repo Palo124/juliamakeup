@@ -2897,3 +2897,86 @@ body.is-sheet-loading {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.invoce-printer__lead {
+  margin: 12px 0 0;
+  max-width: 52ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.invoce-printer__card {
+  display: grid;
+  gap: 20px;
+}
+
+.invoce-printer__panes {
+  display: grid;
+  gap: 18px;
+}
+
+.invoce-printer__pane {
+  display: grid;
+  gap: 8px;
+}
+
+.invoce-printer__label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.invoce-printer__textarea {
+  min-height: 320px;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.invoce-printer__preview-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border: 1px dashed rgba(36, 28, 24, 0.16);
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(45deg, rgba(36, 28, 24, 0.04) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(36, 28, 24, 0.04) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(36, 28, 24, 0.04) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(36, 28, 24, 0.04) 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+  background-color: rgba(255, 255, 255, 0.72);
+  overflow-x: auto;
+}
+
+.invoce-printer__preview {
+  width: min(100%, 384px);
+  height: auto;
+  display: block;
+  box-shadow: 0 10px 28px rgba(36, 28, 24, 0.14);
+  image-rendering: pixelated;
+}
+
+.invoce-printer__meta {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.invoce-printer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .invoce-printer__panes {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  }
+}

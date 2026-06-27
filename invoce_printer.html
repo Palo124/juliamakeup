@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tlačiareň faktúr | Juliére Beauty</title>
+  <link rel="icon" href="/assets/img/favicon_juliere.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+  <div class="page-shell page-shell--sub">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Domov Juliére Beauty">
+        <span class="brand-lockup">
+          <span class="brand-lockup-primary">Juliére</span>
+          <span class="brand-lockup-secondary">Beauty</span>
+        </span>
+      </a>
+    </header>
+
+    <main>
+      <section class="section invoce-printer">
+        <div class="section-heading">
+          <span class="eyebrow">Nástroj</span>
+          <h1>Tlačiareň faktúr</h1>
+          <p class="invoce-printer__lead">
+            Vložte text faktúry. Nástroj vytvorí PNG obrázok šírky 48 mm (termotlač) so zachovaním riadkov a medzier.
+          </p>
+        </div>
+
+        <div class="card invoce-printer__card">
+          <div class="invoce-printer__panes">
+            <label class="invoce-printer__pane">
+              <span class="invoce-printer__label">Text faktúry</span>
+              <textarea
+                id="invoce-printer-input"
+                class="invoce-printer__textarea"
+                rows="16"
+                spellcheck="false"
+                placeholder="Sem vložte text faktúry…"
+              ></textarea>
+            </label>
+
+            <div class="invoce-printer__pane">
+              <span class="invoce-printer__label">Náhľad (48 mm)</span>
+              <div class="invoce-printer__preview-wrap">
+                <img
+                  id="invoce-printer-preview"
+                  class="invoce-printer__preview"
+                  alt="Náhľad faktúry 48 mm"
+                  width="384"
+                >
+              </div>
+              <p id="invoce-printer-preview-meta" class="invoce-printer__meta"></p>
+            </div>
+          </div>
+
+          <div class="invoce-printer__actions">
+            <button id="invoce-printer-download" class="button" type="button" disabled>
+              Stiahnuť PNG
+            </button>
+            <button id="invoce-printer-clear" class="button button-ghost" type="button">Vymazať</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { initInvocePrinter } from "/assets/js/features/invoce-printer.js";
+    initInvocePrinter();
+  </script>
+</body>
+</html>
