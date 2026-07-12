@@ -1,3 +1,4 @@
+import { CONFIG } from "../config.js";
 import { t } from "../i18n.js";
 import { elements } from "../core/elements.js";
 
@@ -42,5 +43,15 @@ export function bindNavigation() {
       }
       closeMobileMenu();
     });
+  }
+
+  if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
+    const warmBooking = () => {
+      void import("../services/booking-api.js").then((mod) => mod.prefetchAvailability());
+    };
+    for (const link of document.querySelectorAll('a[href*="booking.html"], a[href="#booking"]')) {
+      link.addEventListener("mouseenter", warmBooking, { once: true, passive: true });
+      link.addEventListener("focus", warmBooking, { once: true });
+    }
   }
 }

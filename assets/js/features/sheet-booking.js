@@ -9,7 +9,7 @@ import {
 import { CONFIG } from "../config.js";
 import { pagePath } from "../core/locale-urls.js";
 import { applyTranslations, getDateLocale, getLang, t } from "../i18n.js";
-import { fetchAvailability, postReservation } from "../services/booking-api.js";
+import { fetchAvailability, getCachedAvailability, postReservation, warmBookingBackend } from "../services/booking-api.js";
 import { showToast } from "../ui/toast.js";
 
 const WEEKDAY_KEYS = [
@@ -211,7 +211,6 @@ export function initSheetBooking() {
   const calWeekdays = document.getElementById("booking-cal-weekdays");
   const calGrid = document.getElementById("booking-cal-grid");
   const bookingPicker = document.getElementById("booking-picker");
-  const calendarLoadingEl = document.getElementById("booking-calendar-loading");
 
   const resultBanner = document.getElementById("booking-action-result");
 
@@ -236,20 +235,28 @@ export function initSheetBooking() {
   let selectedDateKey = null;
 
   let selectedSlotId = "";
-  let isLoadingSlots = false;
+  let isFetchingSlots = false;
 
-  function setCalendarLoading(loading) {
-    isLoadingSlots = loading;
-    calRoot?.classList.toggle("is-loading", loading);
-    calRoot?.setAttribute("aria-busy", loading ? "true" : "false");
-    bookingPicker?.setAttribute("aria-busy", loading ? "true" : "false");
-    calendarLoadingEl?.classList.toggle("hidden", !loading);
-    calendarLoadingEl?.setAttribute("aria-hidden", loading ? "false" : "true");
-    if (loading) {
-      statusEl.textContent = t("booking.slotsLoading");
+  function setPickerBusy(busy) {
+    isFetchingSlots = busy;
+    bookingPicker?.setAttribute("aria-busy", busy ? "true" : "false");
+  }
+
+  function hydrateSlotsFromCache() {
+    const cached = getCachedAvailability();
+    if (!cached?.ok || !Array.isArray(cached.slots)) {
+      return false;
     }
-    updatePickerVisibility();
-    renderCalendar();
+    allSlotsRaw = cached.slots.filter((s) => normalizeDateKey(s.date));
+    return allSlotsRaw.length > 0;
+  }
+
+  function renderIdleState() {
+    statusEl.textContent = t("booking.chooseServiceFirst");
+    slotsEl.innerHTML = "";
+    setSelected("");
+    bookingPicker?.classList.add("hidden");
+    calRoot?.classList.add("hidden");
   }
 
   function getSelectedService() {
@@ -307,9 +314,16 @@ export function initSheetBooking() {
   }
 
   function updatePickerVisibility() {
-    const hasData = allSlotsRaw.length > 0;
     const svc = getSelectedService();
-    bookingPicker?.classList.toggle("hidden", !(isLoadingSlots || (hasData && svc)));
+    bookingPicker?.classList.toggle("hidden", !svc);
+  }
+
+  function renderWaitingForSlots() {
+    updatePickerVisibility();
+    calRoot?.classList.add("hidden");
+    slotsEl.innerHTML = "";
+    setSelected("");
+    statusEl.textContent = t("booking.slotsLoading");
   }
 
   function renderSlotsForDay() {
@@ -381,26 +395,12 @@ export function initSheetBooking() {
       return;
     }
 
-    if (isLoadingSlots) {
-      calRoot.classList.remove("hidden");
-      renderWeekdayLabels();
-      renderMonthTitle();
-      calGrid.innerHTML = "";
-      for (let i = 0; i < 35; i += 1) {
-        const cell = document.createElement("div");
-        cell.className = "booking-cal-day booking-cal-day--skeleton";
-        cell.setAttribute("aria-hidden", "true");
-        calGrid.append(cell);
-      }
-      return;
-    }
-
-    if (!allSlotsRaw.length) {
+    if (!getSelectedService()) {
       calRoot.classList.add("hidden");
       return;
     }
 
-    if (!getSelectedService()) {
+    if (!allSlotsRaw.length) {
       calRoot.classList.add("hidden");
       return;
     }
@@ -475,32 +475,39 @@ export function initSheetBooking() {
     renderSlotsForDay();
   }
 
-  async function applyAvailabilityData(data) {
+  function applyAvailabilityData(data) {
     if (!data.ok || !Array.isArray(data.slots)) {
-      statusEl.textContent = data.message || t("booking.slotsError");
+      if (getSelectedService()) {
+        statusEl.textContent = data.message || t("booking.slotsError");
+        bookingPicker?.classList.remove("hidden");
+      }
       allSlotsRaw = [];
       datesWithSlots = new Set();
       selectedDateKey = null;
+      calRoot?.classList.add("hidden");
       return;
     }
 
     allSlotsRaw = data.slots.filter((s) => normalizeDateKey(s.date));
-    applyServiceFilter();
+    if (getSelectedService()) {
+      applyServiceFilter();
+    }
   }
 
   async function loadSlots(options = {}) {
-    const hadSlots = allSlotsRaw.length > 0;
-    if (!hadSlots) {
-      setCalendarLoading(true);
-      slotsEl.innerHTML = "";
-      setSelected("");
+    const { forceFresh = false } = options;
+    const awaitingService = Boolean(getSelectedService());
+
+    if (awaitingService && !allSlotsRaw.length) {
+      renderWaitingForSlots();
+      setPickerBusy(true);
     }
 
     try {
-      const data = await fetchAvailability(options);
-      await applyAvailabilityData(data);
+      const data = await fetchAvailability({ forceFresh });
+      applyAvailabilityData(data);
     } finally {
-      setCalendarLoading(false);
+      setPickerBusy(false);
     }
   }
 
@@ -513,7 +520,16 @@ export function initSheetBooking() {
   });
 
   serviceSelect.addEventListener("change", () => {
-    applyServiceFilter();
+    const svc = getSelectedService();
+    if (!svc) {
+      renderIdleState();
+      return;
+    }
+    if (allSlotsRaw.length) {
+      applyServiceFilter();
+      return;
+    }
+    void loadSlots();
   });
 
   if (calPrev) {
@@ -587,7 +603,8 @@ export function initSheetBooking() {
       form.reset();
       slotIdInput.value = "";
       selectedSlotId = "";
-      await loadSlots({ forceFresh: true });
+      renderIdleState();
+      void loadSlots({ forceFresh: true });
       return;
     }
 
@@ -603,11 +620,15 @@ export function initSheetBooking() {
     }
   });
 
-  void loadSlots();
+  hydrateSlotsFromCache();
+  renderIdleState();
+  warmBookingBackend();
 
   window.addEventListener("juliamakeup:lang", () => {
     if (!getSelectedService()) {
       statusEl.textContent = t("booking.chooseServiceFirst");
+    } else if (isFetchingSlots && !allSlotsRaw.length) {
+      statusEl.textContent = t("booking.slotsLoading");
     } else if (!allSlotsRaw.length) {
       statusEl.textContent = t("booking.slotsEmpty");
     } else if (!filteredSlots().length) {

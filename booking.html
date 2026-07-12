@@ -59,6 +59,13 @@
     >
   </noscript>
   <link rel="stylesheet" href="/assets/css/main.css">
+  <script type="module">
+    import { CONFIG } from "/assets/js/config.js";
+    import { warmBookingBackend } from "/assets/js/services/booking-api.js";
+    if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
+      warmBookingBackend();
+    }
+  </script>
 </head>
 <body data-seo-page="booking">
   <div class="page-shell page-shell--sub">

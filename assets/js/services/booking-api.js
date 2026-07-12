@@ -1,7 +1,7 @@
 import { CONFIG } from "../config.js";
 
-const AVAIL_SESSION_KEY = "juliamakeup:booking:availability:v1";
-const AVAIL_SESSION_TTL_MS = 3 * 60 * 1000;
+const AVAIL_CACHE_KEY = "juliamakeup:booking:availability:v1";
+const AVAIL_CACHE_TTL_MS = 30 * 60 * 1000;
 const AVAIL_STALE_REVALIDATE_MS = 45 * 1000;
 
 /** @type {Promise<unknown> | null} */
@@ -27,9 +27,9 @@ export function getAvailabilityRequestUrl() {
 /**
  * @returns {{ fetchedAt: number, data: { ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string } } | null}
  */
-function readSessionAvailabilityCache() {
+function readAvailabilityCacheEntry() {
   try {
-    const raw = sessionStorage.getItem(AVAIL_SESSION_KEY);
+    const raw = localStorage.getItem(AVAIL_CACHE_KEY);
     if (!raw) {
       return null;
     }
@@ -37,8 +37,8 @@ function readSessionAvailabilityCache() {
     if (!parsed || typeof parsed.fetchedAt !== "number" || !parsed.data) {
       return null;
     }
-    if (Date.now() - parsed.fetchedAt > AVAIL_SESSION_TTL_MS) {
-      sessionStorage.removeItem(AVAIL_SESSION_KEY);
+    if (Date.now() - parsed.fetchedAt > AVAIL_CACHE_TTL_MS) {
+      localStorage.removeItem(AVAIL_CACHE_KEY);
       return null;
     }
     return parsed;
@@ -48,15 +48,22 @@ function readSessionAvailabilityCache() {
 }
 
 /**
+ * @returns {{ ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string } | null}
+ */
+export function getCachedAvailability() {
+  return readAvailabilityCacheEntry()?.data ?? null;
+}
+
+/**
  * @param {{ ok: boolean, slots?: unknown[], message?: string, pendingVerification?: boolean, code?: string }} data
  */
-function writeSessionAvailabilityCache(data) {
+function writeAvailabilityCache(data) {
   if (!data?.ok || !Array.isArray(data.slots)) {
     return;
   }
   try {
-    sessionStorage.setItem(
-      AVAIL_SESSION_KEY,
+    localStorage.setItem(
+      AVAIL_CACHE_KEY,
       JSON.stringify({
         fetchedAt: Date.now(),
         data,
@@ -69,7 +76,7 @@ function writeSessionAvailabilityCache(data) {
 
 export function clearAvailabilityCache() {
   try {
-    sessionStorage.removeItem(AVAIL_SESSION_KEY);
+    localStorage.removeItem(AVAIL_CACHE_KEY);
   } catch {
     /* ignore */
   }
@@ -111,13 +118,13 @@ function dispatchAvailabilityUpdated(data) {
 
 function scheduleAvailabilityRevalidate() {
   if (availabilityInFlight) {
-    return;
+    return availabilityInFlight;
   }
 
   availabilityInFlight = fetchAvailabilityFromNetwork()
     .then((data) => {
       if (data.ok) {
-        writeSessionAvailabilityCache(data);
+        writeAvailabilityCache(data);
         dispatchAvailabilityUpdated(data);
       }
       return data;
@@ -125,14 +132,35 @@ function scheduleAvailabilityRevalidate() {
     .finally(() => {
       availabilityInFlight = null;
     });
+
+  return availabilityInFlight;
 }
 
-/** Warm the network path as early as possible on the booking page. */
+/** Soft prefetch — skips network when cache is still fresh. */
 export function prefetchAvailability() {
   if (!getAvailabilityRequestUrl()) {
     return;
   }
-  if (readSessionAvailabilityCache()) {
+
+  const cached = readAvailabilityCacheEntry();
+  if (cached) {
+    const age = Date.now() - cached.fetchedAt;
+    if (age < AVAIL_STALE_REVALIDATE_MS) {
+      return;
+    }
+    scheduleAvailabilityRevalidate();
+    return;
+  }
+
+  scheduleAvailabilityRevalidate();
+}
+
+/**
+ * Always hit the booking API in the background to warm GAS and refresh cache.
+ * Safe to call on page entry — never blocks UI.
+ */
+export function warmBookingBackend() {
+  if (!getAvailabilityRequestUrl()) {
     return;
   }
   scheduleAvailabilityRevalidate();
@@ -144,7 +172,7 @@ export function prefetchAvailability() {
  */
 export async function fetchAvailability(options = {}) {
   const { forceFresh = false } = options;
-  const cached = !forceFresh ? readSessionAvailabilityCache() : null;
+  const cached = !forceFresh ? readAvailabilityCacheEntry() : null;
 
   if (cached && !forceFresh) {
     const age = Date.now() - cached.fetchedAt;
@@ -161,7 +189,7 @@ export async function fetchAvailability(options = {}) {
   availabilityInFlight = fetchAvailabilityFromNetwork()
     .then((data) => {
       if (data.ok) {
-        writeSessionAvailabilityCache(data);
+        writeAvailabilityCache(data);
       }
       return data;
     })
