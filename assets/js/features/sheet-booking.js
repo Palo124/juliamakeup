@@ -9,7 +9,13 @@ import {
 import { CONFIG } from "../config.js";
 import { pagePath } from "../core/locale-urls.js";
 import { applyTranslations, getDateLocale, getLang, t } from "../i18n.js";
-import { fetchAvailability, getCachedAvailability, postReservation, warmBookingBackend } from "../services/booking-api.js";
+import {
+  fetchAvailability,
+  getCachedAvailability,
+  hasAvailabilityCache,
+  postReservation,
+  warmBookingBackend,
+} from "../services/booking-api.js";
 import { showToast } from "../ui/toast.js";
 
 const WEEKDAY_KEYS = [
@@ -237,6 +243,7 @@ export function initSheetBooking() {
 
   let selectedSlotId = "";
   let isLoadingSlots = false;
+  let isEntryWarming = false;
 
   function setCalendarLoading(loading) {
     isLoadingSlots = loading;
@@ -245,11 +252,30 @@ export function initSheetBooking() {
     bookingPicker?.setAttribute("aria-busy", loading ? "true" : "false");
     calendarLoadingEl?.classList.toggle("hidden", !loading);
     calendarLoadingEl?.setAttribute("aria-hidden", loading ? "false" : "true");
-    if (loading) {
+    if (loading && getSelectedService()) {
       statusEl.textContent = t("booking.slotsLoading");
     }
     updatePickerVisibility();
     renderCalendar();
+  }
+
+  function showEntryWarmShell() {
+    isEntryWarming = true;
+    statusEl.textContent = t("booking.chooseServiceFirst");
+    bookingPicker?.classList.remove("hidden");
+    setCalendarLoading(true);
+  }
+
+  function clearEntryWarmShell() {
+    if (!isEntryWarming) {
+      return;
+    }
+    isEntryWarming = false;
+    if (!getSelectedService()) {
+      setCalendarLoading(false);
+      bookingPicker?.classList.add("hidden");
+      statusEl.textContent = t("booking.chooseServiceFirst");
+    }
   }
 
   function hydrateSlotsFromCache() {
@@ -325,7 +351,7 @@ export function initSheetBooking() {
 
   function updatePickerVisibility() {
     const svc = getSelectedService();
-    bookingPicker?.classList.toggle("hidden", !svc);
+    bookingPicker?.classList.toggle("hidden", !(svc || isEntryWarming));
   }
 
   function renderWaitingForSlots() {
@@ -404,7 +430,7 @@ export function initSheetBooking() {
       return;
     }
 
-    if (!getSelectedService()) {
+    if (!getSelectedService() && !isEntryWarming) {
       calRoot.classList.add("hidden");
       return;
     }
@@ -508,12 +534,16 @@ export function initSheetBooking() {
       datesWithSlots = new Set();
       selectedDateKey = null;
       calRoot?.classList.add("hidden");
+      clearEntryWarmShell();
       return;
     }
 
     allSlotsRaw = data.slots.filter((s) => normalizeDateKey(s.date));
+    clearEntryWarmShell();
     if (getSelectedService()) {
       applyServiceFilter();
+    } else {
+      renderIdleState();
     }
   }
 
@@ -548,6 +578,7 @@ export function initSheetBooking() {
       renderIdleState();
       return;
     }
+    isEntryWarming = false;
     if (allSlotsRaw.length) {
       applyServiceFilter();
       return;
@@ -645,7 +676,11 @@ export function initSheetBooking() {
   });
 
   hydrateSlotsFromCache();
-  renderIdleState();
+  if (hasAvailabilityCache()) {
+    renderIdleState();
+  } else {
+    showEntryWarmShell();
+  }
   warmBookingBackend();
 
   window.addEventListener("juliamakeup:lang", () => {

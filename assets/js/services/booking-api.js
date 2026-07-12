@@ -1,8 +1,8 @@
 import { CONFIG } from "../config.js";
 
 const AVAIL_CACHE_KEY = "juliamakeup:booking:availability:v1";
-const AVAIL_CACHE_TTL_MS = 30 * 60 * 1000;
-const AVAIL_STALE_REVALIDATE_MS = 45 * 1000;
+const AVAIL_CACHE_TTL_MS = 60 * 60 * 1000;
+const AVAIL_STALE_REVALIDATE_MS = 5 * 60 * 1000;
 
 /** @type {Promise<unknown> | null} */
 let availabilityInFlight = null;
@@ -52,6 +52,12 @@ function readAvailabilityCacheEntry() {
  */
 export function getCachedAvailability() {
   return readAvailabilityCacheEntry()?.data ?? null;
+}
+
+/** @returns {boolean} */
+export function hasAvailabilityCache() {
+  const cached = getCachedAvailability();
+  return Boolean(cached?.ok && Array.isArray(cached.slots) && cached.slots.length > 0);
 }
 
 /**
@@ -117,6 +123,10 @@ function dispatchAvailabilityUpdated(data) {
 }
 
 function scheduleAvailabilityRevalidate() {
+  if (!getAvailabilityRequestUrl()) {
+    return null;
+  }
+
   if (availabilityInFlight) {
     return availabilityInFlight;
   }
@@ -136,23 +146,22 @@ function scheduleAvailabilityRevalidate() {
   return availabilityInFlight;
 }
 
-/** Soft prefetch — skips network when cache is still fresh. */
+/** Soft prefetch — refreshes in background when cache is older than 5 minutes. */
 export function prefetchAvailability() {
   if (!getAvailabilityRequestUrl()) {
-    return;
+    return null;
   }
 
   const cached = readAvailabilityCacheEntry();
   if (cached) {
     const age = Date.now() - cached.fetchedAt;
     if (age < AVAIL_STALE_REVALIDATE_MS) {
-      return;
+      return null;
     }
-    scheduleAvailabilityRevalidate();
-    return;
+    return scheduleAvailabilityRevalidate();
   }
 
-  scheduleAvailabilityRevalidate();
+  return scheduleAvailabilityRevalidate();
 }
 
 /**
@@ -160,10 +169,7 @@ export function prefetchAvailability() {
  * Safe to call on page entry — never blocks UI.
  */
 export function warmBookingBackend() {
-  if (!getAvailabilityRequestUrl()) {
-    return;
-  }
-  scheduleAvailabilityRevalidate();
+  return scheduleAvailabilityRevalidate();
 }
 
 /**

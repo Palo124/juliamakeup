@@ -84,7 +84,7 @@ function scheduleBelowFoldFeatures() {
 async function bootstrap() {
   const page = detectSeoPage();
 
-  if (page === "booking" && CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
+  if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
     void import("./services/booking-api.js").then((mod) => mod.warmBookingBackend());
   }
 
@@ -103,17 +103,6 @@ async function bootstrap() {
 
   initCriticalFeatures();
   scheduleBelowFoldFeatures();
-
-  if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
-    const warmBooking = () => {
-      void import("./services/booking-api.js").then((mod) => mod.prefetchAvailability());
-    };
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(warmBooking, { timeout: 2000 });
-    } else {
-      setTimeout(warmBooking, 0);
-    }
-  }
 
   if (page === "booking") {
     void import("./features/sheet-booking.js").then(({ initSheetBooking }) => initSheetBooking());

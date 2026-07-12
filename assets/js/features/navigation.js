@@ -47,11 +47,12 @@ export function bindNavigation() {
 
   if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
     const warmBooking = () => {
-      void import("../services/booking-api.js").then((mod) => mod.prefetchAvailability());
+      void import("../services/booking-api.js").then((mod) => mod.warmBookingBackend());
     };
     for (const link of document.querySelectorAll('a[href*="booking.html"], a[href="#booking"]')) {
       link.addEventListener("mouseenter", warmBooking, { once: true, passive: true });
       link.addEventListener("focus", warmBooking, { once: true });
+      link.addEventListener("touchstart", warmBooking, { once: true, passive: true });
     }
   }
 }
