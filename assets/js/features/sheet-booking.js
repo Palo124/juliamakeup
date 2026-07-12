@@ -475,28 +475,42 @@ export function initSheetBooking() {
     renderSlotsForDay();
   }
 
-  async function loadSlots() {
-    setCalendarLoading(true);
-    slotsEl.innerHTML = "";
-    setSelected("");
+  async function applyAvailabilityData(data) {
+    if (!data.ok || !Array.isArray(data.slots)) {
+      statusEl.textContent = data.message || t("booking.slotsError");
+      allSlotsRaw = [];
+      datesWithSlots = new Set();
+      selectedDateKey = null;
+      return;
+    }
+
+    allSlotsRaw = data.slots.filter((s) => normalizeDateKey(s.date));
+    applyServiceFilter();
+  }
+
+  async function loadSlots(options = {}) {
+    const hadSlots = allSlotsRaw.length > 0;
+    if (!hadSlots) {
+      setCalendarLoading(true);
+      slotsEl.innerHTML = "";
+      setSelected("");
+    }
 
     try {
-      const data = await fetchAvailability();
-
-      if (!data.ok || !Array.isArray(data.slots)) {
-        statusEl.textContent = data.message || t("booking.slotsError");
-        allSlotsRaw = [];
-        datesWithSlots = new Set();
-        selectedDateKey = null;
-        return;
-      }
-
-      allSlotsRaw = data.slots.filter((s) => normalizeDateKey(s.date));
-      applyServiceFilter();
+      const data = await fetchAvailability(options);
+      await applyAvailabilityData(data);
     } finally {
       setCalendarLoading(false);
     }
   }
+
+  window.addEventListener("juliamakeup:availability-updated", (event) => {
+    const data = event.detail;
+    if (!data?.ok || !Array.isArray(data.slots)) {
+      return;
+    }
+    void applyAvailabilityData(data);
+  });
 
   serviceSelect.addEventListener("change", () => {
     applyServiceFilter();
@@ -573,7 +587,7 @@ export function initSheetBooking() {
       form.reset();
       slotIdInput.value = "";
       selectedSlotId = "";
-      await loadSlots();
+      await loadSlots({ forceFresh: true });
       return;
     }
 
@@ -585,7 +599,7 @@ export function initSheetBooking() {
     }
 
     if (result.code === "TAKEN") {
-      await loadSlots();
+      await loadSlots({ forceFresh: true });
     }
   });
 

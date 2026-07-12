@@ -99,6 +99,7 @@ async function bootstrap() {
   scheduleBelowFoldFeatures();
 
   if (page === "booking") {
+    void import("./services/booking-api.js").then((mod) => mod.prefetchAvailability());
     const { initSheetBooking } = await import("./features/sheet-booking.js");
     initSheetBooking();
   }

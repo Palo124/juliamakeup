@@ -10,7 +10,9 @@
     "booking:clasp:push": "cd backend/apps-script-booking && clasp push",
     "booking:clasp:pull": "cd backend/apps-script-booking && clasp pull",
     "booking:clasp:open": "cd backend/apps-script-booking && clasp open",
-    "booking:clasp:status": "cd backend/apps-script-booking && clasp status"
+    "booking:clasp:status": "cd backend/apps-script-booking && clasp status",
+    "booking:clasp:deploy": "bash scripts/deploy-booking-backend.sh",
+    "booking:deploy": "bash scripts/deploy-booking-backend.sh"
   },
   "devDependencies": {
     "@google/clasp": "^3.0.6"

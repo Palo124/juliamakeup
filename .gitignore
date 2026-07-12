@@ -18,6 +18,7 @@ Thumbs.db
 
 # Google Apps Script (clasp) — script id is per-user / per-deployment
 backend/apps-script-booking/.clasp.json
+backend/apps-script-booking/.clasp.deploy.json
 
 # Editor swap / backup
 *.swp
@@ -30,3 +31,5 @@ backend/apps-script-booking/.clasp.json
 /backend
 README.md
 *.pdf
+/printer_test
+deploy-booking-backend.sh
