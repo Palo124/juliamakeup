@@ -126,8 +126,22 @@ function renderBookingOutcomeBanner(resultEl, result, code) {
     return;
   }
   const r = String(result || "").trim();
-  resultEl.textContent = messageForBookingUrlOutcome(result, code);
+  const titleEl = resultEl.querySelector(".booking-action-result__title");
+  const textEl = resultEl.querySelector(".booking-action-result__text");
+  const message = messageForBookingUrlOutcome(result, code);
+
+  if (titleEl) {
+    titleEl.textContent = "";
+    titleEl.classList.add("hidden");
+  }
+  if (textEl) {
+    textEl.textContent = message;
+  } else {
+    resultEl.textContent = message;
+  }
+
   resultEl.classList.remove("hidden", "is-error", "is-success");
+  resultEl.dataset.outcome = "";
   resultEl.dataset.bookingResult = r;
   resultEl.dataset.bookingCode = String(code || "").trim();
   if (r === "error" || r === "rejected") {
@@ -135,6 +149,70 @@ function renderBookingOutcomeBanner(resultEl, result, code) {
   } else if (r) {
     resultEl.classList.add("is-success");
   }
+}
+
+/**
+ * @param {HTMLDialogElement | null} dialogEl
+ * @param {{ pendingVerification?: boolean }} [options]
+ */
+function fillBookingSubmitSuccessDialog(dialogEl, options = {}) {
+  if (!dialogEl) {
+    return;
+  }
+  const { pendingVerification = true } = options;
+  const titleEl = document.getElementById("booking-success-title");
+  const textEl = document.getElementById("booking-success-text");
+  const okBtn = document.getElementById("booking-success-ok");
+  const title = t("booking.submitSuccessTitle");
+  const body = pendingVerification ? t("booking.submitSuccessVerifyBody") : t("booking.success");
+
+  if (titleEl) {
+    titleEl.textContent = title;
+  }
+  if (textEl) {
+    textEl.textContent = body;
+  }
+  if (okBtn) {
+    okBtn.textContent = t("booking.dialogOk");
+  }
+}
+
+/**
+ * @param {HTMLDialogElement | null} dialogEl
+ * @param {{ pendingVerification?: boolean }} [options]
+ */
+function showBookingSubmitSuccess(dialogEl, options = {}) {
+  if (!dialogEl) {
+    return;
+  }
+  const { pendingVerification = true } = options;
+  dialogEl.dataset.pendingVerification = pendingVerification ? "1" : "0";
+  fillBookingSubmitSuccessDialog(dialogEl, { pendingVerification });
+  if (!dialogEl.open) {
+    dialogEl.showModal();
+  }
+}
+
+/**
+ * @param {HTMLDialogElement | null} dialogEl
+ */
+function bindBookingSubmitSuccessDialog(dialogEl) {
+  if (!dialogEl) {
+    return;
+  }
+  const okBtn = document.getElementById("booking-success-ok");
+  okBtn?.addEventListener("click", () => {
+    dialogEl.close();
+  });
+  dialogEl.addEventListener("cancel", (event) => {
+    event.preventDefault();
+  });
+  dialogEl.addEventListener("click", (event) => {
+    if (event.target === dialogEl) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
 }
 
 /**
@@ -218,8 +296,14 @@ export function initSheetBooking() {
   const calGrid = document.getElementById("booking-cal-grid");
   const bookingPicker = document.getElementById("booking-picker");
   const calendarLoadingEl = document.getElementById("booking-calendar-loading");
+  const formLoadingEl = document.getElementById("booking-form-loading");
 
   const resultBanner = document.getElementById("booking-action-result");
+  const successDialog = /** @type {HTMLDialogElement | null} */ (
+    document.getElementById("booking-success-dialog")
+  );
+
+  bindBookingSubmitSuccessDialog(successDialog);
 
   if (!section || !statusEl || !slotsEl || !form || !slotIdInput || !submitBtn || !serviceSelect) {
     return;
@@ -626,10 +710,13 @@ export function initSheetBooking() {
       service: String(formData.get("service") || "").trim(),
       notes: String(formData.get("notes") || "").trim(),
       website: String(formData.get("website") || "").trim(),
+      lang: getLang(),
     };
 
     form.setAttribute("aria-busy", "true");
     bookingPicker?.setAttribute("aria-busy", "true");
+    formLoadingEl?.classList.remove("hidden");
+    formLoadingEl?.setAttribute("aria-hidden", "false");
     submitBtn.disabled = true;
     submitBtn.classList.add("is-loading");
     submitBtn.textContent = t("booking.sending");
@@ -644,17 +731,15 @@ export function initSheetBooking() {
     } finally {
       form.removeAttribute("aria-busy");
       bookingPicker?.removeAttribute("aria-busy");
+      formLoadingEl?.classList.add("hidden");
+      formLoadingEl?.setAttribute("aria-hidden", "true");
       submitBtn.disabled = false;
       submitBtn.classList.remove("is-loading");
       submitBtn.textContent = t("booking.submit");
     }
 
     if (result.ok) {
-      if (result.pendingVerification) {
-        showToast(t("booking.successPending"), "success");
-      } else {
-        showToast(t("booking.success"), "success");
-      }
+      showBookingSubmitSuccess(successDialog, { pendingVerification: Boolean(result.pendingVerification) });
       form.reset();
       slotIdInput.value = "";
       selectedSlotId = "";
@@ -684,6 +769,11 @@ export function initSheetBooking() {
   warmBookingBackend();
 
   window.addEventListener("juliamakeup:lang", () => {
+    if (successDialog?.open) {
+      fillBookingSubmitSuccessDialog(successDialog, {
+        pendingVerification: successDialog.dataset.pendingVerification !== "0",
+      });
+    }
     if (!getSelectedService()) {
       statusEl.textContent = t("booking.chooseServiceFirst");
     } else if (isLoadingSlots && !allSlotsRaw.length) {

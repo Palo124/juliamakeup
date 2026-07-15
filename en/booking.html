@@ -127,8 +127,21 @@
               <li data-i18n="booking.ruleCancel">Confirmed reservations can be cancelled from the email link up to 24 hours before the appointment.</li>
             </ul>
           </aside>
-          <p id="booking-action-result" class="booking-action-result hidden" role="status" aria-live="polite"></p>
+          <div id="booking-action-result" class="booking-action-result hidden" role="status" aria-live="polite">
+            <p class="booking-action-result__title hidden"></p>
+            <p class="booking-action-result__text"></p>
+          </div>
           <form id="booking-form" class="booking-form" autocomplete="on">
+            <div
+              class="booking-form-loading hidden"
+              id="booking-form-loading"
+              role="status"
+              aria-live="polite"
+              aria-hidden="true"
+            >
+              <span class="booking-form-loading__spinner" aria-hidden="true"></span>
+              <span class="booking-form-loading__text" data-i18n="booking.sending">Sending…</span>
+            </div>
             <div class="booking-service-row">
               <label>
                 <span data-i18n="booking.serviceFirst">Which service do you want?</span>
@@ -201,7 +214,7 @@
             </div>
             <div class="booking-form-grid">
               <label>
-                <span data-i18n="booking.name">Name</span>
+                <span data-i18n="booking.name">Name Surname</span>
                 <input type="text" name="name" data-i18n-placeholder="booking.phName" placeholder="Your name" required>
               </label>
               <label>
@@ -277,6 +290,21 @@
       </nav>
     </footer>
   </div>
+
+  <dialog
+    id="booking-success-dialog"
+    class="booking-success-dialog"
+    aria-labelledby="booking-success-title"
+    aria-describedby="booking-success-text"
+  >
+    <div class="booking-success-dialog__panel">
+      <h2 id="booking-success-title" class="booking-success-dialog__title"></h2>
+      <p id="booking-success-text" class="booking-success-dialog__text"></p>
+      <button type="button" class="button booking-success-dialog__ok" id="booking-success-ok" data-i18n="booking.dialogOk">
+        OK
+      </button>
+    </div>
+  </dialog>
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="false"></div>
 

@@ -2,6 +2,7 @@
   "name": "juliamakeup",
   "private": true,
   "type": "module",
+  "//booking": "clasp:push = upload source to Apps Script editor only (live web app unchanged). deploy = push + redeploy to same /exec URL (booking:deploy and booking:clasp:deploy are identical).",
   "scripts": {
     "test:site-texts": "node scripts/test-site-text-csv.mjs",
     "sync:locale-pages": "node scripts/sync-locale-pages.mjs",

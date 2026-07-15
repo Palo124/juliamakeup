@@ -1,7 +1,13 @@
 import { t } from "../i18n.js";
 import { TOAST_MS } from "../core/constants.js";
 
-export function showToast(message, type = "info") {
+/**
+ * @param {string} message
+ * @param {"info" | "success" | "error"} [type]
+ * @param {{ title?: string, durationMs?: number }} [options]
+ */
+export function showToast(message, type = "info", options = {}) {
+  const { title = "", durationMs = TOAST_MS } = options;
   let region = document.getElementById("toast-region");
   if (!region) {
     region = document.createElement("div");
@@ -19,9 +25,21 @@ export function showToast(message, type = "info") {
   const inner = document.createElement("div");
   inner.className = "toast-inner";
 
+  const copy = document.createElement("div");
+  copy.className = "toast-copy";
+
+  if (title) {
+    const heading = document.createElement("p");
+    heading.className = "toast-title";
+    heading.textContent = title;
+    copy.append(heading);
+  }
+
   const text = document.createElement("p");
-  text.className = "toast-message";
+  text.className = title ? "toast-detail" : "toast-message";
   text.textContent = message;
+
+  copy.append(text);
 
   const close = document.createElement("button");
   close.type = "button";
@@ -29,7 +47,7 @@ export function showToast(message, type = "info") {
   close.setAttribute("aria-label", t("toast.dismiss"));
   close.textContent = "\u00d7";
 
-  inner.append(text, close);
+  inner.append(copy, close);
   toast.append(inner);
   region.appendChild(toast);
 
@@ -49,6 +67,6 @@ export function showToast(message, type = "info") {
     setTimeout(() => toast.remove(), 280);
   }
 
-  const timer = setTimeout(dismiss, TOAST_MS);
+  const timer = setTimeout(dismiss, durationMs);
   close.addEventListener("click", dismiss);
 }
