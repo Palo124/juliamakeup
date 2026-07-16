@@ -2082,9 +2082,11 @@ textarea {
   background: rgba(176, 123, 103, 0.85);
 }
 
-.booking-cal-day:hover:not(:disabled) {
-  border-color: rgba(176, 123, 103, 0.4);
-  background: #fff;
+@media (hover: hover) and (pointer: fine) {
+  .booking-cal-day:hover:not(:disabled):not(.is-selected) {
+    border-color: rgba(176, 123, 103, 0.4);
+    background: #fff;
+  }
 }
 
 .booking-cal-day:focus-visible {
@@ -2109,8 +2111,11 @@ textarea {
   border-color: transparent;
 }
 
-.booking-cal-day.is-selected:hover {
+.booking-cal-day.is-selected:hover,
+.booking-cal-day.is-selected:focus-visible {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: #fff;
+  border-color: transparent;
 }
 
 .booking-slots-status {
