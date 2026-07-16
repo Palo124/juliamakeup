@@ -1913,6 +1913,93 @@ textarea {
   margin-bottom: 0.35rem;
 }
 
+.booking-action-shell {
+  min-height: 100vh;
+}
+
+.booking-action-page {
+  display: grid;
+  place-items: center;
+  padding: clamp(32px, 8vw, 72px) 20px 48px;
+  min-height: min(70vh, 640px);
+}
+
+.booking-action-card {
+  width: min(440px, 100%);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: clamp(22px, 4vw, 32px);
+  text-align: center;
+}
+
+.booking-action-card[data-state="success"] {
+  border-color: rgba(80, 140, 100, 0.35);
+}
+
+.booking-action-card[data-state="error"] {
+  border-color: rgba(176, 80, 70, 0.4);
+}
+
+.booking-action-card__spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  border: 3px solid rgba(176, 123, 103, 0.22);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: booking-cal-spin 0.75s linear infinite;
+}
+
+.booking-action-card__spinner[hidden] {
+  display: none;
+}
+
+.booking-action-card__title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.booking-action-card[data-state="success"] .booking-action-card__title {
+  color: #2f5f3d;
+}
+
+.booking-action-card[data-state="error"] .booking-action-card__title {
+  color: #8a3a32;
+}
+
+.booking-action-card__text {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.booking-action-card__hint {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.booking-action-card__hint[hidden] {
+  display: none;
+}
+
+.booking-action-card__cta {
+  display: inline-flex;
+  margin-top: 1.35rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.booking-action-card[data-state="loading"] .booking-action-card__cta {
+  display: none;
+}
+
 /* Legacy class aliases (older markup / cached HTML) */
 .booking-success-dialog {
   padding: 0;

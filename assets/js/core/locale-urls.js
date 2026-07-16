@@ -3,7 +3,7 @@
  */
 import { CONFIG } from "../config.js";
 
-/** @typedef {"home" | "booking" | "bridalLanding"} PageId */
+/** @typedef {"home" | "booking" | "action" | "bridalLanding"} PageId */
 /** @typedef {"en" | "sk"} SiteLang */
 
 /**
@@ -23,6 +23,9 @@ export function getPageId(pathname = window.location.pathname) {
   if (/\/booking\.html$/i.test(base)) {
     return "booking";
   }
+  if (/\/action\.html$/i.test(base)) {
+    return "action";
+  }
   if (/\/svadobne-licenie-bratislava$/i.test(base)) {
     return "bridalLanding";
   }
@@ -38,6 +41,9 @@ export function getPageId(pathname = window.location.pathname) {
 export function pagePath(pageId, lang) {
   if (pageId === "bridalLanding") {
     return "/svadobne-licenie-bratislava/";
+  }
+  if (pageId === "action") {
+    return lang === "en" ? "/en/action.html" : "/action.html";
   }
   if (lang === "en") {
     return pageId === "booking" ? "/en/booking.html" : "/en/";

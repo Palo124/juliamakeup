@@ -104,6 +104,34 @@ test("buildWebAppActionUrl_ builds verify link", () => {
   assert.match(url, /token=abc-123/);
 });
 
+test("buildWebAppActionUrl_ prefers PUBLIC_SITE_URL action page", () => {
+  const ctx = loadCtx({
+    scriptProperties: {
+      WEB_APP_URL: "https://script.google.com/macros/s/AKfycbzTEST/exec",
+      PUBLIC_SITE_URL: "https://julierebeauty.com/",
+    },
+  });
+  const sk = ctx.buildWebAppActionUrl_("verifyEmail", { token: "abc-123" }, "sk");
+  const en = ctx.buildWebAppActionUrl_("verifyEmail", { token: "abc-123" }, "en");
+  assert.equal(sk, "https://julierebeauty.com/action.html?action=verifyEmail&token=abc-123");
+  assert.equal(en, "https://julierebeauty.com/en/action.html?action=verifyEmail&token=abc-123");
+});
+
+test("redirectOrHtml_ returns JSON when format=json", () => {
+  const ctx = loadCtx();
+  ctx.BOOKING_ACTION_FORMAT_JSON_ = true;
+  const out = ctx.redirectOrHtml_(
+    "Potvrdené",
+    "<h1>Rezervácia potvrdená</h1><p>Zákazník bol informovaný.</p>",
+    "bookingResult=confirmed",
+  );
+  const data = readJsonOutput(out);
+  assert.equal(data.ok, true);
+  assert.equal(data.bookingResult, "confirmed");
+  assert.equal(data.bookingCode, "");
+  assert.match(String(data.message || ""), /Rezervácia potvrdená/);
+});
+
 test("formatSheetDate_ and formatSheetTime_ normalize Date cells", () => {
   const ctx = loadCtx();
   assert.equal(ctx.formatSheetDate_("2026-08-15"), "2026-08-15");

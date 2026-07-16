@@ -244,6 +244,60 @@ export async function fetchAvailability(options = {}) {
 }
 
 /**
+ * Token actions from email CTAs (verify / approve / reject / cancel).
+ * Calls write /exec with format=json (site action.html).
+ * @param {string} action
+ * @param {string} token
+ * @returns {Promise<{ ok?: boolean, bookingResult?: string, bookingCode?: string, code?: string, message?: string }>}
+ */
+export async function fetchBookingTokenAction(action, token) {
+  const base = CONFIG.bookingScriptUrl?.trim();
+  if (!base) {
+    return { ok: false, bookingResult: "error", bookingCode: "CONFIG", message: "Booking URL not configured." };
+  }
+
+  let url;
+  try {
+    const u = new URL(base);
+    u.searchParams.set("action", String(action || ""));
+    u.searchParams.set("token", String(token || ""));
+    u.searchParams.set("format", "json");
+    url = u.toString();
+  } catch {
+    return { ok: false, bookingResult: "error", bookingCode: "CONFIG", message: "Booking URL not configured." };
+  }
+
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "GET",
+      redirect: "follow",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+  } catch {
+    return { ok: false, bookingResult: "error", bookingCode: "", message: "Could not reach booking server." };
+  }
+
+  const text = await response.text();
+  const trimmed = String(text ?? "").trim();
+  if (!trimmed || trimmed.startsWith("<")) {
+    return { ok: false, bookingResult: "error", bookingCode: "", message: "Invalid response from server." };
+  }
+
+  try {
+    const data = JSON.parse(trimmed);
+    if (!data || typeof data !== "object") {
+      return { ok: false, bookingResult: "error", bookingCode: "", message: "Invalid response from server." };
+    }
+    return data;
+  } catch {
+    return { ok: false, bookingResult: "error", bookingCode: "", message: "Invalid response from server." };
+  }
+}
+
+/**
  * @param {Record<string, string>} reservation
  */
 export async function postReservation(reservation) {
