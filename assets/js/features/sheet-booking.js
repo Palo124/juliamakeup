@@ -813,8 +813,18 @@ export function initSheetBooking() {
 
     form.setAttribute("aria-busy", "true");
     bookingPicker?.setAttribute("aria-busy", "true");
-    formLoadingEl?.classList.remove("hidden");
-    formLoadingEl?.setAttribute("aria-hidden", "false");
+    if (formLoadingEl) {
+      const loadingText = formLoadingEl.querySelector(".booking-form-loading__text");
+      const loadingHint = formLoadingEl.querySelector(".booking-form-loading__hint");
+      if (loadingText) {
+        loadingText.textContent = t("booking.sending");
+      }
+      if (loadingHint) {
+        loadingHint.textContent = t("booking.sendingHint");
+      }
+      formLoadingEl.classList.remove("hidden");
+      formLoadingEl.setAttribute("aria-hidden", "false");
+    }
     submitBtn.disabled = true;
     submitBtn.classList.add("is-loading");
     submitBtn.textContent = t("booking.sending");

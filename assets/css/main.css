@@ -2175,10 +2175,11 @@ textarea {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
+  padding: 24px 20px;
   border-radius: var(--radius-md);
-  background: rgba(255, 253, 251, 0.88);
-  backdrop-filter: blur(3px);
+  background: rgba(255, 253, 251, 0.94);
+  backdrop-filter: blur(4px);
 }
 
 .booking-form-loading.hidden {
@@ -2186,8 +2187,8 @@ textarea {
 }
 
 .booking-form-loading__spinner {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: 3px solid rgba(176, 123, 103, 0.22);
   border-top-color: var(--accent);
   border-radius: 50%;
@@ -2196,9 +2197,20 @@ textarea {
 
 .booking-form-loading__text {
   margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
+  max-width: 22rem;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text);
+  text-align: center;
+}
+
+.booking-form-loading__hint {
+  margin: 0;
+  max-width: 22rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted);
   text-align: center;
 }
 
