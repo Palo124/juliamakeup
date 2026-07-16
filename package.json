@@ -2,18 +2,27 @@
   "name": "juliamakeup",
   "private": true,
   "type": "module",
-  "//booking": "clasp:push = upload source to Apps Script editor only (live web app unchanged). deploy = push + redeploy to same /exec URL (booking:deploy and booking:clasp:deploy are identical).",
+  "//booking": "Write = POST + token links (backend/apps-script-booking). Read = GET availability (backend/apps-script-booking-read). Run booking:sync:read before read deploy.",
   "scripts": {
     "test:site-texts": "node scripts/test-site-text-csv.mjs",
+    "test:booking": "node --test scripts/test-booking-logic.mjs",
+    "test:booking:frontend": "node --test scripts/test-booking-frontend.mjs",
+    "test:booking:layout": "node --test scripts/test-booking-layout.mjs",
+    "test:booking:live": "node --test scripts/test-booking-api-live.mjs",
+    "test:booking:all": "npm run test:booking && npm run test:booking:frontend && npm run test:booking:layout && npm run test:booking:live",
     "sync:locale-pages": "node scripts/sync-locale-pages.mjs",
     "optimize:site-images": "node scripts/optimize-site-images.mjs",
+    "booking:sync:read": "bash scripts/sync-booking-read.sh",
     "booking:clasp:login": "cd backend/apps-script-booking && clasp login",
     "booking:clasp:push": "cd backend/apps-script-booking && clasp push",
     "booking:clasp:pull": "cd backend/apps-script-booking && clasp pull",
     "booking:clasp:open": "cd backend/apps-script-booking && clasp open",
     "booking:clasp:status": "cd backend/apps-script-booking && clasp status",
     "booking:clasp:deploy": "bash scripts/deploy-booking-backend.sh",
-    "booking:deploy": "bash scripts/deploy-booking-backend.sh"
+    "booking:deploy": "bash scripts/deploy-booking-backend.sh",
+    "booking:read:clasp:open": "cd backend/apps-script-booking-read && clasp open",
+    "booking:read:clasp:push": "bash scripts/sync-booking-read.sh && cd backend/apps-script-booking-read && clasp push",
+    "booking:read:deploy": "bash scripts/deploy-booking-read.sh"
   },
   "devDependencies": {
     "@google/clasp": "^3.0.6"

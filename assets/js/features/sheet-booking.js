@@ -310,7 +310,7 @@ export function initSheetBooking() {
   }
 
   consumeBookingUrlParams_(resultBanner);
-  if (!CONFIG.bookingScriptUrl?.trim()) {
+  if (!CONFIG.bookingScriptUrl?.trim() || !getAvailabilityRequestUrl()) {
     statusEl.textContent = t("booking.configNeeded");
     form.classList.add("hidden");
     return;

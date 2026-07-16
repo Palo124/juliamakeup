@@ -10,10 +10,15 @@ export const CONFIG = {
     "https://drive.google.com/file/d/1M2SYG3WTJjP0mbKm1NRF6RmLeXj2aKRI/view?usp=sharing",
 
   /**
-   * Booking API (same spreadsheet as `Availability` + `Reservations` tabs — see `backend/apps-script-booking/`).
-   * Deploy the script as a Web app and paste the `/exec` URL here.
+   * Booking write API — POST createReservation, email/approval token links.
+   * Deploy `backend/apps-script-booking/` as a Web app and paste the `/exec` URL here.
    */
   bookingScriptUrl: "https://script.google.com/macros/s/AKfycbymkvl15hM-zHqt-YElyRcC4an58RXlv6Cu4aorqzcovn-PKjWEy5XySB3HaeH0BWWY/exec",
+  /**
+   * Booking read API — GET getAvailability only (lighter cold start).
+   * Deploy `backend/apps-script-booking-read/` as a separate Web app. Falls back to bookingScriptUrl when empty.
+   */
+  bookingReadScriptUrl: "https://script.google.com/macros/s/AKfycbxxVFVuV8SGgcWqyLBZHRETjsMAaecgwveBW4ftTyFeOPaMq3lErPe9waLOZO5Q7EX_7w/exec",
   useSheetBooking: true,
 
   /**

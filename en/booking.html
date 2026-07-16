@@ -62,7 +62,7 @@
   <script type="module">
     import { CONFIG } from "/assets/js/config.js";
     import { warmBookingBackend } from "/assets/js/services/booking-api.js";
-    if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
+    if (CONFIG.useSheetBooking && (CONFIG.bookingReadScriptUrl?.trim() || CONFIG.bookingScriptUrl?.trim())) {
       warmBookingBackend();
     }
   </script>

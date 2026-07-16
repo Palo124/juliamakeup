@@ -7,11 +7,20 @@ const AVAIL_STALE_REVALIDATE_MS = 5 * 60 * 1000;
 /** @type {Promise<unknown> | null} */
 let availabilityInFlight = null;
 
+/** @returns {string} */
+function getBookingReadBaseUrl() {
+  const read = CONFIG.bookingReadScriptUrl?.trim();
+  if (read) {
+    return read;
+  }
+  return CONFIG.bookingScriptUrl?.trim() || "";
+}
+
 /**
  * @returns {string | null}
  */
 export function getAvailabilityRequestUrl() {
-  const base = CONFIG.bookingScriptUrl?.trim();
+  const base = getBookingReadBaseUrl();
   if (!base) {
     return null;
   }

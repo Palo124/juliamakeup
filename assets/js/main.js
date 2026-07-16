@@ -81,10 +81,14 @@ function scheduleBelowFoldFeatures() {
   }
 }
 
+function bookingBackendConfigured() {
+  return Boolean(CONFIG.bookingReadScriptUrl?.trim() || CONFIG.bookingScriptUrl?.trim());
+}
+
 async function bootstrap() {
   const page = detectSeoPage();
 
-  if (CONFIG.useSheetBooking && CONFIG.bookingScriptUrl?.trim()) {
+  if (CONFIG.useSheetBooking && bookingBackendConfigured()) {
     void import("./services/booking-api.js").then((mod) => mod.warmBookingBackend());
   }
 
