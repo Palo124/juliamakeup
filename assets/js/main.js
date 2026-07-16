@@ -88,7 +88,7 @@ function bookingBackendConfigured() {
 async function bootstrap() {
   const page = detectSeoPage();
 
-  if (CONFIG.useSheetBooking && bookingBackendConfigured()) {
+  if (CONFIG.useSheetBooking && !CONFIG.bookingMaintenanceMode && bookingBackendConfigured()) {
     void import("./services/booking-api.js").then((mod) => mod.warmBookingBackend());
   }
 

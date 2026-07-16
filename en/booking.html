@@ -10,7 +10,7 @@
     content="Reserve a makeup appointment  choose a service and pick an available time."
   >
   <meta name="robots" content="index, follow">
-                                          <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/booking.html">
+                                            <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/booking.html">
   <link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/booking.html">
   <link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/booking.html">
 <link rel="canonical" id="canonical-link" href="https://julierebeauty.com/en/booking.html">
@@ -62,7 +62,7 @@
   <script type="module">
     import { CONFIG } from "/assets/js/config.js";
     import { warmBookingBackend } from "/assets/js/services/booking-api.js";
-    if (CONFIG.useSheetBooking && (CONFIG.bookingReadScriptUrl?.trim() || CONFIG.bookingScriptUrl?.trim())) {
+    if (CONFIG.useSheetBooking && !CONFIG.bookingMaintenanceMode && (CONFIG.bookingReadScriptUrl?.trim() || CONFIG.bookingScriptUrl?.trim())) {
       warmBookingBackend();
     }
   </script>
@@ -131,6 +131,11 @@
             <p class="booking-action-result__title hidden"></p>
             <p class="booking-action-result__text"></p>
           </div>
+          <div id="booking-maintenance" class="booking-maintenance hidden" role="status" aria-live="polite">
+            <p class="booking-maintenance__lead" data-i18n="booking.maintenanceLead">Online booking is temporarily unavailable.</p>
+            <p class="booking-maintenance__body" data-i18n="booking.maintenanceBody">Please arrange your appointment directly with the studio — by phone, email, or Instagram.</p>
+            <a class="button booking-maintenance__contact" href="index.html#contact" data-i18n="booking.maintenanceContact">Contact the studio</a>
+          </div>
           <form id="booking-form" class="booking-form" autocomplete="on">
             <div
               class="booking-form-loading hidden"
@@ -159,7 +164,7 @@
               </label>
             </div>
             <input type="hidden" name="slotId" id="booking-slot-id" value="">
-            <p id="booking-slots-status" class="booking-slots-status" data-i18n="booking.chooseServiceFirst" aria-live="polite">Choose a service first.</p>
+            <p id="booking-slots-status" class="booking-slots-status" data-i18n="booking.chooseServiceFirst" aria-live="polite">Choose a service to see available dates and times.</p>
             <div id="booking-picker" class="booking-picker hidden">
             <div class="booking-calendar" id="booking-calendar" aria-hidden="false">
               <div class="booking-calendar-loading hidden" id="booking-calendar-loading" aria-hidden="true">
@@ -300,9 +305,7 @@
     <div class="booking-success-dialog__panel">
       <h2 id="booking-success-title" class="booking-success-dialog__title"></h2>
       <p id="booking-success-text" class="booking-success-dialog__text"></p>
-      <button type="button" class="button booking-success-dialog__ok" id="booking-success-ok" data-i18n="booking.dialogOk">
-        OK
-      </button>
+      <button type="button" class="button booking-success-dialog__ok" id="booking-success-ok" data-i18n="booking.dialogOk">OK</button>
     </div>
   </dialog>
 

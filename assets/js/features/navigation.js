@@ -45,7 +45,11 @@ export function bindNavigation() {
     });
   }
 
-  if (CONFIG.useSheetBooking && (CONFIG.bookingReadScriptUrl?.trim() || CONFIG.bookingScriptUrl?.trim())) {
+  if (
+    CONFIG.useSheetBooking &&
+    !CONFIG.bookingMaintenanceMode &&
+    (CONFIG.bookingReadScriptUrl?.trim() || CONFIG.bookingScriptUrl?.trim())
+  ) {
     const warmBooking = () => {
       void import("../services/booking-api.js").then((mod) => mod.warmBookingBackend());
     };

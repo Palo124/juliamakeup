@@ -267,6 +267,59 @@ function toastForReservationErrorCode(code) {
   }
 }
 
+/**
+ * @param {HTMLElement | null} section
+ * @param {HTMLElement | null} resultBanner
+ */
+function showBookingMaintenanceScreen(section, resultBanner) {
+  const maintenanceEl = document.getElementById("booking-maintenance");
+  const form = document.getElementById("booking-form");
+  const introEl = document.querySelector(".booking-intro");
+  const rulesEl = document.querySelector(".booking-rules");
+  const contactLink = maintenanceEl?.querySelector(".booking-maintenance__contact");
+  const eyebrowEl = section?.querySelector(".eyebrow");
+  const headingEl = section?.querySelector(".section-heading h2");
+
+  consumeBookingUrlParams_(resultBanner);
+
+  introEl?.classList.add("hidden");
+  rulesEl?.classList.add("hidden");
+  form?.classList.add("hidden");
+  maintenanceEl?.classList.remove("hidden");
+
+  if (contactLink instanceof HTMLAnchorElement) {
+    contactLink.href = `${pagePath("home", getLang())}#contact`;
+  }
+  if (eyebrowEl) {
+    eyebrowEl.textContent = t("booking.maintenanceEyebrow");
+  }
+  if (headingEl) {
+    headingEl.textContent = t("booking.maintenanceH2");
+  }
+
+  applyTranslations();
+}
+
+/** @param {HTMLElement | null} section */
+function refreshBookingMaintenanceCopy(section) {
+  if (!CONFIG.bookingMaintenanceMode) {
+    return;
+  }
+  const eyebrowEl = section?.querySelector(".eyebrow");
+  const headingEl = section?.querySelector(".section-heading h2");
+  const contactLink = document.querySelector(".booking-maintenance__contact");
+  if (eyebrowEl) {
+    eyebrowEl.textContent = t("booking.maintenanceEyebrow");
+  }
+  if (headingEl) {
+    headingEl.textContent = t("booking.maintenanceH2");
+  }
+  if (contactLink instanceof HTMLAnchorElement) {
+    contactLink.href = `${pagePath("home", getLang())}#contact`;
+  }
+  applyTranslations();
+}
+
 export function initSheetBooking() {
   if (!CONFIG.useSheetBooking) {
     document.getElementById("booking")?.classList.add("hidden");
@@ -306,6 +359,14 @@ export function initSheetBooking() {
   bindBookingSubmitSuccessDialog(successDialog);
 
   if (!section || !statusEl || !slotsEl || !form || !slotIdInput || !submitBtn || !serviceSelect) {
+    return;
+  }
+
+  if (CONFIG.bookingMaintenanceMode) {
+    showBookingMaintenanceScreen(section, resultBanner);
+    window.addEventListener("juliamakeup:lang", () => {
+      refreshBookingMaintenanceCopy(section);
+    });
     return;
   }
 

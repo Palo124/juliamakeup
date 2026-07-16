@@ -1787,6 +1787,32 @@ textarea {
   margin-top: 4px;
 }
 
+.booking-maintenance {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: var(--radius-md);
+  background: rgb(255 248 242 / 0.72);
+  border: 1px solid rgb(120 84 64 / 0.12);
+}
+
+.booking-maintenance__lead {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.booking-maintenance__body {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.booking-maintenance__contact {
+  justify-self: start;
+}
+
 .booking-success-dialog {
   padding: 0;
   border: none;

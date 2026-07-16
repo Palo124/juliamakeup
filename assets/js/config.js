@@ -19,6 +19,8 @@ export const CONFIG = {
    * Deploy `backend/apps-script-booking-read/` as a separate Web app. Falls back to bookingScriptUrl when empty.
    */
   bookingReadScriptUrl: "https://script.google.com/macros/s/AKfycbxxVFVuV8SGgcWqyLBZHRETjsMAaecgwveBW4ftTyFeOPaMq3lErPe9waLOZO5Q7EX_7w/exec",
+  /** When true, booking form is hidden and visitors see a contact-the-studio message instead. */
+  bookingMaintenanceMode: true,
   useSheetBooking: true,
 
   /**
