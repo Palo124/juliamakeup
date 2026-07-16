@@ -211,9 +211,24 @@ export function prefetchAvailability() {
  * Cheap GET — returns API help JSON. Does not create a reservation.
  * @returns {Promise<boolean> | null}
  */
-export function warmBookingWriteBackend() {
+/** @returns {string | null} */
+export function getWriteWarmupRequestUrl() {
   const base = CONFIG.bookingScriptUrl?.trim();
   if (!base) {
+    return null;
+  }
+  try {
+    const u = new URL(base);
+    u.searchParams.set("action", "warmup");
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
+export function warmBookingWriteBackend() {
+  const url = getWriteWarmupRequestUrl();
+  if (!url) {
     return null;
   }
 
@@ -221,7 +236,7 @@ export function warmBookingWriteBackend() {
     return writeWarmInFlight;
   }
 
-  writeWarmInFlight = fetch(base, {
+  writeWarmInFlight = fetch(url, {
     method: "GET",
     redirect: "follow",
     headers: {

@@ -304,7 +304,7 @@ test("availability cache invalidation pings read deployment", () => {
 
   ctx.invalidateBookingAvailabilityCache_();
   assert.equal(sandbox.urlFetchCalls.length, 1);
-  assert.match(sandbox.urlFetchCalls[0].url, /action=refreshAvailability/);
+  assert.match(sandbox.urlFetchCalls[0].url, /action=invalidateAvailability/);
   assert.match(sandbox.urlFetchCalls[0].url, /secret=sekret/);
 });
 
@@ -378,6 +378,35 @@ test("read refreshAvailability rejects bad secret", () => {
   );
   assert.equal(out.ok, false);
   assert.match(String(out.message), /forbidden/i);
+});
+
+test("read invalidateAvailability drops cache without recomputing", () => {
+  const spreadsheet = createMockSpreadsheet([
+    createMockSheet("Availability", ["SlotId", "Date", "Time", "AllowedServices", "Status"], [
+      ["slot-1", "2026-09-01", "10:00", "Signature Makeup", "available"],
+    ]),
+  ]);
+  const { ctx } = loadReadCtx({
+    spreadsheet,
+    scriptProperties: {
+      BOOKING_REFRESH_SECRET: "sekret",
+    },
+  });
+
+  const fresh = ctx.computeAvailabilityPayload_();
+  ctx.writeBookingAvailabilityCache_(fresh);
+  assert.ok(ctx.readBookingAvailabilityCache_());
+
+  spreadsheet.getSheetByName = () => {
+    throw new Error("invalidateAvailability must not recompute from spreadsheet");
+  };
+
+  const out = readJsonOutput(
+    ctx.doGet({ parameter: { action: "invalidateAvailability", secret: "sekret" } }),
+  );
+  assert.equal(out.ok, true);
+  assert.equal(out.cleared, true);
+  assert.equal(ctx.readBookingAvailabilityCache_(), null);
 });
 
 test("write doGet default help message", () => {

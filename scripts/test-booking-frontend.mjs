@@ -169,7 +169,7 @@ test("warmBookingBackend deduplicates concurrent fetches", async () => {
       true,
     );
     assert.equal(
-      [...urls].some((u) => u.includes("WRITE_WARM") && !u.includes("getAvailability")),
+      [...urls].some((u) => u.includes("WRITE_WARM") && u.includes("action=warmup")),
       true,
     );
   } finally {
