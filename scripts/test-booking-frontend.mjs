@@ -130,16 +130,28 @@ test("warmBookingBackend deduplicates concurrent fetches", async () => {
   globalThis.window = {
     dispatchEvent() {},
   };
+  const configModule = await import("../assets/js/config.js");
+  const originalWrite = configModule.CONFIG.bookingScriptUrl;
+  const originalRead = configModule.CONFIG.bookingReadScriptUrl;
+  configModule.CONFIG.bookingScriptUrl =
+    "https://script.google.com/macros/s/WRITE_WARM/exec";
+  configModule.CONFIG.bookingReadScriptUrl =
+    "https://script.google.com/macros/s/READ_WARM/exec";
+
   const api = await import("../assets/js/services/booking-api.js");
   api.clearAvailabilityCache();
 
   let fetchCalls = 0;
+  /** @type {Set<string>} */
+  const urls = new Set();
   const payload = { ok: true, slots: [] };
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = async () => {
+  globalThis.fetch = async (input) => {
     fetchCalls += 1;
+    urls.add(String(input));
     await new Promise((resolve) => setTimeout(resolve, 20));
     return {
+      ok: true,
       text: async () => JSON.stringify(payload),
     };
   };
@@ -150,8 +162,19 @@ test("warmBookingBackend deduplicates concurrent fetches", async () => {
     assert.ok(p1);
     assert.equal(p1, p2);
     await p1;
-    assert.equal(fetchCalls, 1);
+    // Read getAvailability + write GET — separate deployments.
+    assert.equal(fetchCalls, 2);
+    assert.equal(
+      [...urls].some((u) => u.includes("READ_WARM") && u.includes("getAvailability")),
+      true,
+    );
+    assert.equal(
+      [...urls].some((u) => u.includes("WRITE_WARM") && !u.includes("getAvailability")),
+      true,
+    );
   } finally {
     globalThis.fetch = originalFetch;
+    configModule.CONFIG.bookingScriptUrl = originalWrite;
+    configModule.CONFIG.bookingReadScriptUrl = originalRead;
   }
 });

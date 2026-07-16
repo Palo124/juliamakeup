@@ -7,6 +7,12 @@ const AVAIL_STALE_REVALIDATE_MS = 5 * 60 * 1000;
 /** @type {Promise<unknown> | null} */
 let availabilityInFlight = null;
 
+/** @type {Promise<boolean> | null} */
+let writeWarmInFlight = null;
+
+/** @type {Promise<unknown[]> | null} */
+let warmAllInFlight = null;
+
 /** @returns {string} */
 function getBookingReadBaseUrl() {
   const read = CONFIG.bookingReadScriptUrl?.trim();
@@ -201,11 +207,63 @@ export function prefetchAvailability() {
 }
 
 /**
- * Always hit the booking API in the background to warm GAS and refresh cache.
+ * Ping the write /exec (createReservation) so its GAS instance is warm before submit.
+ * Cheap GET — returns API help JSON. Does not create a reservation.
+ * @returns {Promise<boolean> | null}
+ */
+export function warmBookingWriteBackend() {
+  const base = CONFIG.bookingScriptUrl?.trim();
+  if (!base) {
+    return null;
+  }
+
+  if (writeWarmInFlight) {
+    return writeWarmInFlight;
+  }
+
+  writeWarmInFlight = fetch(base, {
+    method: "GET",
+    redirect: "follow",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((response) => response.ok)
+    .catch(() => false)
+    .finally(() => {
+      writeWarmInFlight = null;
+    });
+
+  return writeWarmInFlight;
+}
+
+/**
+ * Warm read (availability) + write (reservation) GAS deployments in the background.
  * Safe to call on page entry — never blocks UI.
+ * @returns {Promise<unknown[]> | null}
  */
 export function warmBookingBackend() {
-  return scheduleAvailabilityRevalidate();
+  if (warmAllInFlight) {
+    return warmAllInFlight;
+  }
+
+  const tasks = [];
+  const readWarm = scheduleAvailabilityRevalidate();
+  const writeWarm = warmBookingWriteBackend();
+  if (readWarm) {
+    tasks.push(readWarm);
+  }
+  if (writeWarm) {
+    tasks.push(writeWarm);
+  }
+  if (!tasks.length) {
+    return null;
+  }
+
+  warmAllInFlight = Promise.all(tasks).finally(() => {
+    warmAllInFlight = null;
+  });
+  return warmAllInFlight;
 }
 
 /**

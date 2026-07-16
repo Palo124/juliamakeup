@@ -16,6 +16,7 @@ import {
   hasAvailabilityCache,
   postReservation,
   warmBookingBackend,
+  warmBookingWriteBackend,
 } from "../services/booking-api.js";
 import { showToast } from "../ui/toast.js";
 
@@ -506,6 +507,11 @@ export function initSheetBooking() {
       const isSelected = id === slotId;
       btn.classList.toggle("is-selected", isSelected);
       btn.setAttribute("aria-pressed", isSelected ? "true" : "false");
+    }
+
+    // Re-warm write GAS when user commits to a slot — submit is next.
+    if (slotId) {
+      warmBookingWriteBackend();
     }
   }
 
