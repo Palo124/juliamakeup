@@ -1131,6 +1131,11 @@ p {
   color: var(--text);
 }
 
+.portfolio-gallery-dialog:focus,
+.portfolio-gallery-dialog:focus-visible {
+  outline: none;
+}
+
 html.is-portfolio-gallery-open,
 body.is-portfolio-gallery-open {
   overflow: hidden;
@@ -1824,6 +1829,12 @@ textarea {
   margin: auto;
   background: transparent;
   color: var(--text);
+}
+
+/* Chromium focuses <dialog> on showModal() — default blue ring is not a design border. */
+.booking-submit-dialog:focus,
+.booking-submit-dialog:focus-visible {
+  outline: none;
 }
 
 .booking-submit-dialog::backdrop {
