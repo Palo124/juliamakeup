@@ -11,6 +11,7 @@ import { pagePath } from "../core/locale-urls.js";
 import { applyTranslations, getDateLocale, getLang, t } from "../i18n.js";
 import {
   fetchAvailability,
+  getAvailabilityRequestUrl,
   getCachedAvailability,
   hasAvailabilityCache,
   postReservation,
@@ -858,7 +859,14 @@ export function initSheetBooking() {
   });
 
   hydrateSlotsFromCache();
-  if (hasAvailabilityCache()) {
+  if (getSelectedService()) {
+    if (allSlotsRaw.length) {
+      applyServiceFilter();
+    } else {
+      renderWaitingForSlots();
+      void loadSlots();
+    }
+  } else if (hasAvailabilityCache()) {
     renderIdleState();
   } else {
     showEntryWarmShell();

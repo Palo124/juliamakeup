@@ -1907,7 +1907,7 @@ textarea {
   border: 0;
 }
 
-.booking-picker {
+.booking-picker:not(.hidden) {
   display: grid;
   grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
   gap: 22px;
@@ -1915,7 +1915,7 @@ textarea {
 }
 
 @media (max-width: 900px) {
-  .booking-picker {
+  .booking-picker:not(.hidden) {
     grid-template-columns: 1fr;
   }
 }
