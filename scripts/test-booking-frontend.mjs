@@ -1,5 +1,5 @@
 /**
- * Frontend booking-api cache + URL helpers (Node, no browser).
+ * Frontend booking-api helpers (Node, no browser).
  * Usage: npm run test:booking:frontend
  */
 import assert from "node:assert/strict";
@@ -63,39 +63,7 @@ test("getAvailabilityRequestUrl builds action query", async () => {
   configModule.CONFIG.bookingScriptUrl = originalUrl;
 });
 
-test("availability cache write/read/clear", async () => {
-  globalThis.localStorage = createLocalStorage();
-  const api = await import("../assets/js/services/booking-api.js");
-
-  api.clearAvailabilityCache();
-  assert.equal(api.getCachedAvailability(), null);
-  assert.equal(api.hasAvailabilityCache(), false);
-
-  const payload = {
-    ok: true,
-    slots: [{ slotId: "s1", date: "2026-09-01", time: "10:00", allowedServices: ["Signature Makeup"] }],
-  };
-
-  const fetchMock = async () => ({
-    text: async () => JSON.stringify(payload),
-  });
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = fetchMock;
-
-  try {
-    const result = await api.fetchAvailability({ forceFresh: true });
-    assert.deepEqual(result, payload);
-    assert.deepEqual(api.getCachedAvailability(), payload);
-    assert.equal(api.hasAvailabilityCache(), true);
-
-    api.clearAvailabilityCache();
-    assert.equal(api.getCachedAvailability(), null);
-  } finally {
-    globalThis.fetch = originalFetch;
-  }
-});
-
-test("fetchAvailability returns cached data without network when fresh enough", async () => {
+test("fetchAvailability always hits network and does not cache", async () => {
   globalThis.localStorage = createLocalStorage();
   const api = await import("../assets/js/services/booking-api.js");
 
@@ -104,22 +72,32 @@ test("fetchAvailability returns cached data without network when fresh enough", 
     slots: [{ slotId: "s1", date: "2026-09-01", time: "10:00", allowedServices: ["Signature Makeup"] }],
   };
 
+  // Legacy cache entry must be ignored / cleared.
   globalThis.localStorage.setItem(
     "juliamakeup:booking:availability:v1",
-    JSON.stringify({ fetchedAt: Date.now(), data: payload }),
+    JSON.stringify({ fetchedAt: Date.now(), data: { ok: true, slots: [] } }),
   );
 
   let fetchCalls = 0;
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => {
     fetchCalls += 1;
-    throw new Error("network should not be used");
+    return {
+      ok: true,
+      text: async () => JSON.stringify(payload),
+    };
   };
 
   try {
     const result = await api.fetchAvailability();
     assert.deepEqual(result, payload);
-    assert.equal(fetchCalls, 0);
+    assert.equal(fetchCalls, 1);
+    assert.equal(api.getCachedAvailability(), null);
+    assert.equal(api.hasAvailabilityCache(), false);
+    assert.equal(globalThis.localStorage.getItem("juliamakeup:booking:availability:v1"), null);
+
+    await api.fetchAvailability();
+    assert.equal(fetchCalls, 2);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -162,7 +140,6 @@ test("warmBookingBackend deduplicates concurrent fetches", async () => {
     assert.ok(p1);
     assert.equal(p1, p2);
     await p1;
-    // Read getAvailability + write GET — separate deployments.
     assert.equal(fetchCalls, 2);
     assert.equal(
       [...urls].some((u) => u.includes("READ_WARM") && u.includes("getAvailability")),

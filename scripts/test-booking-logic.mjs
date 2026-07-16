@@ -274,24 +274,46 @@ test("availability cache round-trip and invalidation", () => {
   assert.equal(ctx.readBookingAvailabilityCache_(), null);
 });
 
-test("handleGetAvailability_ serves cache without recomputing", () => {
+test("handleGetAvailability_ always recomputes from spreadsheet", () => {
   const spreadsheet = createMockSpreadsheet([
     createMockSheet("Availability", ["SlotId", "Date", "Time", "AllowedServices", "Status"], [
       ["slot-1", "2026-09-01", "10:00", "Signature Makeup", "available"],
     ]),
+    createMockSheet("Reservations", [
+      "ReservationId",
+      "Created At",
+      "Status",
+      "Verification Token",
+      "Verification Expires",
+      "Approval Token",
+      "Approval Expires",
+      "Cancellation Token",
+      "Cancellation Expires",
+      "Cancelled At",
+      "SlotId",
+      "Date",
+      "Time",
+      "Name",
+      "Email",
+      "Phone",
+      "Service",
+      "Notes",
+      "Lang",
+      "Calendar Event Id",
+    ]),
   ]);
   const ctx = loadCtx({ spreadsheet });
 
-  const fresh = ctx.computeAvailabilityPayload_();
-  ctx.writeBookingAvailabilityCache_(fresh);
-
-  spreadsheet.getSheetByName = () => {
-    throw new Error("computeAvailabilityPayload_ should not touch spreadsheet on cache hit");
-  };
+  // Stale cache must be ignored.
+  ctx.writeBookingAvailabilityCache_({
+    ok: true,
+    slots: [{ slotId: "stale", date: "2026-01-01", time: "00:00", allowedServices: ["Signature Makeup"] }],
+  });
 
   const response = readJsonOutput(ctx.handleGetAvailability_());
   assert.equal(response.ok, true);
   assert.equal(response.slots?.length, 1);
+  assert.equal(response.slots?.[0]?.slotId, "slot-1");
 });
 
 test("availability cache invalidation pings read deployment", () => {
@@ -457,58 +479,18 @@ test("doPost honeypot returns fake success", () => {
   assert.match(String(out.message), /received/i);
 });
 
-test("runBookingAvailabilityPrewarm_ skips sheet scan on cache hit", () => {
+test("runBookingAvailabilityPrewarm_ only warms runtime (no availability cache fill)", () => {
   const spreadsheet = createMockSpreadsheet([
     createMockSheet("Availability", ["SlotId", "Date", "Time", "AllowedServices", "Status"], [
       ["slot-1", "2026-09-01", "10:00", "Signature Makeup", "available"],
-    ]),
-  ]);
-  const { ctx } = loadReadCtx({ spreadsheet });
-  ctx.writeBookingAvailabilityCache_({ ok: true, slots: [{ slotId: "slot-1", date: "2026-09-01", time: "10:00" }] });
-
-  spreadsheet.getSheetByName = () => {
-    throw new Error("prewarm should not touch spreadsheet on cache hit");
-  };
-
-  const result = ctx.runBookingAvailabilityPrewarm_();
-  assert.equal(result.cacheHit, true);
-  assert.equal(result.slotCount, 1);
-});
-
-test("runBookingAvailabilityPrewarm_ recomputes on cache miss", () => {
-  const spreadsheet = createMockSpreadsheet([
-    createMockSheet("Availability", ["SlotId", "Date", "Time", "AllowedServices", "Status"], [
-      ["slot-1", "2026-09-01", "10:00", "Signature Makeup", "available"],
-    ]),
-    createMockSheet("Reservations", [
-      "ReservationId",
-      "Created At",
-      "Status",
-      "Verification Token",
-      "Verification Expires",
-      "Approval Token",
-      "Approval Expires",
-      "Cancellation Token",
-      "Cancellation Expires",
-      "Cancelled At",
-      "SlotId",
-      "Date",
-      "Time",
-      "Name",
-      "Email",
-      "Phone",
-      "Service",
-      "Notes",
-      "Lang",
-      "Calendar Event Id",
     ]),
   ]);
   const { ctx } = loadReadCtx({ spreadsheet });
 
   const result = ctx.runBookingAvailabilityPrewarm_();
   assert.equal(result.cacheHit, false);
-  assert.equal(result.slotCount, 1);
-  assert.ok(ctx.readBookingAvailabilityCache_());
+  assert.equal(result.slotCount, 0);
+  assert.equal(ctx.readBookingAvailabilityCache_(), null);
 });
 
 test("refreshBookingAvailabilityCache_ writes cache key used by readers", () => {

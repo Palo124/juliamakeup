@@ -1,8 +1,6 @@
 import { CONFIG } from "../config.js";
 
 const AVAIL_CACHE_KEY = "juliamakeup:booking:availability:v1";
-const AVAIL_CACHE_TTL_MS = 60 * 60 * 1000;
-const AVAIL_STALE_REVALIDATE_MS = 5 * 60 * 1000;
 
 /** @type {Promise<unknown> | null} */
 let availabilityInFlight = null;
@@ -40,61 +38,19 @@ export function getAvailabilityRequestUrl() {
 }
 
 /**
- * @returns {{ fetchedAt: number, data: { ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string } } | null}
- */
-function readAvailabilityCacheEntry() {
-  try {
-    const raw = localStorage.getItem(AVAIL_CACHE_KEY);
-    if (!raw) {
-      return null;
-    }
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed.fetchedAt !== "number" || !parsed.data) {
-      return null;
-    }
-    if (Date.now() - parsed.fetchedAt > AVAIL_CACHE_TTL_MS) {
-      localStorage.removeItem(AVAIL_CACHE_KEY);
-      return null;
-    }
-    return parsed;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * @returns {{ ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string } | null}
+ * Availability is always fetched from the network (no localStorage cache).
+ * @returns {null}
  */
 export function getCachedAvailability() {
-  return readAvailabilityCacheEntry()?.data ?? null;
+  return null;
 }
 
 /** @returns {boolean} */
 export function hasAvailabilityCache() {
-  const cached = getCachedAvailability();
-  return Boolean(cached?.ok && Array.isArray(cached.slots) && cached.slots.length > 0);
+  return false;
 }
 
-/**
- * @param {{ ok: boolean, slots?: unknown[], message?: string, pendingVerification?: boolean, code?: string }} data
- */
-function writeAvailabilityCache(data) {
-  if (!data?.ok || !Array.isArray(data.slots)) {
-    return;
-  }
-  try {
-    localStorage.setItem(
-      AVAIL_CACHE_KEY,
-      JSON.stringify({
-        fetchedAt: Date.now(),
-        data,
-      }),
-    );
-  } catch {
-    /* quota / private mode */
-  }
-}
-
+/** Clears any legacy localStorage entry from older builds. */
 export function clearAvailabilityCache() {
   try {
     localStorage.removeItem(AVAIL_CACHE_KEY);
@@ -176,7 +132,6 @@ function scheduleAvailabilityRevalidate() {
   availabilityInFlight = fetchAvailabilityFromNetwork()
     .then((data) => {
       if (data.ok) {
-        writeAvailabilityCache(data);
         dispatchAvailabilityUpdated(data);
       }
       return data;
@@ -188,21 +143,8 @@ function scheduleAvailabilityRevalidate() {
   return availabilityInFlight;
 }
 
-/** Soft prefetch — refreshes in background when cache is older than 5 minutes. */
+/** Prefetch — always hits the network (no browser cache). */
 export function prefetchAvailability() {
-  if (!getAvailabilityRequestUrl()) {
-    return null;
-  }
-
-  const cached = readAvailabilityCacheEntry();
-  if (cached) {
-    const age = Date.now() - cached.fetchedAt;
-    if (age < AVAIL_STALE_REVALIDATE_MS) {
-      return null;
-    }
-    return scheduleAvailabilityRevalidate();
-  }
-
   return scheduleAvailabilityRevalidate();
 }
 
@@ -282,35 +224,21 @@ export function warmBookingBackend() {
 }
 
 /**
+ * Always fetches availability from the network (no localStorage cache).
  * @param {{ forceFresh?: boolean }} [options]
  * @returns {Promise<{ ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string }>}
  */
 export async function fetchAvailability(options = {}) {
-  const { forceFresh = false } = options;
-  const cached = !forceFresh ? readAvailabilityCacheEntry() : null;
-
-  if (cached && !forceFresh) {
-    const age = Date.now() - cached.fetchedAt;
-    if (age >= AVAIL_STALE_REVALIDATE_MS) {
-      scheduleAvailabilityRevalidate();
-    }
-    return cached.data;
-  }
+  void options;
+  clearAvailabilityCache();
 
   if (availabilityInFlight) {
     return /** @type {Promise<ReturnType<typeof fetchAvailabilityFromNetwork>>} */ (availabilityInFlight);
   }
 
-  availabilityInFlight = fetchAvailabilityFromNetwork()
-    .then((data) => {
-      if (data.ok) {
-        writeAvailabilityCache(data);
-      }
-      return data;
-    })
-    .finally(() => {
-      availabilityInFlight = null;
-    });
+  availabilityInFlight = fetchAvailabilityFromNetwork().finally(() => {
+    availabilityInFlight = null;
+  });
 
   return availabilityInFlight;
 }
