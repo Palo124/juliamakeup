@@ -98,6 +98,29 @@ export function clearAvailabilityCache() {
 }
 
 /**
+ * @param {string} text
+ * @returns {{ ok: boolean, slots?: unknown[], message?: string, pendingVerification?: boolean, code?: string }}
+ */
+function parseAvailabilityResponse(text) {
+  const trimmed = String(text ?? "").trim();
+  if (!trimmed) {
+    return { ok: false, message: "Empty response from server." };
+  }
+  if (trimmed.startsWith("<")) {
+    return { ok: false, message: "Invalid response from server." };
+  }
+  try {
+    const data = JSON.parse(trimmed);
+    if (!data || typeof data !== "object") {
+      return { ok: false, message: "Invalid response from server." };
+    }
+    return data;
+  } catch {
+    return { ok: false, message: "Invalid response from server." };
+  }
+}
+
+/**
  * @returns {Promise<{ ok: boolean, slots?: Array<{ slotId: string, date: string, time: string, allowedServices?: string[], service?: string, label?: string }>, message?: string, pendingVerification?: boolean, code?: string }>}
  */
 async function fetchAvailabilityFromNetwork() {
@@ -106,21 +129,25 @@ async function fetchAvailabilityFromNetwork() {
     return { ok: false, message: "Booking URL not configured." };
   }
 
-  const response = await fetch(url, {
-    method: "GET",
-    redirect: "follow",
-    headers: {
-      Accept: "application/json",
-    },
-  });
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "GET",
+      redirect: "follow",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+  } catch {
+    return { ok: false, message: "Could not reach booking server." };
+  }
 
   const text = await response.text();
-
-  try {
-    return JSON.parse(text);
-  } catch {
-    return { ok: false, message: "Invalid response from server." };
+  const data = parseAvailabilityResponse(text);
+  if (!response.ok && data.ok !== true) {
+    return { ok: false, message: data.message || `Booking server error (${response.status}).` };
   }
+  return data;
 }
 
 function dispatchAvailabilityUpdated(data) {

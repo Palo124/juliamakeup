@@ -371,6 +371,10 @@ export function initSheetBooking() {
   }
 
   consumeBookingUrlParams_(resultBanner);
+  document.getElementById("booking-maintenance")?.classList.add("hidden");
+  document.querySelector(".booking-intro")?.classList.remove("hidden");
+  document.querySelector(".booking-rules")?.classList.remove("hidden");
+  form?.classList.remove("hidden");
   if (!CONFIG.bookingScriptUrl?.trim() || !getAvailabilityRequestUrl()) {
     statusEl.textContent = t("booking.configNeeded");
     form.classList.add("hidden");
@@ -449,9 +453,47 @@ export function initSheetBooking() {
     if (!svc) {
       return [];
     }
-    return allSlotsRaw.filter(
-      (s) => normalizeDateKey(s.date) && slotAllowsService(s, svc),
+    const today = todayDateKey();
+    return allSlotsRaw.filter((s) => {
+      const dateKey = normalizeDateKey(s.date);
+      return dateKey && compareDateKeys(dateKey, today) >= 0 && slotAllowsService(s, svc);
+    });
+  }
+
+  /** @param {Array<{ date?: string }>} slots */
+  function focusCalendarOnFirstAvailableDay(slots) {
+    if (!slots.length) {
+      return;
+    }
+    const sorted = [...slots].sort((a, b) =>
+      compareDateKeys(normalizeDateKey(a.date), normalizeDateKey(b.date)),
     );
+    const firstDate = normalizeDateKey(sorted[0].date);
+    if (!firstDate) {
+      return;
+    }
+    const parts = firstDate.split("-").map(Number);
+    viewYear = parts[0];
+    viewMonth = parts[1] - 1;
+    selectedDateKey = firstDate;
+  }
+
+  function applyServiceFilter() {
+    setCalendarLoading(false);
+    const slots = filteredSlots();
+    if (!slots.length) {
+      selectedDateKey = null;
+      updatePickerVisibility();
+      renderCalendar();
+      renderSlotsForDay();
+      return;
+    }
+
+    focusCalendarOnFirstAvailableDay(slots);
+    setSelected("");
+    updatePickerVisibility();
+    renderCalendar();
+    renderSlotsForDay();
   }
 
   function setSelected(slotId) {
@@ -658,17 +700,6 @@ export function initSheetBooking() {
     }
   }
 
-  function applyServiceFilter() {
-    const now = new Date();
-    viewYear = now.getFullYear();
-    viewMonth = now.getMonth();
-    selectedDateKey = todayDateKey();
-    setSelected("");
-    updatePickerVisibility();
-    renderCalendar();
-    renderSlotsForDay();
-  }
-
   function applyAvailabilityData(data) {
     if (!data.ok || !Array.isArray(data.slots)) {
       if (getSelectedService()) {
@@ -679,11 +710,13 @@ export function initSheetBooking() {
       datesWithSlots = new Set();
       selectedDateKey = null;
       calRoot?.classList.add("hidden");
+      setCalendarLoading(false);
       clearEntryWarmShell();
       return;
     }
 
     allSlotsRaw = data.slots.filter((s) => normalizeDateKey(s.date));
+    setCalendarLoading(false);
     clearEntryWarmShell();
     if (getSelectedService()) {
       applyServiceFilter();
@@ -726,6 +759,9 @@ export function initSheetBooking() {
     isEntryWarming = false;
     if (allSlotsRaw.length) {
       applyServiceFilter();
+      if (!filteredSlots().length) {
+        void loadSlots({ forceFresh: true });
+      }
       return;
     }
     renderWaitingForSlots();
