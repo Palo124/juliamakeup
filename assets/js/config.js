@@ -20,7 +20,7 @@ export const CONFIG = {
    */
   bookingReadScriptUrl: "https://script.google.com/macros/s/AKfycbxxVFVuV8SGgcWqyLBZHRETjsMAaecgwveBW4ftTyFeOPaMq3lErPe9waLOZO5Q7EX_7w/exec",
   /** When true, booking form is hidden and visitors see a contact-the-studio message instead. */
-  bookingMaintenanceMode: false,
+  bookingMaintenanceMode: true,
   useSheetBooking: true,
 
   /**
