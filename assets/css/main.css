@@ -1816,7 +1816,7 @@ textarea {
   justify-self: start;
 }
 
-.booking-success-dialog {
+.booking-submit-dialog {
   padding: 0;
   border: none;
   max-width: min(480px, calc(100vw - 32px));
@@ -1826,36 +1826,101 @@ textarea {
   color: var(--text);
 }
 
-.booking-success-dialog::backdrop {
+.booking-submit-dialog::backdrop {
   background: rgba(36, 28, 24, 0.52);
   backdrop-filter: blur(8px);
 }
 
-.booking-success-dialog__panel {
+.booking-submit-dialog__panel {
   background: var(--surface-strong);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(80, 140, 100, 0.35);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow);
   padding: clamp(22px, 4vw, 30px);
+  text-align: center;
 }
 
-.booking-success-dialog__title {
+.booking-submit-dialog[data-state="success"] .booking-submit-dialog__panel {
+  border-color: rgba(80, 140, 100, 0.35);
+}
+
+.booking-submit-dialog[data-state="error"] .booking-submit-dialog__panel {
+  border-color: rgba(176, 80, 70, 0.4);
+}
+
+.booking-submit-dialog__loading {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1rem;
+}
+
+.booking-submit-dialog__loading[hidden] {
+  display: none;
+}
+
+.booking-submit-dialog__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(176, 123, 103, 0.22);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: booking-cal-spin 0.75s linear infinite;
+}
+
+.booking-submit-dialog__title {
   margin: 0 0 0.75rem;
   font-size: clamp(1.35rem, 3vw, 1.65rem);
   line-height: 1.25;
+  color: var(--text);
+}
+
+.booking-submit-dialog[data-state="success"] .booking-submit-dialog__title {
   color: #2f5f3d;
 }
 
-.booking-success-dialog__text {
-  margin: 0 0 1.35rem;
+.booking-submit-dialog[data-state="error"] .booking-submit-dialog__title {
+  color: #8a3a32;
+}
+
+.booking-submit-dialog__text {
+  margin: 0 0 0.75rem;
   font-size: 1rem;
   line-height: 1.6;
   color: var(--text);
 }
 
-.booking-success-dialog__ok {
+.booking-submit-dialog__hint {
+  margin: 0 0 1.35rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.booking-submit-dialog__hint[hidden] {
+  display: none;
+}
+
+.booking-submit-dialog__ok {
   width: 100%;
   margin: 0;
+}
+
+.booking-submit-dialog[data-state="loading"] .booking-submit-dialog__ok {
+  display: none;
+}
+
+.booking-submit-dialog[data-state="loading"] .booking-submit-dialog__text {
+  margin-bottom: 0.35rem;
+}
+
+/* Legacy class aliases (older markup / cached HTML) */
+.booking-success-dialog {
+  padding: 0;
+  border: none;
+  max-width: min(480px, calc(100vw - 32px));
+  width: 100%;
+  margin: auto;
+  background: transparent;
 }
 
 .booking-action-result {

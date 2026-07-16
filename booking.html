@@ -10,7 +10,7 @@
     content="Rezervujte si termín na líčenie  zvoľte službu a voľný čas."
   >
   <meta name="robots" content="index, follow">
-                                              <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/booking.html">
+                                                <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/booking.html">
   <link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/booking.html">
   <link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/booking.html">
 <link rel="canonical" id="canonical-link" href="https://julierebeauty.com/booking.html">
@@ -299,14 +299,18 @@
 
   <dialog
     id="booking-success-dialog"
-    class="booking-success-dialog"
+    class="booking-submit-dialog"
     aria-labelledby="booking-success-title"
     aria-describedby="booking-success-text"
   >
-    <div class="booking-success-dialog__panel">
-      <h2 id="booking-success-title" class="booking-success-dialog__title"></h2>
-      <p id="booking-success-text" class="booking-success-dialog__text"></p>
-      <button type="button" class="button booking-success-dialog__ok" id="booking-success-ok" data-i18n="booking.dialogOk">OK</button>
+    <div class="booking-submit-dialog__panel">
+      <div class="booking-submit-dialog__loading" id="booking-submit-loading" hidden>
+        <span class="booking-submit-dialog__spinner" aria-hidden="true"></span>
+      </div>
+      <h2 id="booking-success-title" class="booking-submit-dialog__title"></h2>
+      <p id="booking-success-text" class="booking-submit-dialog__text"></p>
+      <p id="booking-submit-hint" class="booking-submit-dialog__hint" hidden></p>
+      <button type="button" class="button booking-submit-dialog__ok" id="booking-success-ok" data-i18n="booking.dialogOk">OK</button>
     </div>
   </dialog>
 

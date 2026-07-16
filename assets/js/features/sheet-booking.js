@@ -155,27 +155,71 @@ function renderBookingOutcomeBanner(resultEl, result, code) {
 
 /**
  * @param {HTMLDialogElement | null} dialogEl
- * @param {{ pendingVerification?: boolean }} [options]
+ * @param {"loading" | "success" | "error"} state
+ * @param {{ title?: string, text?: string, hint?: string, pendingVerification?: boolean }} [options]
  */
-function fillBookingSubmitSuccessDialog(dialogEl, options = {}) {
+function setBookingSubmitDialogState(dialogEl, state, options = {}) {
   if (!dialogEl) {
     return;
   }
-  const { pendingVerification = true } = options;
   const titleEl = document.getElementById("booking-success-title");
   const textEl = document.getElementById("booking-success-text");
+  const hintEl = document.getElementById("booking-submit-hint");
+  const loadingEl = document.getElementById("booking-submit-loading");
   const okBtn = document.getElementById("booking-success-ok");
-  const title = t("booking.submitSuccessTitle");
-  const body = pendingVerification ? t("booking.submitSuccessVerifyBody") : t("booking.success");
+
+  dialogEl.dataset.state = state;
+  dialogEl.dataset.pendingVerification =
+    options.pendingVerification === false ? "0" : options.pendingVerification ? "1" : dialogEl.dataset.pendingVerification || "1";
 
   if (titleEl) {
-    titleEl.textContent = title;
+    titleEl.textContent = options.title || "";
   }
   if (textEl) {
-    textEl.textContent = body;
+    textEl.textContent = options.text || "";
+  }
+  if (hintEl) {
+    const hint = String(options.hint || "").trim();
+    hintEl.textContent = hint;
+    hintEl.hidden = !hint;
+  }
+  if (loadingEl) {
+    loadingEl.hidden = state !== "loading";
   }
   if (okBtn) {
     okBtn.textContent = t("booking.dialogOk");
+    okBtn.hidden = state === "loading";
+  }
+}
+
+/**
+ * @param {HTMLDialogElement | null} dialogEl
+ * @param {{ pendingVerification?: boolean }} [options]
+ */
+function fillBookingSubmitSuccessDialog(dialogEl, options = {}) {
+  const { pendingVerification = true } = options;
+  setBookingSubmitDialogState(dialogEl, "success", {
+    title: t("booking.submitSuccessTitle"),
+    text: pendingVerification ? t("booking.submitSuccessVerifyBody") : t("booking.success"),
+    hint: "",
+    pendingVerification,
+  });
+}
+
+/**
+ * @param {HTMLDialogElement | null} dialogEl
+ */
+function showBookingSubmitLoading(dialogEl) {
+  if (!dialogEl) {
+    return;
+  }
+  setBookingSubmitDialogState(dialogEl, "loading", {
+    title: t("booking.sending"),
+    text: t("booking.sendingHint"),
+    hint: "",
+  });
+  if (!dialogEl.open) {
+    dialogEl.showModal();
   }
 }
 
@@ -188,8 +232,25 @@ function showBookingSubmitSuccess(dialogEl, options = {}) {
     return;
   }
   const { pendingVerification = true } = options;
-  dialogEl.dataset.pendingVerification = pendingVerification ? "1" : "0";
   fillBookingSubmitSuccessDialog(dialogEl, { pendingVerification });
+  if (!dialogEl.open) {
+    dialogEl.showModal();
+  }
+}
+
+/**
+ * @param {HTMLDialogElement | null} dialogEl
+ * @param {string} message
+ */
+function showBookingSubmitError(dialogEl, message) {
+  if (!dialogEl) {
+    return;
+  }
+  setBookingSubmitDialogState(dialogEl, "error", {
+    title: t("booking.submitFailTitle"),
+    text: message || t("booking.error"),
+    hint: "",
+  });
   if (!dialogEl.open) {
     dialogEl.showModal();
   }
@@ -204,10 +265,15 @@ function bindBookingSubmitSuccessDialog(dialogEl) {
   }
   const okBtn = document.getElementById("booking-success-ok");
   okBtn?.addEventListener("click", () => {
+    if (dialogEl.dataset.state === "loading") {
+      return;
+    }
     dialogEl.close();
   });
   dialogEl.addEventListener("cancel", (event) => {
-    event.preventDefault();
+    if (dialogEl.dataset.state === "loading") {
+      event.preventDefault();
+    }
   });
   dialogEl.addEventListener("click", (event) => {
     if (event.target === dialogEl) {
@@ -819,28 +885,17 @@ export function initSheetBooking() {
 
     form.setAttribute("aria-busy", "true");
     bookingPicker?.setAttribute("aria-busy", "true");
-    if (formLoadingEl) {
-      const loadingText = formLoadingEl.querySelector(".booking-form-loading__text");
-      const loadingHint = formLoadingEl.querySelector(".booking-form-loading__hint");
-      if (loadingText) {
-        loadingText.textContent = t("booking.sending");
-      }
-      if (loadingHint) {
-        loadingHint.textContent = t("booking.sendingHint");
-      }
-      formLoadingEl.classList.remove("hidden");
-      formLoadingEl.setAttribute("aria-hidden", "false");
-    }
     submitBtn.disabled = true;
     submitBtn.classList.add("is-loading");
     submitBtn.textContent = t("booking.sending");
+    showBookingSubmitLoading(successDialog);
 
-    /** @type {{ ok?: boolean, code?: string, message?: string }} */
+    /** @type {{ ok?: boolean, code?: string, message?: string, pendingVerification?: boolean }} */
     let result = { ok: false };
     try {
       result = await postReservation(reservation);
     } catch {
-      showToast(t("booking.error"), "error");
+      showBookingSubmitError(successDialog, t("booking.error"));
       return;
     } finally {
       form.removeAttribute("aria-busy");
@@ -863,11 +918,7 @@ export function initSheetBooking() {
     }
 
     const mappedErr = toastForReservationErrorCode(result.code);
-    if (mappedErr) {
-      showToast(mappedErr, "error");
-    } else {
-      showToast(result.message || t("booking.error"), "error");
-    }
+    showBookingSubmitError(successDialog, mappedErr || result.message || t("booking.error"));
 
     if (result.code === "TAKEN") {
       await loadSlots({ forceFresh: true });
@@ -891,9 +942,22 @@ export function initSheetBooking() {
 
   window.addEventListener("juliamakeup:lang", () => {
     if (successDialog?.open) {
-      fillBookingSubmitSuccessDialog(successDialog, {
-        pendingVerification: successDialog.dataset.pendingVerification !== "0",
-      });
+      const state = successDialog.dataset.state || "success";
+      if (state === "loading") {
+        setBookingSubmitDialogState(successDialog, "loading", {
+          title: t("booking.sending"),
+          text: t("booking.sendingHint"),
+        });
+      } else if (state === "error") {
+        setBookingSubmitDialogState(successDialog, "error", {
+          title: t("booking.submitFailTitle"),
+          text: document.getElementById("booking-success-text")?.textContent || t("booking.error"),
+        });
+      } else {
+        fillBookingSubmitSuccessDialog(successDialog, {
+          pendingVerification: successDialog.dataset.pendingVerification !== "0",
+        });
+      }
     }
     if (!getSelectedService()) {
       statusEl.textContent = t("booking.chooseServiceFirst");
