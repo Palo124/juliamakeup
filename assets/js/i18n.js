@@ -698,7 +698,7 @@ const BUNDLED_STRINGS = {
     "booking.errBusy": "Server je zaneprázdnený. Skúste o chvíľu znova.",
     "booking.notFound": "Tento časový slot už v kalendári neexistuje.",
     "booking.resultEmailVerified": "E-mail overený. Štúdio posúdi vašu žiadosť.",
-    "booking.resultConfirmed": "Rezervácia potvrdená. Mali by ste dostať potvrdzovací e-mail.",
+    "booking.resultConfirmed": "Rezervácia potvrdená.",
     "booking.resultRejected": "Táto žiadosť o rezerváciu nebola schválená.",
     "booking.resultCancelled": "Vaša rezervácia bola zrušená.",
     "booking.resultAlreadyCancelled": "Táto rezervácia už bola zrušená.",
