@@ -1,5 +1,5 @@
 /**
- * Generate /en pages from root HTML (index, booking, action).
+ * Generate /en pages from root HTML (index, booking, action, privacy).
  * Applies SK sheet image URLs (column C) to both locales. Run after editing HTML: npm run sync:locale-pages
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -13,11 +13,12 @@ import { parseCsv, siteImgUrlsFromSkCsvRows } from "../assets/js/site-text-csv.j
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const enDir = join(root, "en");
 
-/** @type {Record<string, "home" | "booking" | "action">} */
+/** @type {Record<string, "home" | "booking" | "action" | "privacy">} */
 const PAGE_KEYS = {
   home: "home",
   booking: "booking",
   action: "action",
+  privacy: "privacy",
 };
 
 function canonicalFor(pageKey, lang) {
@@ -163,6 +164,8 @@ function applyBundledLang(html, lang) {
   let titleKey = "meta.title";
   if (out.includes('data-page-title-i18n="meta.titleBookingAction"')) {
     titleKey = "meta.titleBookingAction";
+  } else if (out.includes('data-page-title-i18n="meta.titlePrivacy"')) {
+    titleKey = "meta.titlePrivacy";
   } else if (out.includes('data-page-title-i18n="meta.titleBooking"')) {
     titleKey = "meta.titleBooking";
   }
@@ -235,6 +238,7 @@ mkdirSync(enDir, { recursive: true });
 const indexShared = prepareSharedHtml(readFileSync(join(root, "index.html"), "utf8"));
 const bookingShared = prepareSharedHtml(readFileSync(join(root, "booking.html"), "utf8"));
 const actionShared = prepareSharedHtml(readFileSync(join(root, "action.html"), "utf8"));
+const privacyShared = prepareSharedHtml(readFileSync(join(root, "privacy.html"), "utf8"));
 
 writeFileSync(join(root, "index.html"), toSkPage(indexShared, "home"));
 writeFileSync(join(enDir, "index.html"), toEnPage(indexShared, "home"));
@@ -242,5 +246,7 @@ writeFileSync(join(root, "booking.html"), toSkPage(bookingShared, "booking"));
 writeFileSync(join(enDir, "booking.html"), toEnPage(bookingShared, "booking"));
 writeFileSync(join(root, "action.html"), toSkPage(actionShared, "action"));
 writeFileSync(join(enDir, "action.html"), toEnPage(actionShared, "action"));
+writeFileSync(join(root, "privacy.html"), toSkPage(privacyShared, "privacy"));
+writeFileSync(join(enDir, "privacy.html"), toEnPage(privacyShared, "privacy"));
 
 console.log("Synced SK + EN pages (SK/EN copy from i18n.js, SK sheet images, /assets/ paths)");

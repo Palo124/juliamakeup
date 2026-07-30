@@ -24,6 +24,9 @@ const BUNDLED_STRINGS = {
     "meta.descriptionBooking": "Reserve a makeup appointment  choose a service and pick an available time.",
     "meta.titleBookingAction": "Juliére Beauty | Processing booking",
     "meta.descriptionBookingAction": "Processing a booking action from your email link.",
+    "meta.titlePrivacy": "Juliére Beauty | Privacy policy",
+    "meta.descriptionPrivacy":
+      "How Juliére Beauty processes personal data for reservations (name, email, phone).",
     "meta.titleBridalLanding": "Bridal Makeup Bratislava | Juliére Beauty",
     "meta.descriptionBridalLanding":
       "Professional bridal makeup in Bratislava — tailored looks, long-wear products and optional trial. Book at Juliére Beauty studio.",
@@ -321,6 +324,10 @@ const BUNDLED_STRINGS = {
     "booking.phNotes": "Occasion, style, or preferences",
     "booking.selectService": "Select a service",
     "booking.submit": "Send reservation",
+    "booking.privacyNoticeBefore":
+      "Your name, email address and phone number will be used only to process your reservation and send messages related to it. More information is available in our ",
+    "booking.privacyPolicyLink": "Privacy Policy",
+    "booking.privacyNoticeAfter": ".",
     "booking.sending": "Sending reservation…",
     "booking.sendingHint": "This can take up to a minute. Please don’t close the page.",
     "booking.submitFailTitle": "Reservation not sent",
@@ -369,7 +376,72 @@ const BUNDLED_STRINGS = {
     "contact.mapTitle": "Map — Juliére Beauty studio, Bratislava",
     "footer.brand": "Juliére Beauty",
     "footer.address": "Račianska 66, 831 02 Bratislava",
+    "footer.privacy": "Privacy policy",
     "footer.socialAria": "Social media",
+    "privacy.h1": "Privacy policy",
+    "privacy.s1Title": "1. Who processes your personal data",
+    "privacy.s1Intro": "The controller of personal data is:",
+    "privacy.operatorName": "Júlia Paštrnáková",
+    "privacy.operatorIco": "Company ID (IČO): 57637636",
+    "privacy.operatorAddress": "Registered office or place of business: Račianska 66, 831 02 Bratislava",
+    "privacy.operatorEmail": "Email: info@julierebeauty.com",
+    "privacy.operatorPhone": "Phone: +421 944 114 253",
+    "privacy.s1Contact":
+      "If you have questions about personal data protection, you can contact us at the email above.",
+    "privacy.s2Title": "2. What personal data we process",
+    "privacy.s2Intro": "When you create a reservation, we process:",
+    "privacy.s2Item1": "first name and surname,",
+    "privacy.s2Item2": "email address,",
+    "privacy.s2Item3": "phone number,",
+    "privacy.s2Item4": "reservation details, in particular the selected appointment and service,",
+    "privacy.s2Item5": "data related to changing, confirming or cancelling a reservation.",
+    "privacy.s3Title": "3. Purpose of processing",
+    "privacy.s3Intro": "We use personal data exclusively to:",
+    "privacy.s3Item1": "receive and assess a reservation request,",
+    "privacy.s3Item2": "confirm or refuse a reservation,",
+    "privacy.s3Item3": "communicate in connection with the reservation,",
+    "privacy.s3Item4": "change or cancel an appointment,",
+    "privacy.s3Item5": "handle questions or issues relating to the reservation.",
+    "privacy.s3NoMarketing":
+      "We do not use personal data to send marketing messages, nor do we sell it to third parties.",
+    "privacy.s4Title": "4. Legal basis for processing",
+    "privacy.s4Body1":
+      "We process personal data because it is necessary to take steps at your request before providing the service and subsequently to perform the agreement for the reserved service.",
+    "privacy.s4Body2":
+      "Providing the data listed above is necessary to create and manage a reservation. Without providing them, the reservation cannot be processed.",
+    "privacy.s5Title": "5. How long we keep the data",
+    "privacy.s5Body1":
+      "We keep reservation data for at most 12 months from the date of the reserved appointment. We then delete or anonymise it, unless further retention is necessary to meet a legal obligation or to protect our legal claims.",
+    "privacy.s5Body2":
+      "Pending or incomplete reservation requests are deleted within 30 days at the latest.",
+    "privacy.s6Title": "6. Who may be given access to the data",
+    "privacy.s6Body1":
+      "Only persons who operate the studio and manage reservations have access to personal data.",
+    "privacy.s6Body2":
+      "For the technical operation of reservations and communication we use Google services. Providers of these services may act as processors of personal data.",
+    "privacy.s6Body3":
+      "We do not disclose personal data to other persons except where required by law.",
+    "privacy.s7Title": "7. Data security",
+    "privacy.s7Body":
+      "Access to reservation data is limited to authorised persons. We use appropriate technical and organisational measures, in particular secured user accounts.",
+    "privacy.s8Title": "8. Your rights",
+    "privacy.s8Intro": "In connection with the processing of personal data you have the right to:",
+    "privacy.s8Item1": "request access to your personal data,",
+    "privacy.s8Item2": "request rectification of inaccurate data,",
+    "privacy.s8Item3": "request erasure of data where they are no longer needed,",
+    "privacy.s8Item4": "request restriction of processing,",
+    "privacy.s8Item5": "object to processing where the legal conditions are met,",
+    "privacy.s8Item6":
+      "lodge a complaint with the Office for Personal Data Protection of the Slovak Republic.",
+    "privacy.s8Contact":
+      "You can exercise your rights by emailing info@julierebeauty.com.",
+    "privacy.s9Title": "9. Automated decision-making",
+    "privacy.s9Body":
+      "When processing reservations we do not use automated decision-making or profiling that would produce legal or similarly significant effects.",
+    "privacy.s10Title": "10. Changes to this information",
+    "privacy.s10Body":
+      "We may update this information, especially if the way the reservation system works or the services we use change.",
+    "privacy.updated": "Last updated: 30 July 2026",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
     "footer.socialX": "X",
@@ -390,6 +462,9 @@ const BUNDLED_STRINGS = {
     "meta.descriptionBooking": "Rezervujte si termín na líčenie  zvoľte službu a voľný čas.",
     "meta.titleBookingAction": "Juliére Beauty | Spracovanie rezervácie",
     "meta.descriptionBookingAction": "Spracovanie odkazu z e-mailu rezervácie.",
+    "meta.titlePrivacy": "Juliére Beauty | Ochrana osobných údajov",
+    "meta.descriptionPrivacy":
+      "Informácie o spracúvaní osobných údajov pri rezerváciách v štúdiu Juliére Beauty.",
     "meta.titleBridalLanding": "Svadobné líčenie Bratislava | Juliére Beauty",
     "meta.descriptionBridalLanding":
       "Svadobné líčenie v Bratislave od vizážistky Julia — individuálny look, profesionálna kozmetika a dlhá výdrž. Voliteľná skúška. Štúdio Juliére Beauty, Račianska 66.",
@@ -677,6 +752,10 @@ const BUNDLED_STRINGS = {
     "booking.phNotes": "Príležitosť, štýl alebo preferencie",
     "booking.selectService": "Vyberte službu",
     "booking.submit": "Odoslať rezerváciu",
+    "booking.privacyNoticeBefore":
+      "Vaše údaje budú použité na spracovanie rezervácie. Viac informáci na stránke ",
+    "booking.privacyPolicyLink": "Ochrana osobných údajov",
+    "booking.privacyNoticeAfter": ".",
     "booking.sending": "Odosiela sa rezervácia…",
     "booking.sendingHint": "Môže to trvať až minútu. Nezatvárajte stránku.",
     "booking.submitFailTitle": "Rezerváciu sa nepodarilo odoslať",
@@ -725,7 +804,72 @@ const BUNDLED_STRINGS = {
     "contact.mapTitle": "Mapa — Juliére Beauty, Bratislava",
     "footer.brand": "Juliére Beauty",
     "footer.address": "Račianska 66, 831 02 Bratislava",
+    "footer.privacy": "Ochrana osobných údajov",
     "footer.socialAria": "Sociálne siete",
+    "privacy.h1": "Ochrana osobných údajov",
+    "privacy.s1Title": "1. Kto spracúva vaše osobné údaje",
+    "privacy.s1Intro": "Prevádzkovateľom osobných údajov je:",
+    "privacy.operatorName": "Júlia Paštrnáková",
+    "privacy.operatorIco": "IČO: 57637636",
+    "privacy.operatorAddress": "Sídlo alebo miesto podnikania: Račianska 66, 831 02 Bratislava",
+    "privacy.operatorEmail": "E-mail: info@julierebeauty.com",
+    "privacy.operatorPhone": "Telefón: +421 944 114 253",
+    "privacy.s1Contact":
+      "V prípade otázok týkajúcich sa ochrany osobných údajov nás môžete kontaktovať na uvedenom e-maile.",
+    "privacy.s2Title": "2. Aké osobné údaje spracúvame",
+    "privacy.s2Intro": "Pri vytvorení rezervácie spracúvame:",
+    "privacy.s2Item1": "meno a priezvisko,",
+    "privacy.s2Item2": "e-mailovú adresu,",
+    "privacy.s2Item3": "telefónne číslo,",
+    "privacy.s2Item4": "údaje o rezervácii, najmä vybraný termín a službu,",
+    "privacy.s2Item5": "údaje súvisiace so zmenou, potvrdením alebo zrušením rezervácie.",
+    "privacy.s3Title": "3. Na aký účel údaje používame",
+    "privacy.s3Intro": "Osobné údaje používame výlučne na:",
+    "privacy.s3Item1": "prijatie a posúdenie žiadosti o rezerváciu,",
+    "privacy.s3Item2": "potvrdenie alebo odmietnutie rezervácie,",
+    "privacy.s3Item3": "komunikáciu súvisiacu s rezerváciou,",
+    "privacy.s3Item4": "zmenu alebo zrušenie termínu,",
+    "privacy.s3Item5": "riešenie otázok alebo problémov týkajúcich sa rezervácie.",
+    "privacy.s3NoMarketing":
+      "Osobné údaje nepoužívame na zasielanie marketingových správ ani ich nepredávame tretím stranám.",
+    "privacy.s4Title": "4. Právny základ spracúvania",
+    "privacy.s4Body1":
+      "Osobné údaje spracúvame, pretože je to potrebné na vykonanie krokov na vašu žiadosť pred poskytnutím služby a na následné splnenie dohody o rezervovanej službe.",
+    "privacy.s4Body2":
+      "Poskytnutie uvedených údajov je potrebné na vytvorenie a správu rezervácie. Bez ich poskytnutia rezerváciu nie je možné spracovať.",
+    "privacy.s5Title": "5. Ako dlho údaje uchovávame",
+    "privacy.s5Body1":
+      "Údaje o rezervácii uchovávame najviac 12 mesiacov od dátumu rezervovaného termínu. Následne ich vymažeme alebo anonymizujeme, ak ich ďalšie uchovávanie nie je potrebné na splnenie zákonnej povinnosti alebo na ochranu našich právnych nárokov.",
+    "privacy.s5Body2":
+      "Nevybavené alebo nedokončené žiadosti o rezerváciu vymažeme najneskôr do 30 dní.",
+    "privacy.s6Title": "6. Komu môžu byť údaje sprístupnené",
+    "privacy.s6Body1":
+      "K osobným údajom majú prístup iba osoby, ktoré zabezpečujú prevádzku štúdia a správu rezervácií.",
+    "privacy.s6Body2":
+      "Na technické zabezpečenie rezervácií a komunikácie používame služby spoločnosti Google. Poskytovatelia týchto služieb môžu vystupovať ako sprostredkovatelia osobných údajov.",
+    "privacy.s6Body3":
+      "Osobné údaje neposkytujeme iným osobám, okrem prípadov, keď nám to prikazuje zákon.",
+    "privacy.s7Title": "7. Zabezpečenie údajov",
+    "privacy.s7Body":
+      "Prístup k rezervačným údajom je obmedzený na oprávnené osoby. Používame primerané technické a organizačné opatrenia, najmä zabezpečené používateľské účty.",
+    "privacy.s8Title": "8. Vaše práva",
+    "privacy.s8Intro": "V súvislosti so spracúvaním osobných údajov máte právo:",
+    "privacy.s8Item1": "požiadať o prístup k svojim osobným údajom,",
+    "privacy.s8Item2": "požiadať o opravu nesprávnych údajov,",
+    "privacy.s8Item3": "požiadať o vymazanie údajov, ak už nie sú potrebné,",
+    "privacy.s8Item4": "požiadať o obmedzenie spracúvania,",
+    "privacy.s8Item5": "namietať proti spracúvaniu, ak sú splnené zákonné podmienky,",
+    "privacy.s8Item6":
+      "podať návrh na začatie konania na Úrade na ochranu osobných údajov Slovenskej republiky.",
+    "privacy.s8Contact":
+      "Svoje práva si môžete uplatniť prostredníctvom e-mailu info@julierebeauty.com.",
+    "privacy.s9Title": "9. Automatizované rozhodovanie",
+    "privacy.s9Body":
+      "Pri spracúvaní rezervácií nepoužívame automatizované rozhodovanie ani profilovanie, ktoré by malo právne alebo podobne významné účinky.",
+    "privacy.s10Title": "10. Zmeny týchto informácií",
+    "privacy.s10Body":
+      "Tieto informácie môžeme aktualizovať, najmä ak sa zmení spôsob fungovania rezervačného systému alebo používané služby.",
+    "privacy.updated": "Posledná aktualizácia: 30. 7. 2026",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
     "footer.socialX": "X",

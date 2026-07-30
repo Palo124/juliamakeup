@@ -5,7 +5,7 @@ import { CONFIG } from "../config.js";
 import { getPageId, getSiteOrigin, pagePath, pageUrl as localePageUrl } from "../core/locale-urls.js";
 import { getLang, resolveSiteImageUrl, siteImageSrcForProfile, t } from "../i18n.js";
 
-/** @typedef {"home" | "booking" | "bridalLanding"} SeoPage */
+/** @typedef {"home" | "booking" | "bridalLanding" | "privacy"} SeoPage */
 
 const FAQ_COUNT = 4;
 const BRIDAL_LANDING_FAQ_COUNT = 6;
@@ -33,6 +33,12 @@ function pageMetaKeys(page) {
     return {
       titleKey: "meta.titleBooking",
       descriptionKey: "meta.descriptionBooking",
+    };
+  }
+  if (page === "privacy") {
+    return {
+      titleKey: "meta.titlePrivacy",
+      descriptionKey: "meta.descriptionPrivacy",
     };
   }
   if (page === "bridalLanding") {
@@ -295,6 +301,9 @@ export function detectSeoPage(pathname = window.location.pathname) {
   const pageId = getPageId(pathname);
   if (pageId === "booking") {
     return "booking";
+  }
+  if (pageId === "privacy") {
+    return "privacy";
   }
   if (pageId === "bridalLanding") {
     return "bridalLanding";
