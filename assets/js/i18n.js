@@ -325,7 +325,7 @@ const BUNDLED_STRINGS = {
     "booking.selectService": "Select a service",
     "booking.submit": "Send reservation",
     "booking.privacyNoticeBefore":
-      "Your name, email address and phone number will be used only to process your reservation and send messages related to it. More information is available in our ",
+      "Your data will be used only to process your reservation. More information at",
     "booking.privacyPolicyLink": "Privacy Policy",
     "booking.privacyNoticeAfter": ".",
     "booking.sending": "Sending reservation…",
