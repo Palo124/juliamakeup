@@ -24,6 +24,9 @@ export function messageForBookingUrlOutcome(result, code) {
   if (r === "already_cancelled") {
     return t("booking.resultAlreadyCancelled");
   }
+  if (r === "review_unsubscribed") {
+    return t("review.unsubscribeDoneBody");
+  }
   if (r === "error") {
     if (c === "EXPIRED_VERIFICATION") {
       return t("booking.expiredVerification");

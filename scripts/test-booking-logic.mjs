@@ -15,6 +15,7 @@ import {
   BOOKING_READ_DIR,
   READ_MODULE_FILES,
   WRITE_MODULE_FILES,
+  loadBookingScript,
   loadReadModules,
   loadWriteModules,
 } from "./booking/load-script.mjs";
@@ -555,4 +556,83 @@ test("refreshBookingAvailabilityCache_ writes cache key used by readers", () => 
   assert.equal(payload.ok, true);
   assert.equal(sandbox.scriptCache.get(ctx.BOOKING_AVAIL_CACHE_KEY)?.length > 0, true);
   jsonEqual(ctx.readBookingAvailabilityCache_(), payload);
+});
+
+const REVIEW_WRITE_FILES = [
+  ...WRITE_MODULE_FILES,
+  "68_ReviewEmailPrefs.gs",
+  "72_ReviewUnsubscribe.gs",
+];
+
+/** @param {Record<string, unknown>} [options] */
+function loadReviewWriteCtx(options = {}) {
+  const sandbox = createGasSandbox(options);
+  return {
+    ctx: /** @type {BookingCtx & { handleUnsubscribeReview_: (token: string) => { _text: string }, doGet: Function, EMAIL_PREFS_HEADERS: string[] }} */ (
+      loadBookingScript(REVIEW_WRITE_FILES, sandbox, BOOKING_DIR)
+    ),
+    sandbox,
+  };
+}
+
+test("unsubscribeReview opts out EmailPrefs row", () => {
+  const spreadsheet = createMockSpreadsheet([
+    createMockSheet(
+      "EmailPrefs",
+      [
+        "Email",
+        "Review Opt Out",
+        "Review Opt Out At",
+        "Unsubscribe Token",
+        "Review Last Sent At",
+      ],
+      [["client@example.com", "", "", "unsub-token-1", ""]],
+    ),
+    createMockSheet("Reservations", [
+      "ReservationId",
+      "Created At",
+      "Status",
+      "Verification Token",
+      "Verification Expires",
+      "Approval Token",
+      "Approval Expires",
+      "Cancellation Token",
+      "Cancellation Expires",
+      "Cancelled At",
+      "SlotId",
+      "Date",
+      "Time",
+      "Name",
+      "Email",
+      "Phone",
+      "Service",
+      "Notes",
+      "Lang",
+      "Calendar Event Id",
+      "Review Request Token",
+      "Review Request Sent At",
+      "Review Sentiment",
+      "Review Feedback Text",
+      "Review Feedback At",
+    ]),
+  ]);
+
+  const { ctx } = loadReviewWriteCtx({ spreadsheet });
+  ctx.BOOKING_ACTION_FORMAT_JSON_ = true;
+
+  const out = ctx.doGet({
+    parameter: {
+      action: "unsubscribeReview",
+      token: "unsub-token-1",
+      format: "json",
+    },
+  });
+  const data = readJsonOutput(out);
+  assert.equal(data.ok, true);
+  assert.equal(data.bookingResult, "review_unsubscribed");
+
+  const prefs = spreadsheet.getSheetByName("EmailPrefs");
+  const row = prefs.getDataRange().getValues()[1];
+  assert.equal(String(row[1]).toUpperCase(), "TRUE");
+  assert.ok(row[2]);
 });

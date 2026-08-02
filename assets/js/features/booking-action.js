@@ -11,6 +11,7 @@ const ALLOWED_ACTIONS = new Set([
   "approveReservation",
   "rejectReservation",
   "cancelReservation",
+  "unsubscribeReview",
 ]);
 
 /**
@@ -35,7 +36,9 @@ function showResult(card, result, code) {
   const hintEl = document.getElementById("booking-action-hint");
   const spinnerEl = document.getElementById("booking-action-spinner");
   const ctaEl = document.getElementById("booking-action-cta");
-  const message = messageForBookingUrlOutcome(result, code);
+  const resultKey = String(result || "").trim();
+  const isUnsubscribed = resultKey === "review_unsubscribed";
+  const message = isUnsubscribed ? t("review.unsubscribeDoneBody") : messageForBookingUrlOutcome(result, code);
   const isError = isBookingOutcomeError(result);
   const lang = getLangFromPath();
 
@@ -49,7 +52,13 @@ function showResult(card, result, code) {
   }
   if (titleEl) {
     titleEl.removeAttribute("data-i18n");
-    titleEl.textContent = t(isError ? "booking.actionFailTitle" : "booking.actionDoneTitle");
+    if (isError) {
+      titleEl.textContent = t("booking.actionFailTitle");
+    } else if (isUnsubscribed) {
+      titleEl.textContent = t("review.unsubscribeDoneTitle");
+    } else {
+      titleEl.textContent = t("booking.actionDoneTitle");
+    }
   }
   if (textEl) {
     textEl.removeAttribute("data-i18n");
@@ -57,7 +66,14 @@ function showResult(card, result, code) {
   }
   if (ctaEl) {
     ctaEl.classList.remove("hidden");
-    ctaEl.href = pagePath("booking", lang);
+    ctaEl.removeAttribute("data-i18n");
+    if (isUnsubscribed) {
+      ctaEl.href = pagePath("home", lang);
+      ctaEl.textContent = t("review.backHome");
+    } else {
+      ctaEl.href = pagePath("booking", lang);
+      ctaEl.textContent = t("booking.actionBackToBooking");
+    }
   }
 }
 

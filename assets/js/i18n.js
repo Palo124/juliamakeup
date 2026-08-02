@@ -377,6 +377,9 @@ const BUNDLED_STRINGS = {
     "review.thankYouTitle": "Thank you for your feedback",
     "review.thankYouBody": "We appreciate you taking the time.",
     "review.backHome": "Back to homepage",
+    "review.unsubscribeDoneTitle": "Unsubscribed",
+    "review.unsubscribeDoneBody":
+      "You will no longer receive feedback request emails from us, even if you book again.",
     "review.errorTitle": "Something went wrong",
     "review.invalidLink": "This feedback link is invalid or expired.",
     "review.invalidRating": "Please choose a rating using the links in your email.",
@@ -831,6 +834,9 @@ const BUNDLED_STRINGS = {
     "review.thankYouTitle": "Ďakujeme za spätnú väzbu",
     "review.thankYouBody": "Veľmi si vážime, že ste si našli chvíľu.",
     "review.backHome": "Späť na úvod",
+    "review.unsubscribeDoneTitle": "Odhlásené",
+    "review.unsubscribeDoneBody":
+      "Ďalšie žiadosti o spätnú väzbu vám nepošleme, ani pri ďalšej rezervácii.",
     "review.errorTitle": "Niečo sa nepodarilo",
     "review.invalidLink": "Tento odkaz na spätnú väzbu je neplatný alebo expiroval.",
     "review.invalidRating": "Vyberte prosím hodnotenie cez odkazy v e-maile.",
