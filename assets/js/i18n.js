@@ -424,23 +424,25 @@ const BUNDLED_STRINGS = {
     "privacy.s2Item3": "phone number,",
     "privacy.s2Item4": "reservation details, in particular the selected appointment and service,",
     "privacy.s2Item5": "data related to changing, confirming or cancelling a reservation.",
+    "privacy.s2Item6": "optional feedback you provide after a visit.",
     "privacy.s3Title": "3. Purpose of processing",
-    "privacy.s3Intro": "We use personal data exclusively to:",
+    "privacy.s3Intro": "We use personal data for:",
     "privacy.s3Item1": "receive and assess a reservation request,",
     "privacy.s3Item2": "confirm or refuse a reservation,",
     "privacy.s3Item3": "communicate in connection with the reservation,",
     "privacy.s3Item4": "change or cancel an appointment,",
     "privacy.s3Item5": "handle questions or issues relating to the reservation.",
+    "privacy.s3Item6": "evaluating feedback to improve our services.",
     "privacy.s3NoMarketing":
-      "We do not use personal data to send marketing messages, nor do we sell it to third parties.",
+      "We do not send promotional marketing or sell personal data. You can opt out of non-essential service emails, including feedback requests, via the link in the message.",
     "privacy.s4Title": "4. Legal basis for processing",
     "privacy.s4Body1":
-      "We process personal data because it is necessary to take steps at your request before providing the service and subsequently to perform the agreement for the reserved service.",
+      "We process personal data because it is necessary to take steps at your request before providing the service and subsequently to perform the agreement for the reserved service. Post-visit feedback is processed on the basis of our legitimate interest in improving our services.",
     "privacy.s4Body2":
       "Providing the data listed above is necessary to create and manage a reservation. Without providing them, the reservation cannot be processed.",
     "privacy.s5Title": "5. How long we keep the data",
     "privacy.s5Body1":
-      "We keep reservation data for at most 12 months from the date of the reserved appointment. We then delete or anonymise it, unless further retention is necessary to meet a legal obligation or to protect our legal claims.",
+      "We keep reservation data for at most 12 months from the date of the reserved appointment, including linked feedback. We then delete or anonymise it, unless further retention is necessary to meet a legal obligation or to protect our legal claims.",
     "privacy.s5Body2":
       "Pending or incomplete reservation requests are deleted within 30 days at the latest.",
     "privacy.s6Title": "6. Who may be given access to the data",
@@ -470,7 +472,7 @@ const BUNDLED_STRINGS = {
     "privacy.s10Title": "10. Changes to this information",
     "privacy.s10Body":
       "We may update this information, especially if the way the reservation system works or the services we use change.",
-    "privacy.updated": "Last updated: 30 July 2026",
+    "privacy.updated": "Last updated: 2 August 2026",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
     "footer.socialX": "X",
@@ -882,23 +884,25 @@ const BUNDLED_STRINGS = {
     "privacy.s2Item3": "telefónne číslo,",
     "privacy.s2Item4": "údaje o rezervácii, najmä vybraný termín a službu,",
     "privacy.s2Item5": "údaje súvisiace so zmenou, potvrdením alebo zrušením rezervácie.",
+    "privacy.s2Item6": "voliteľnú spätnú väzbu po termíne.",
     "privacy.s3Title": "3. Na aký účel údaje používame",
-    "privacy.s3Intro": "Osobné údaje používame výlučne na:",
+    "privacy.s3Intro": "Osobné údaje používame na:",
     "privacy.s3Item1": "prijatie a posúdenie žiadosti o rezerváciu,",
     "privacy.s3Item2": "potvrdenie alebo odmietnutie rezervácie,",
     "privacy.s3Item3": "komunikáciu súvisiacu s rezerváciou,",
     "privacy.s3Item4": "zmenu alebo zrušenie termínu,",
     "privacy.s3Item5": "riešenie otázok alebo problémov týkajúcich sa rezervácie.",
+    "privacy.s3Item6": "hodnotenie spätnej väzby za účelom zlepšovania služieb.",
     "privacy.s3NoMarketing":
-      "Osobné údaje nepoužívame na zasielanie marketingových správ ani ich nepredávame tretím stranám.",
+      "Neposielame propagačný marketing ani nepredávame údaje tretím stranám. Z nepovinných službou súvisiacich e-mailov (vrátane spätnej väzby) sa môžete odhlásiť odkazom v správe.",
     "privacy.s4Title": "4. Právny základ spracúvania",
     "privacy.s4Body1":
-      "Osobné údaje spracúvame, pretože je to potrebné na vykonanie krokov na vašu žiadosť pred poskytnutím služby a na následné splnenie dohody o rezervovanej službe.",
+      "Osobné údaje spracúvame, pretože je to potrebné na vykonanie krokov na vašu žiadosť pred poskytnutím služby a na následné splnenie dohody o rezervovanej službe. Spätnú väzbu po termíne spracúvame na základe oprávneného záujmu zlepšovať poskytované služby.",
     "privacy.s4Body2":
       "Poskytnutie uvedených údajov je potrebné na vytvorenie a správu rezervácie. Bez ich poskytnutia rezerváciu nie je možné spracovať.",
     "privacy.s5Title": "5. Ako dlho údaje uchovávame",
     "privacy.s5Body1":
-      "Údaje o rezervácii uchovávame najviac 12 mesiacov od dátumu rezervovaného termínu. Následne ich vymažeme alebo anonymizujeme, ak ich ďalšie uchovávanie nie je potrebné na splnenie zákonnej povinnosti alebo na ochranu našich právnych nárokov.",
+      "Údaje o rezervácii uchovávame najviac 12 mesiacov od dátumu rezervovaného termínu, vrátane súvisiacej spätnej väzby. Následne ich vymažeme alebo anonymizujeme, ak ich ďalšie uchovávanie nie je potrebné na splnenie zákonnej povinnosti alebo na ochranu našich právnych nárokov.",
     "privacy.s5Body2":
       "Nevybavené alebo nedokončené žiadosti o rezerváciu vymažeme najneskôr do 30 dní.",
     "privacy.s6Title": "6. Komu môžu byť údaje sprístupnené",
@@ -928,7 +932,7 @@ const BUNDLED_STRINGS = {
     "privacy.s10Title": "10. Zmeny týchto informácií",
     "privacy.s10Body":
       "Tieto informácie môžeme aktualizovať, najmä ak sa zmení spôsob fungovania rezervačného systému alebo používané služby.",
-    "privacy.updated": "Posledná aktualizácia: 30. 7. 2026",
+    "privacy.updated": "Posledná aktualizácia: 2. 8. 2026",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
     "footer.socialX": "X",
