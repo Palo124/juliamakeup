@@ -13,12 +13,13 @@ import { parseCsv, siteImgUrlsFromSkCsvRows } from "../assets/js/site-text-csv.j
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const enDir = join(root, "en");
 
-/** @type {Record<string, "home" | "booking" | "action" | "privacy">} */
+/** @type {Record<string, "home" | "booking" | "action" | "privacy" | "review">} */
 const PAGE_KEYS = {
   home: "home",
   booking: "booking",
   action: "action",
   privacy: "privacy",
+  review: "review",
 };
 
 function canonicalFor(pageKey, lang) {
@@ -168,6 +169,8 @@ function applyBundledLang(html, lang) {
     titleKey = "meta.titlePrivacy";
   } else if (out.includes('data-page-title-i18n="meta.titleBooking"')) {
     titleKey = "meta.titleBooking";
+  } else if (out.includes('data-page-title-i18n="meta.titleReview"')) {
+    titleKey = "meta.titleReview";
   }
   const title = strings[titleKey];
   if (title) {
@@ -238,6 +241,7 @@ mkdirSync(enDir, { recursive: true });
 const indexShared = prepareSharedHtml(readFileSync(join(root, "index.html"), "utf8"));
 const bookingShared = prepareSharedHtml(readFileSync(join(root, "booking.html"), "utf8"));
 const actionShared = prepareSharedHtml(readFileSync(join(root, "action.html"), "utf8"));
+const reviewShared = prepareSharedHtml(readFileSync(join(root, "review.html"), "utf8"));
 const privacyShared = prepareSharedHtml(readFileSync(join(root, "privacy.html"), "utf8"));
 
 writeFileSync(join(root, "index.html"), toSkPage(indexShared, "home"));
@@ -246,6 +250,8 @@ writeFileSync(join(root, "booking.html"), toSkPage(bookingShared, "booking"));
 writeFileSync(join(enDir, "booking.html"), toEnPage(bookingShared, "booking"));
 writeFileSync(join(root, "action.html"), toSkPage(actionShared, "action"));
 writeFileSync(join(enDir, "action.html"), toEnPage(actionShared, "action"));
+writeFileSync(join(root, "review.html"), toSkPage(reviewShared, "review"));
+writeFileSync(join(enDir, "review.html"), toEnPage(reviewShared, "review"));
 writeFileSync(join(root, "privacy.html"), toSkPage(privacyShared, "privacy"));
 writeFileSync(join(enDir, "privacy.html"), toEnPage(privacyShared, "privacy"));
 

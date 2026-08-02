@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Juliére Beauty | Moderné kozmetické štúdio</title>
+  <meta
+    name="description"
+    data-i18n-content="meta.descriptionReview"
+    content="Krátka spätná väzba po návšteve v štúdiu Juliére Beauty."
+  >
+  <meta name="robots" content="noindex, follow">
+        <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/review.html">
+  <link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/review.html">
+  <link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/review.html">
+<link rel="canonical" id="canonical-link" href="https://julierebeauty.com/review.html">
+  <meta property="og:site_name" content="Juliére Beauty">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://julierebeauty.com/review.html">
+  <meta
+    property="og:title"
+    data-i18n-content="meta.titleReview"
+    content="Juliére Beauty | Spätná väzba"
+  >
+  <meta
+    property="og:description"
+    data-i18n-content="meta.descriptionReview"
+    content="Krátka spätná väzba po návšteve v štúdiu Juliére Beauty."
+  >
+  <meta property="og:locale" content="sk_SK">
+  <meta property="og:locale:alternate" content="en_GB">
+  <link rel="icon" href="/assets/img/favicon_juliere.png" type="image/png">
+  <link rel="preconnect" href="https://script.google.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+  </noscript>
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body data-seo-page="review">
+  <div class="page-shell page-shell--sub booking-action-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html" data-i18n-aria="header.brandAria" aria-label="Domov Juliére Beauty">
+        <span class="brand-lockup">
+          <span class="brand-lockup-primary" data-i18n="header.brandPrimary">Juliére</span>
+          <span class="brand-lockup-secondary" data-i18n="header.brandSecondary">Beauty</span>
+        </span>
+      </a>
+    </header>
+
+    <main class="booking-action-page" aria-live="polite">
+      <div id="review-card" class="booking-action-card review-card" data-state="loading">
+        <div id="review-spinner" class="booking-action-card__spinner" aria-hidden="true"></div>
+        <h1 id="review-title" class="booking-action-card__title" data-i18n="review.savingRating">Ukladám hodnotenie…</h1>
+        <p id="review-text" class="booking-action-card__text" data-i18n="review.savingRatingBody">Prosím počkajte.</p>
+        <p id="review-form-hint" class="booking-action-card__hint" data-i18n="review.formIntro" hidden>Môžete nám voliteľne napísať, čo sa vám páčilo alebo čo by sme mohli zlepšiť.</p>
+
+        <div id="review-form-panel" class="review-form-panel" hidden>
+          <div id="review-stars-display" class="review-stars-display" aria-live="polite"></div>
+          <form id="review-form" class="review-form">
+            <label class="review-form__label" for="review-comment" data-i18n="review.commentLabel">Vaša poznámka</label>
+            <div class="review-form__topic-hint" role="note">
+              <p class="review-form__topic-intro" data-i18n="review.commentTopicsIntro">Môžete napísať napríklad o:</p>
+              <ul class="review-form__topic-list">
+                <li data-i18n="review.commentTopicApproach">prístupe</li>
+                <li data-i18n="review.commentTopicLongevity">výdrži líčenia</li>
+                <li data-i18n="review.commentTopicResult">výsledku líčenia</li>
+                <li data-i18n="review.commentTopicAtmosphere">atmosfére</li>
+                <li data-i18n="review.commentTopicOverall">celkovom dojme</li>
+              </ul>
+            </div>
+            <textarea
+              id="review-comment"
+              class="review-form__textarea"
+              name="comment"
+              rows="4"
+              maxlength="500"
+              data-i18n-placeholder="review.commentPlaceholder"
+              placeholder="Stačí pár slov…"
+            ></textarea>
+            <div class="review-form__actions">
+              <button id="review-submit" class="button review-form__submit" type="submit" data-i18n="review.submit">Odoslať poznámku</button>
+              <button id="review-skip" class="button button-ghost review-form__skip" type="button" data-i18n="review.skip">Preskočiť</button>
+            </div>
+          </form>
+        </div>
+
+        <a id="review-home-cta" class="button booking-action-card__cta hidden" href="/" data-i18n="review.backHome">Späť na úvod</a>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/assets/js/features/review-feedback.js"></script>
+</body>
+</html>

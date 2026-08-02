@@ -298,6 +298,51 @@ export async function fetchBookingTokenAction(action, token) {
 }
 
 /**
+ * @param {{ token: string, step: "rating" | "comment" | "skip", rating?: number, text?: string }} payload
+ * @returns {Promise<{ ok?: boolean, reviewResult?: string, reviewCode?: string, rating?: number, message?: string }>}
+ */
+export async function postReviewFeedback(payload) {
+  const base = CONFIG.bookingScriptUrl?.trim();
+  if (!base) {
+    return { ok: false, reviewCode: "CONFIG", message: "Booking URL not configured." };
+  }
+
+  let response;
+  try {
+    response = await fetch(base, {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        action: "submitReviewFeedback",
+        ...payload,
+      }),
+    });
+  } catch {
+    return { ok: false, reviewCode: "", message: "Could not reach booking server." };
+  }
+
+  const text = await response.text();
+  const trimmed = String(text ?? "").trim();
+  if (!trimmed || trimmed.startsWith("<")) {
+    return { ok: false, reviewCode: "", message: "Invalid response from server." };
+  }
+
+  try {
+    const data = JSON.parse(trimmed);
+    if (!data || typeof data !== "object") {
+      return { ok: false, reviewCode: "", message: "Invalid response from server." };
+    }
+    return data;
+  } catch {
+    return { ok: false, reviewCode: "", message: "Invalid response from server." };
+  }
+}
+
+/**
  * @param {Record<string, string>} reservation
  */
 export async function postReservation(reservation) {

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Juliére Beauty | Modern makeup studio</title>
+  <meta
+    name="description"
+    data-i18n-content="meta.descriptionReview"
+    content="Share quick feedback after your visit at Juliére Beauty."
+  >
+  <meta name="robots" content="noindex, follow">
+        <link rel="alternate" hreflang="sk" href="https://julierebeauty.com/review.html">
+  <link rel="alternate" hreflang="en" href="https://julierebeauty.com/en/review.html">
+  <link rel="alternate" hreflang="x-default" href="https://julierebeauty.com/review.html">
+<link rel="canonical" id="canonical-link" href="https://julierebeauty.com/en/review.html">
+  <meta property="og:site_name" content="Juliére Beauty">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://julierebeauty.com/en/review.html">
+  <meta
+    property="og:title"
+    data-i18n-content="meta.titleReview"
+    content="Juliére Beauty | Your feedback"
+  >
+  <meta
+    property="og:description"
+    data-i18n-content="meta.descriptionReview"
+    content="Share quick feedback after your visit at Juliére Beauty."
+  >
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="sk_SK">
+  <link rel="icon" href="/assets/img/favicon_juliere.png" type="image/png">
+  <link rel="preconnect" href="https://script.google.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Italiana&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+  </noscript>
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body data-seo-page="review">
+  <div class="page-shell page-shell--sub booking-action-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html" data-i18n-aria="header.brandAria" aria-label="Juliére Beauty home">
+        <span class="brand-lockup">
+          <span class="brand-lockup-primary" data-i18n="header.brandPrimary">Juliére</span>
+          <span class="brand-lockup-secondary" data-i18n="header.brandSecondary">Beauty</span>
+        </span>
+      </a>
+    </header>
+
+    <main class="booking-action-page" aria-live="polite">
+      <div id="review-card" class="booking-action-card review-card" data-state="loading">
+        <div id="review-spinner" class="booking-action-card__spinner" aria-hidden="true"></div>
+        <h1 id="review-title" class="booking-action-card__title" data-i18n="review.savingRating">Saving your rating…</h1>
+        <p id="review-text" class="booking-action-card__text" data-i18n="review.savingRatingBody">Please wait a moment.</p>
+        <p id="review-form-hint" class="booking-action-card__hint" data-i18n="review.formIntro" hidden>Would you like to add a short note? (optional)</p>
+
+        <div id="review-form-panel" class="review-form-panel" hidden>
+          <div id="review-stars-display" class="review-stars-display" aria-live="polite"></div>
+          <form id="review-form" class="review-form">
+            <label class="review-form__label" for="review-comment" data-i18n="review.commentLabel">Your note</label>
+            <div class="review-form__topic-hint" role="note">
+              <p class="review-form__topic-intro" data-i18n="review.commentTopicsIntro">You could mention, for example:</p>
+              <ul class="review-form__topic-list">
+                <li data-i18n="review.commentTopicApproach">approach</li>
+                <li data-i18n="review.commentTopicLongevity">makeup longevity</li>
+                <li data-i18n="review.commentTopicResult">makeup result</li>
+                <li data-i18n="review.commentTopicAtmosphere">atmosphere</li>
+                <li data-i18n="review.commentTopicOverall">overall impression</li>
+              </ul>
+            </div>
+            <textarea
+              id="review-comment"
+              class="review-form__textarea"
+              name="comment"
+              rows="4"
+              maxlength="500"
+              data-i18n-placeholder="review.commentPlaceholder"
+              placeholder="A few words are enough…"
+            ></textarea>
+            <div class="review-form__actions">
+              <button id="review-submit" class="button review-form__submit" type="submit" data-i18n="review.submit">Send note</button>
+              <button id="review-skip" class="button button-ghost review-form__skip" type="button" data-i18n="review.skip">Skip</button>
+            </div>
+          </form>
+        </div>
+
+        <a id="review-home-cta" class="button booking-action-card__cta hidden" href="/" data-i18n="review.backHome">Back to homepage</a>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/assets/js/features/review-feedback.js"></script>
+</body>
+</html>

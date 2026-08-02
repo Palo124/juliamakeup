@@ -3,7 +3,7 @@
  */
 import { CONFIG } from "../config.js";
 
-/** @typedef {"home" | "booking" | "action" | "privacy" | "bridalLanding"} PageId */
+/** @typedef {"home" | "booking" | "action" | "privacy" | "bridalLanding" | "review"} PageId */
 /** @typedef {"en" | "sk"} SiteLang */
 
 /**
@@ -26,6 +26,9 @@ export function getPageId(pathname = window.location.pathname) {
   if (/\/action\.html$/i.test(base)) {
     return "action";
   }
+  if (/\/review\.html$/i.test(base)) {
+    return "review";
+  }
   if (/\/privacy\.html$/i.test(base)) {
     return "privacy";
   }
@@ -47,6 +50,9 @@ export function pagePath(pageId, lang) {
   }
   if (pageId === "action") {
     return lang === "en" ? "/en/action.html" : "/action.html";
+  }
+  if (pageId === "review") {
+    return lang === "en" ? "/en/review.html" : "/review.html";
   }
   if (pageId === "privacy") {
     return lang === "en" ? "/en/privacy.html" : "/privacy.html";

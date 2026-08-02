@@ -33,3 +33,4 @@ README.md
 *.pdf
 /printer_test
 deploy-booking-backend.sh
+/email-previews

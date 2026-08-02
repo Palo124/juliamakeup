@@ -2011,6 +2011,126 @@ textarea {
   display: none;
 }
 
+.review-card[data-state="form"] .booking-action-card__text,
+.review-card[data-state="success"] #review-form-hint {
+  display: none;
+}
+
+.review-card[data-state="loading"] #review-form-panel,
+.review-card[data-state="loading"] #review-home-cta,
+.review-card[data-state="error"] #review-form-panel {
+  display: none;
+}
+
+.review-form-panel {
+  margin-top: 0.35rem;
+  text-align: left;
+}
+
+.review-stars-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(176, 123, 103, 0.28);
+  background: rgba(176, 123, 103, 0.08);
+}
+
+.review-stars-display__stars {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.75rem, 5vw, 2.1rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.review-stars-display__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8f614f;
+}
+
+.review-form__label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.review-form__topic-hint {
+  margin: 0 0 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(176, 123, 103, 0.35);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.review-form__topic-intro {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.review-form__topic-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.45rem;
+}
+
+.review-form__topic-list li {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(176, 123, 103, 0.22);
+  background: rgba(176, 123, 103, 0.07);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #6e6259;
+}
+
+.review-form__textarea {
+  width: 100%;
+  min-height: 7.5rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.review-form__textarea:focus {
+  outline: 2px solid rgba(176, 123, 103, 0.35);
+  outline-offset: 2px;
+}
+
+.review-form__actions {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.review-form__submit,
+.review-form__skip {
+  width: 100%;
+  justify-content: center;
+}
+
+.review-form__skip {
+  min-height: 44px;
+}
+
 /* Legacy class aliases (older markup / cached HTML) */
 .booking-success-dialog {
   padding: 0;
