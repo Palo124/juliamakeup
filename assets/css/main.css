@@ -1572,11 +1572,15 @@ html.is-portfolio-gallery-restoring {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  line-height: 1.2;
+  height: fit-content;
+  align-self: start;
 }
 
 .recommend-card {
   display: grid;
   gap: 14px;
+  align-content: start;
 }
 
 .hidden {
