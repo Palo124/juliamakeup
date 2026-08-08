@@ -63,6 +63,12 @@ export const CONFIG = {
   googleMapsEmbedUrl:
     "https://maps.google.com/maps?q=48.1791114%2C17.1289502&t=&z=17&ie=UTF8&iwloc=&output=embed",
 
+  /**
+   * Homepage Instagram embed strip (`#home-instagram`). Off by default — Meta embed.js is flaky
+   * and needs valid `home.instagram.embed.N` permalinks. Footer IG link is unaffected.
+   */
+  showHomeInstagramEmbeds: false,
+
   /** Footer social profile URLs (fallback if ENG/SK sheet keys `footer.social*Url` are empty). */
   social: {
     instagram: "https://www.instagram.com/julierebeauty/",

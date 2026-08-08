@@ -1,3 +1,4 @@
+import { CONFIG } from "../config.js";
 import { getHomeInstagramEmbedPermalinks } from "../i18n.js";
 
 const EMBED_SCRIPT_SRC = "https://www.instagram.com/embed.js";
@@ -203,6 +204,14 @@ export function refreshInstagramEmbeds() {
     return;
   }
 
+  if (!CONFIG.showHomeInstagramEmbeds) {
+    section.hidden = true;
+    container.replaceChildren();
+    container.classList.remove("home-instagram-grid--single");
+    lastRenderedKey = "";
+    return;
+  }
+
   const allPermalinks = collectPermalinks();
   if (!allPermalinks.length) {
     section.hidden = true;
@@ -241,6 +250,11 @@ function bindViewportListener() {
 }
 
 export function initInstagramEmbeds() {
+  if (!CONFIG.showHomeInstagramEmbeds) {
+    refreshInstagramEmbeds();
+    return;
+  }
+
   if (!langListenerBound) {
     langListenerBound = true;
     window.addEventListener("juliamakeup:lang", refreshInstagramEmbeds);

@@ -62,6 +62,13 @@ function initCriticalFeatures() {
   initHeaderScroll();
 }
 
+function hideHomeInstagramSection() {
+  const section = document.getElementById("home-instagram");
+  if (section) {
+    section.hidden = true;
+  }
+}
+
 function initBelowFoldFeatures() {
   initPortfolioCarousel();
   initPriceCarousel();
@@ -69,7 +76,9 @@ function initBelowFoldFeatures() {
   initBeforeVisitCarousel();
   void loadPortfolioGalleryModule().then((mod) => mod.initPortfolioGallery());
   void loadPriceServiceDialogModule().then((mod) => mod.initPriceServiceDialog());
-  void import("./features/instagram-embed.js").then((mod) => mod.initInstagramEmbeds());
+  if (CONFIG.showHomeInstagramEmbeds) {
+    void import("./features/instagram-embed.js").then((mod) => mod.initInstagramEmbeds());
+  }
 }
 
 function scheduleBelowFoldFeatures() {
@@ -106,6 +115,9 @@ async function bootstrap() {
   }
 
   initCriticalFeatures();
+  if (!CONFIG.showHomeInstagramEmbeds) {
+    hideHomeInstagramSection();
+  }
   scheduleBelowFoldFeatures();
 
   if (page === "booking") {
