@@ -236,6 +236,11 @@ body[data-seo-page="booking"] > .page-shell > main {
   color: var(--text);
 }
 
+.site-nav a[aria-current="page"]:not(.site-nav__booking) {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .site-nav a.site-nav__booking {
   font-weight: 700;
   color: #fff;

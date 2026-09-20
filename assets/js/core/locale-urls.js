@@ -35,6 +35,9 @@ export function getPageId(pathname = window.location.pathname) {
   if (/\/svadobne-licenie-bratislava(?:\/index\.html)?$/i.test(base)) {
     return "bridalLanding";
   }
+  if (/\/prom-makeup-bratislava(?:\/index\.html)?$/i.test(base)) {
+    return "promLanding";
+  }
   if (/\/licenie-na-stuzkovu-bratislava(?:\/index\.html)?$/i.test(base)) {
     return "promLanding";
   }
@@ -52,7 +55,7 @@ export function pagePath(pageId, lang) {
     return "/svadobne-licenie-bratislava/";
   }
   if (pageId === "promLanding") {
-    return "/licenie-na-stuzkovu-bratislava/";
+    return lang === "en" ? "/en/prom-makeup-bratislava/" : "/licenie-na-stuzkovu-bratislava/";
   }
   if (pageId === "action") {
     return lang === "en" ? "/en/action.html" : "/action.html";

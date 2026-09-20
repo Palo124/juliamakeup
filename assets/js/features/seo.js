@@ -10,7 +10,7 @@ import { getLang, resolveSiteImageUrl, siteImageSrcForProfile, t } from "../i18n
 const FAQ_COUNT = 4;
 const BRIDAL_LANDING_FAQ_COUNT = 6;
 const JSON_LD_ID = "juliamakeup-json-ld";
-const SK_ONLY_LANDINGS = new Set(["bridalLanding", "promLanding"]);
+const SK_ONLY_LANDINGS = new Set(["bridalLanding"]);
 
 /** @type {SeoPage | null} */
 let activePage = null;
@@ -271,7 +271,7 @@ function buildJsonLd(page) {
       url,
       isPartOf: { "@id": `${origin}/#website` },
       about: { "@id": `${origin}/#business` },
-      inLanguage: "sk-SK",
+      inLanguage,
     });
 
     graph.push({
@@ -281,13 +281,13 @@ function buildJsonLd(page) {
         {
           "@type": "ListItem",
           position: 1,
-          name: "Domov",
-          item: `${origin}/`,
+          name: lang === "sk" ? "Domov" : "Home",
+          item: localePageUrl("home", lang),
         },
         {
           "@type": "ListItem",
           position: 2,
-          name: "Líčenie na stužkovú Bratislava",
+          name: lang === "sk" ? "Líčenie na stužkovú Bratislava" : "Prom Makeup Bratislava",
           item: url,
         },
       ],
@@ -296,7 +296,7 @@ function buildJsonLd(page) {
     graph.push({
       "@type": "Service",
       "@id": `${url}#service`,
-      name: "Líčenie na stužkovú",
+      name: lang === "sk" ? "Líčenie na stužkovú" : "Prom makeup",
       serviceType: "Makeup",
       description: t("meta.descriptionPromLanding"),
       url,

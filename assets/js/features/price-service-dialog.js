@@ -86,7 +86,7 @@ function renderDetail(serviceId) {
   priceEl.textContent = t(PRICE_KEYS[serviceId]);
   durationEl.textContent = t(DURATION_KEYS[serviceId]);
 
-  const detail = t(DETAIL_KEYS[serviceId]);
+  const detail = t(DETAIL_KEYS[serviceId]).trim() || t(`prices.${serviceId}.p`);
   bodyEl.innerHTML = "";
   const chunks = detail
     .split(/\n\n+/)

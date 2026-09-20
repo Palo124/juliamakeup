@@ -188,6 +188,7 @@
         <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Hlavná navigácia">
           <a href="#about" data-i18n="nav.about">O mne</a>
           <a href="#portfolio" data-i18n="nav.portfolio">Portfólio</a>
+          <a href="/licenie-na-stuzkovu-bratislava/" data-i18n="nav.stuzkova">Stužková</a>
           <a href="#prices" data-i18n="nav.prices">Služby + Cenník</a>
           <a href="#before-visit" data-i18n="nav.beforeVisit">Pred termínom</a>
           <a href="#contact" data-i18n="nav.contact">Kontakt</a>
@@ -398,16 +399,18 @@
         </div>
         <div class="portfolio-carousel-viewport" id="price-carousel-viewport">
           <div class="portfolio-carousel-track" id="price-carousel-track">
-            <a
-              href="/licenie-na-stuzkovu-bratislava/"
-              class="price-card featured price-card--link portfolio-carousel-slide"
+            <article
+              class="price-card featured price-card--clickable portfolio-carousel-slide"
+              data-price-service="signature"
+              role="button"
+              tabindex="0"
             >
               <span class="price-tag" data-i18n="prices.signature.tag">Najžiadanejšie</span>
               <h3 data-i18n="prices.signature.h3">Spoločenské líčenie</h3>
               <strong data-i18n="prices.signature.price">40 EUR</strong>
               <p class="price-card-duration" data-i18n="prices.signature.duration">Trvanie: cca 60 minút</p>
               <p data-i18n="prices.signature.p">Spoločenské líčenie je ideálne na plesy, stužkové, oslavy či iné špeciálne príležitosti. </p>
-            </a>
+            </article>
             <a
               href="/svadobne-licenie-bratislava/"
               class="price-card price-card--link portfolio-carousel-slide"
