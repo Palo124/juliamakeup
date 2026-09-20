@@ -48,6 +48,35 @@ const BUNDLED_STRINGS = {
     "bridalLanding.faq.q6": "What products do you use?",
     "bridalLanding.faq.a6":
       "I work with professional brands chosen for longevity, comfort and a natural finish on camera — foundations, powders, setting sprays and pigments suited to long wedding days. Products are selected individually for your skin type and preferences.",
+    "meta.titlePromLanding": "Prom Makeup Bratislava | Juliére Beauty",
+    "meta.descriptionPromLanding":
+      "Professional stužková / prom makeup in Bratislava. Long-wear look matched to dress, hair and skin. See photos and book a slot.",
+    "promLanding.faq.q1": "How long does it take?",
+    "promLanding.faq.a1": "60 minutes in the studio.",
+    "promLanding.faq.q2": "How long does the makeup last?",
+    "promLanding.faq.a2": "The whole evening — ceremony, photos, dancing.",
+    "promLanding.faq.q3": "Should I arrive already made up?",
+    "promLanding.faq.a3": "No. Come with a clean face.",
+    "promLanding.faq.q4": "Will you come to my home?",
+    "promLanding.faq.a4": "Individual appointments are in the studio. Travel from 4 people.",
+    "promLanding.faq.q5": "Are false lashes included?",
+    "promLanding.faq.a5":
+      "Clusters can be added if the look and your eyes allow it. If you want a specific lash style, mention it when booking — it is not an automatic extra and not a guaranteed include.",
+    "promLanding.faq.q6": "Do I need a makeup trial?",
+    "promLanding.faq.a6":
+      "Usually not for stužková. A trial (45 EUR, about 90 min) is useful if you want to lock shades in advance. Otherwise we build the look on the day.",
+    "promLanding.faq.q7": "Can I bring a photo of my dress?",
+    "promLanding.faq.a7":
+      "Yes — and you should. A photo of the dress, hairstyle and jewellery is more useful than a vague description. Makeup references help too, but a few, not an album.",
+    "promLanding.faq.q8": "Do you also make up mum or friends?",
+    "promLanding.faq.a8":
+      "Yes. Each person has their own studio slot. On-location makeup is available from four people, with travel charged per km.",
+    "promLanding.faq.q9": "How far ahead should I book?",
+    "promLanding.faq.a9":
+      "In stužková season (typically May–June), several weeks to months ahead. Off-peak is easier, but Friday and Saturday slots still go quickly.",
+    "promLanding.faq.q10": "Will you come to my home?",
+    "promLanding.faq.a10":
+      "Individual appointments are at the studio on Račianska 66. I travel to you only for makeup of at least four people, at 0.25 EUR/km.",
     "home.instagram.eyebrow": "Instagram",
     "home.instagram.h2": "On Instagram",
     "home.instagram.followLink": "Follow @julierebeauty",
@@ -475,10 +504,8 @@ const BUNDLED_STRINGS = {
     "privacy.updated": "Last updated: 2 August 2026",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
-    "footer.socialX": "X",
     "footer.socialInstagramUrl": "https://www.instagram.com/julierebeauty/",
     "footer.socialFacebookUrl": "",
-    "footer.socialXUrl": "",
     "lang.switchAria": "Language",
     "lang.en": "English",
     "lang.sk": "Slovenčina",
@@ -517,6 +544,35 @@ const BUNDLED_STRINGS = {
     "bridalLanding.faq.q6": "Aké produkty používate?",
     "bridalLanding.faq.a6":
       "Pracujem s profesionálnou kozmetikou zameranou na výdrž, komfort a prirodzený vzhľad pred objektívom — podklady, púdra, fixátory a pigmenty vhodné na dlhý svadobný deň. Výber prispôsobím typu pleti a vašim preferenciám.",
+    "meta.titlePromLanding": "Líčenie na stužkovú Bratislava | Profesionálny make-up – Juliére Beauty",
+    "meta.descriptionPromLanding":
+      "Soft glam, glow a look, v ktorom sa budeš cítiť ako najlepšia verzia seba. Líčenie na stužkovú v Bratislave prispôsobené črtám, šatám a štýlu večera.",
+    "promLanding.faq.q1": "Ako dlho to trvá?",
+    "promLanding.faq.a1": "60 minút v štúdiu.",
+    "promLanding.faq.q2": "Ako dlho makeup vydrží?",
+    "promLanding.faq.a2": "Celý večer — nástup, fotenie, tanec.",
+    "promLanding.faq.q3": "Mám prísť nalíčená?",
+    "promLanding.faq.a3": "Nie. Príďte s čistou pleťou.",
+    "promLanding.faq.q4": "Prídete ma nalíčiť domov?",
+    "promLanding.faq.a4": "Individuálne v štúdiu. Od 4 osôb aj dojazd.",
+    "promLanding.faq.q5": "Sú umelé mihalnice v cene?",
+    "promLanding.faq.a5":
+      "Zväzky doladíme podľa looku, ak to tvár a očakávanie dovoľujú. Ak chcete konkrétny typ mihalníc, napíšte to pri rezervácii — nepredávam to ako automatický príplatok ani ako sľub v cene.",
+    "promLanding.faq.q6": "Je potrebná skúška líčenia?",
+    "promLanding.faq.a6":
+      "Na stužkovú väčšinou nie. Skúška (45 €, cca 90 min) dáva zmysel, ak chcete istotu odtieňov vopred. Inak look staviame priamo v deň udalosti.",
+    "promLanding.faq.q7": "Môžem priniesť fotografiu šiat?",
+    "promLanding.faq.a7":
+      "Áno — a oplatí sa to. Fotka šiat, účesu a prípadne šperkov je užitočnejšia ako vágny popis. Referencie makeup lookov tiež, ale max. zopár, nie album.",
+    "promLanding.faq.q8": "Líčite aj mamu alebo kamarátky?",
+    "promLanding.faq.a8":
+      "Áno. Každá osoba má vlastný termín v štúdiu. Ak chcete líčenie u vás, ide to od štyroch osôb s cestovným podľa km.",
+    "promLanding.faq.q9": "Koľko vopred si mám rezervovať termín?",
+    "promLanding.faq.a9":
+      "V sezóne stužkových (typicky máj–jún) ideálne niekoľko týždňov až mesiacov vopred. Mimo špičky stačí skôr, ale obľúbené piatky a soboty miznú rýchlo.",
+    "promLanding.faq.q10": "Prídete ma nalíčiť domov?",
+    "promLanding.faq.a10":
+      "Individuálne termíny sú v štúdiu na Račianskej 66. Dojazd k vám až pri líčení minimálne štyroch osôb, cestovné 0,25 €/km.",
     "home.instagram.eyebrow": "Instagram",
     "home.instagram.h2": "Juliére Beauty na Instagrame",
     "home.instagram.followLink": "Sledovať @julierebeauty",
@@ -935,10 +991,8 @@ const BUNDLED_STRINGS = {
     "privacy.updated": "Posledná aktualizácia: 2. 8. 2026",
     "footer.socialInstagram": "Instagram",
     "footer.socialFacebook": "Facebook",
-    "footer.socialX": "X",
     "footer.socialInstagramUrl": "https://www.instagram.com/julierebeauty/",
     "footer.socialFacebookUrl": "",
-    "footer.socialXUrl": "",
     "lang.switchAria": "Jazyk",
     "lang.en": "English",
     "lang.sk": "Slovenčina",
@@ -1265,7 +1319,6 @@ function applyFooterSocialLinks() {
   const triples = [
     ["footer-link-instagram", "footer.socialInstagramUrl", CONFIG.social?.instagram],
     ["footer-link-facebook", "footer.socialFacebookUrl", CONFIG.social?.facebook],
-    ["footer-link-x", "footer.socialXUrl", CONFIG.social?.x],
   ];
   for (const [id, urlKey, cfgFallback] of triples) {
     const a = document.getElementById(id);

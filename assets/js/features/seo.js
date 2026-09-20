@@ -5,11 +5,12 @@ import { CONFIG } from "../config.js";
 import { getPageId, getSiteOrigin, pagePath, pageUrl as localePageUrl } from "../core/locale-urls.js";
 import { getLang, resolveSiteImageUrl, siteImageSrcForProfile, t } from "../i18n.js";
 
-/** @typedef {"home" | "booking" | "bridalLanding" | "privacy"} SeoPage */
+/** @typedef {"home" | "booking" | "bridalLanding" | "promLanding" | "privacy"} SeoPage */
 
 const FAQ_COUNT = 4;
 const BRIDAL_LANDING_FAQ_COUNT = 6;
 const JSON_LD_ID = "juliamakeup-json-ld";
+const SK_ONLY_LANDINGS = new Set(["bridalLanding", "promLanding"]);
 
 /** @type {SeoPage | null} */
 let activePage = null;
@@ -19,9 +20,20 @@ function ogImageUrl(page) {
   const source =
     page === "bridalLanding"
       ? "https://drive.google.com/file/d/1zpPOVSkMdypIdToZJQzigpec5VMtCrDA/view?usp=sharing"
-      : CONFIG.seoOgImage || "assets/img/favicon_juliere.png";
+      : page === "promLanding"
+        ? "/assets/img/stuzkova_makeup/stuzkova-3-w1200.webp"
+        : CONFIG.seoOgImage || "assets/img/favicon_juliere.png";
   const resolved = resolveSiteImageUrl(source);
-  return resolved ? siteImageSrcForProfile(resolved, "og") : "";
+  const src = resolved ? siteImageSrcForProfile(resolved, "og") : "";
+  if (!src) {
+    return "";
+  }
+  if (/^https?:\/\//i.test(src)) {
+    return src;
+  }
+  const origin = getSiteOrigin() || CONFIG.siteUrl || "";
+  const path = src.startsWith("/") ? src : `/${src}`;
+  return origin ? `${origin}${path}` : path;
 }
 
 /**
@@ -45,6 +57,12 @@ function pageMetaKeys(page) {
     return {
       titleKey: "meta.titleBridalLanding",
       descriptionKey: "meta.descriptionBridalLanding",
+    };
+  }
+  if (page === "promLanding") {
+    return {
+      titleKey: "meta.titlePromLanding",
+      descriptionKey: "meta.descriptionPromLanding",
     };
   }
   return {
@@ -78,7 +96,7 @@ function setLinkRel(rel, href, hreflang) {
 
 function applyHreflang(page) {
   const skUrl = localePageUrl(page, "sk");
-  if (page === "bridalLanding") {
+  if (SK_ONLY_LANDINGS.has(page)) {
     setLinkRel("alternate", skUrl, "sk");
     setLinkRel("alternate", skUrl, "x-default");
     return;
@@ -110,7 +128,7 @@ function setMetaByProperty(property, content) {
 }
 
 function socialProfileUrls() {
-  const ids = ["footer-link-instagram", "footer-link-facebook", "footer-link-x"];
+  const ids = ["footer-link-instagram", "footer-link-facebook"];
   return ids
     .map((id) => document.getElementById(id))
     .filter((a) => a instanceof HTMLAnchorElement)
@@ -135,6 +153,54 @@ function openingHoursSpecification() {
   ];
 }
 
+/**
+ * @param {string} origin
+ * @param {string} image
+ */
+function beautySalonJsonLd(origin, image) {
+  return {
+    "@type": "BeautySalon",
+    "@id": `${origin}/#business`,
+    name: "Juliére Beauty",
+    url: origin,
+    image,
+    telephone: t("contact.phone"),
+    email: t("contact.email"),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Račianska 66",
+      addressLocality: "Bratislava",
+      postalCode: "831 02",
+      addressCountry: "SK",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 48.1791114,
+      longitude: 17.1289502,
+    },
+    openingHoursSpecification: openingHoursSpecification(),
+    sameAs: socialProfileUrls(),
+  };
+}
+
+/**
+ * @param {string} prefix
+ * @param {number} count
+ */
+function faqEntities(prefix, count) {
+  return Array.from({ length: count }, (_, i) => {
+    const n = i + 1;
+    return {
+      "@type": "Question",
+      name: t(`${prefix}.q${n}`),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: t(`${prefix}.a${n}`),
+      },
+    };
+  });
+}
+
 function buildJsonLd(page) {
   const origin = getSiteOrigin() || "";
   const image = ogImageUrl(page);
@@ -152,45 +218,13 @@ function buildJsonLd(page) {
   });
 
   if (page === "home") {
-    graph.push({
-      "@type": "BeautySalon",
-      "@id": `${origin}/#business`,
-      name: "Juliére Beauty",
-      url: origin || url,
-      image,
-      telephone: t("contact.phone"),
-      email: t("contact.email"),
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Račianska 66",
-        addressLocality: "Bratislava",
-        postalCode: "831 02",
-        addressCountry: "SK",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 48.1791114,
-        longitude: 17.1289502,
-      },
-      openingHoursSpecification: openingHoursSpecification(),
-      sameAs: socialProfileUrls(),
-    });
+    graph.push(beautySalonJsonLd(origin, image));
 
     graph.push({
       "@type": "FAQPage",
       "@id": `${url}#faq`,
       inLanguage,
-      mainEntity: Array.from({ length: FAQ_COUNT }, (_, i) => {
-        const n = i + 1;
-        return {
-          "@type": "Question",
-          name: t(`faq.q${n}`),
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: t(`faq.a${n}`),
-          },
-        };
-      }),
+      mainEntity: faqEntities("faq", FAQ_COUNT),
     });
   }
 
@@ -222,17 +256,60 @@ function buildJsonLd(page) {
       "@type": "FAQPage",
       "@id": `${url}#faq`,
       inLanguage: "sk-SK",
-      mainEntity: Array.from({ length: BRIDAL_LANDING_FAQ_COUNT }, (_, i) => {
-        const n = i + 1;
-        return {
-          "@type": "Question",
-          name: t(`bridalLanding.faq.q${n}`),
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: t(`bridalLanding.faq.a${n}`),
-          },
-        };
-      }),
+      mainEntity: faqEntities("bridalLanding.faq", BRIDAL_LANDING_FAQ_COUNT),
+    });
+  }
+
+  if (page === "promLanding") {
+    graph.push(beautySalonJsonLd(origin, image));
+
+    graph.push({
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: t("meta.titlePromLanding"),
+      description: t("meta.descriptionPromLanding"),
+      url,
+      isPartOf: { "@id": `${origin}/#website` },
+      about: { "@id": `${origin}/#business` },
+      inLanguage: "sk-SK",
+    });
+
+    graph.push({
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Domov",
+          item: `${origin}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Líčenie na stužkovú Bratislava",
+          item: url,
+        },
+      ],
+    });
+
+    graph.push({
+      "@type": "Service",
+      "@id": `${url}#service`,
+      name: "Líčenie na stužkovú",
+      serviceType: "Makeup",
+      description: t("meta.descriptionPromLanding"),
+      url,
+      provider: { "@id": `${origin}/#business` },
+      areaServed: {
+        "@type": "City",
+        name: "Bratislava",
+      },
+      offers: {
+        "@type": "Offer",
+        price: "40",
+        priceCurrency: "EUR",
+      },
     });
   }
 
@@ -307,6 +384,9 @@ export function detectSeoPage(pathname = window.location.pathname) {
   }
   if (pageId === "bridalLanding") {
     return "bridalLanding";
+  }
+  if (pageId === "promLanding") {
+    return "promLanding";
   }
   return "home";
 }

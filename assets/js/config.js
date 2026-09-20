@@ -73,6 +73,5 @@ export const CONFIG = {
   social: {
     instagram: "https://www.instagram.com/julierebeauty/",
     facebook: "https://www.facebook.com/",
-    x: "https://x.com/",
   },
 };

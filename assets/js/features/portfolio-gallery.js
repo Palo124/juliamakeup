@@ -11,6 +11,9 @@ const CATEGORY_LABEL_KEYS = {
 let galleries = null;
 /** @type {Promise<void> | null} */
 let galleriesLoadPromise = null;
+const INLINE_CATEGORY = "inline";
+/** @type {{ images: PortfolioGalleryItem[] } | null} */
+let inlineGallery = null;
 /** @type {HTMLDialogElement | null} */
 let dialog = null;
 /** @type {HTMLElement | null} */
@@ -38,7 +41,7 @@ let suppressLightboxBackdropCloseUntil = 0;
 const SWIPE_MIN_PX = 48;
 const SWIPE_VERTICAL_DOMINANCE = 0.78;
 
-/** @typedef {{ src?: string, altKey?: string, tagKey?: string, captionKey?: string }} PortfolioGalleryItem */
+/** @typedef {{ src?: string, alt?: string, altKey?: string, tagKey?: string, captionKey?: string }} PortfolioGalleryItem */
 
 let pageScrollLocked = false;
 let savedScrollY = 0;
@@ -87,6 +90,9 @@ function openPortfolioGalleryDialog() {
 }
 
 function visibleGalleryImages(/** @type {string} */ categoryId) {
+  if (categoryId === INLINE_CATEGORY) {
+    return (inlineGallery?.images ?? []).filter((item) => String(item.src || "").trim());
+  }
   const images = galleries?.[categoryId]?.images;
   if (!Array.isArray(images)) {
     return [];
@@ -107,7 +113,7 @@ function referrerPolicyForResolvedSrc(/** @type {string} */ resolvedSrc) {
 }
 
 function applyLightboxImage() {
-  if (!lightboxImg || !lightboxCategoryId || !galleries?.[lightboxCategoryId]) {
+  if (!lightboxImg || !lightboxCategoryId) {
     return;
   }
   const images = visibleGalleryImages(lightboxCategoryId);
@@ -115,12 +121,16 @@ function applyLightboxImage() {
   if (!item) {
     return;
   }
-  const imageBase = resolvePortfolioGalleryImageBase(item.altKey, item.src);
+  const imageBase =
+    lightboxCategoryId === INLINE_CATEGORY
+      ? String(item.src || "").trim()
+      : resolvePortfolioGalleryImageBase(item.altKey, item.src);
   if (!imageBase) {
     return;
   }
   applySiteImageDeliveryToElement(lightboxImg, imageBase, "gallery");
-  lightboxImg.alt = item.altKey ? t(item.altKey) : "";
+  lightboxImg.alt =
+    lightboxCategoryId === INLINE_CATEGORY ? item.alt || "" : item.altKey ? t(item.altKey) : "";
   const resolvedSrc = lightboxImg.currentSrc || lightboxImg.src;
   const ref = referrerPolicyForResolvedSrc(resolvedSrc);
   if (ref) {
@@ -137,7 +147,7 @@ function updateLightboxNav() {
   if (!prev || !next) {
     return;
   }
-  if (!lightboxCategoryId || !galleries?.[lightboxCategoryId]) {
+  if (!lightboxCategoryId) {
     prev.disabled = true;
     next.disabled = true;
     return;
@@ -149,7 +159,7 @@ function updateLightboxNav() {
 }
 
 function lightboxStep(/** @type {number} */ delta) {
-  if (!lightboxCategoryId || !galleries?.[lightboxCategoryId]) {
+  if (!lightboxCategoryId) {
     return;
   }
   const images = visibleGalleryImages(lightboxCategoryId);
@@ -180,15 +190,22 @@ function closeGalleryLightbox() {
   updateLightboxNav();
   lastThumbFocus?.focus?.();
   lastThumbFocus = null;
+  if (!dialog?.open) {
+    unlockPageScroll();
+  }
 }
 
 function openGalleryLightbox(/** @type {string} */ categoryId, /** @type {number} */ imageIndex) {
   if (!lightboxEl || !lightboxImg || !visibleGalleryImages(categoryId)[imageIndex]) {
     return;
   }
+  if (!dialog?.open) {
+    lockPageScroll();
+  }
   lightboxCategoryId = categoryId;
   lightboxIndex = imageIndex;
   applyLightboxImage();
+  suppressLightboxBackdropCloseUntil = performance.now() + 420;
   lightboxEl.hidden = false;
   document.getElementById("portfolio-gallery-lightbox-close")?.focus();
 }
@@ -318,6 +335,73 @@ function setCardAriaLabels() {
       el.setAttribute("aria-label", `${t(labelKey)} — ${t("portfolio.gallery.openSuffix")}`);
     }
   });
+  labelInlineGalleryCards();
+}
+
+function labelInlineGalleryCards() {
+  const openLabel = t("portfolio.gallery.fullscreenOpen");
+  document.querySelectorAll("[data-inline-gallery-item]").forEach((card) => {
+    const img = card.querySelector("img.portfolio-card__thumb");
+    const alt = img instanceof HTMLImageElement ? img.alt.trim() : "";
+    card.setAttribute("aria-label", alt ? `${alt} — ${openLabel}` : openLabel);
+  });
+}
+
+function bindInlineLandingGallery() {
+  const cards = document.querySelectorAll("[data-inline-gallery-item]");
+  if (!cards.length) {
+    return;
+  }
+
+  const images = [];
+  cards.forEach((card) => {
+    const img = card.querySelector("img.portfolio-card__thumb");
+    if (!(img instanceof HTMLImageElement)) {
+      return;
+    }
+    const src = img.getAttribute("src") || "";
+    if (!src.trim()) {
+      return;
+    }
+    const imageIndex = images.length;
+    images.push({ src, alt: img.getAttribute("alt") || "" });
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+    let dragged = false;
+    card.addEventListener("pointerdown", (event) => {
+      dragged = false;
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
+    });
+    card.addEventListener("pointermove", (event) => {
+      if (Math.abs(event.clientX - pointerStartX) > 12 || Math.abs(event.clientY - pointerStartY) > 12) {
+        dragged = true;
+      }
+    });
+    const open = () => {
+      lastThumbFocus = card instanceof HTMLElement ? card : null;
+      openGalleryLightbox(INLINE_CATEGORY, imageIndex);
+    };
+    card.addEventListener("click", (event) => {
+      if (dragged) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+      open();
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
+    });
+  });
+
+  inlineGallery = { images };
+  labelInlineGalleryCards();
 }
 
 export function refreshPortfolioGalleryI18n() {
@@ -360,53 +444,12 @@ function onDialogClick(event) {
   closePortfolioGallery();
 }
 
-export async function initPortfolioGallery() {
-  dialog = document.getElementById("portfolio-gallery-dialog");
-  titleEl = document.getElementById("portfolio-gallery-title");
-  gridEl = document.getElementById("portfolio-gallery-grid");
-  lightboxEl = document.getElementById("portfolio-gallery-lightbox");
-  lightboxImg = document.getElementById("portfolio-gallery-lightbox-img");
-  const closeBtn = document.getElementById("portfolio-gallery-close");
-  const lightboxClose = document.getElementById("portfolio-gallery-lightbox-close");
-
-  if (!dialog || !titleEl || !gridEl || !lightboxEl || !lightboxImg) {
+function bindLightboxChrome() {
+  if (!lightboxEl || !lightboxImg) {
     return;
   }
 
-  document.querySelectorAll("[data-portfolio-category]").forEach((el) => {
-    el.addEventListener("click", (event) => {
-      event.preventDefault();
-      const id = el.getAttribute("data-portfolio-category");
-      if (id) {
-        void openPortfolioGallery(id);
-      }
-    });
-    el.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        const id = el.getAttribute("data-portfolio-category");
-        if (id) {
-          void openPortfolioGallery(id);
-        }
-      }
-    });
-  });
-
-  closeBtn?.addEventListener("click", () => {
-    closePortfolioGallery();
-  });
-
-  dialog.addEventListener("cancel", (event) => {
-    event.preventDefault();
-    if (lightboxEl && !lightboxEl.hidden) {
-      closeGalleryLightbox();
-      return;
-    }
-    closePortfolioGallery();
-  });
-
-  dialog.addEventListener("click", onDialogClick);
-
+  const lightboxClose = document.getElementById("portfolio-gallery-lightbox-close");
   lightboxClose?.addEventListener("click", (event) => {
     event.stopPropagation();
     closeGalleryLightbox();
@@ -489,8 +532,13 @@ export async function initPortfolioGallery() {
     closeGalleryLightbox();
   });
 
-  dialog.addEventListener("keydown", (event) => {
+  document.addEventListener("keydown", (event) => {
     if (!lightboxEl || lightboxEl.hidden) {
+      return;
+    }
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeGalleryLightbox();
       return;
     }
     if (event.key === "ArrowLeft") {
@@ -501,6 +549,61 @@ export async function initPortfolioGallery() {
       lightboxStep(1);
     }
   });
+}
+
+export async function initPortfolioGallery() {
+  dialog = document.getElementById("portfolio-gallery-dialog");
+  titleEl = document.getElementById("portfolio-gallery-title");
+  gridEl = document.getElementById("portfolio-gallery-grid");
+  lightboxEl = document.getElementById("portfolio-gallery-lightbox");
+  lightboxImg = document.getElementById("portfolio-gallery-lightbox-img");
+  const closeBtn = document.getElementById("portfolio-gallery-close");
+
+  if (!lightboxEl || !lightboxImg) {
+    return;
+  }
+
+  bindLightboxChrome();
+  bindInlineLandingGallery();
+
+  const hasDialog = Boolean(dialog && titleEl && gridEl);
+  if (!hasDialog) {
+    return;
+  }
+
+  document.querySelectorAll("[data-portfolio-category]").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      const id = el.getAttribute("data-portfolio-category");
+      if (id) {
+        void openPortfolioGallery(id);
+      }
+    });
+    el.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        const id = el.getAttribute("data-portfolio-category");
+        if (id) {
+          void openPortfolioGallery(id);
+        }
+      }
+    });
+  });
+
+  closeBtn?.addEventListener("click", () => {
+    closePortfolioGallery();
+  });
+
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    if (lightboxEl && !lightboxEl.hidden) {
+      closeGalleryLightbox();
+      return;
+    }
+    closePortfolioGallery();
+  });
+
+  dialog.addEventListener("click", onDialogClick);
 
   window.addEventListener("hashchange", () => {
     const id = parseGalleryFromHash();

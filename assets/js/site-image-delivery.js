@@ -36,7 +36,14 @@ export const SITE_IMAGE_PROFILES = {
 const DRIVE_FILE_ID_RE = /^[a-zA-Z0-9_-]+$/;
 
 /** Local masters with generated `-w{width}.webp` variants (see `scripts/optimize-site-images.mjs`). */
-const LOCAL_RESPONSIVE_BASES = new Set(["/assets/img/IMG_7567"]);
+const LOCAL_RESPONSIVE_BASES = new Set([
+  "/assets/img/IMG_7567",
+  "/assets/img/stuzkova_makeup/stuzkova-1",
+  "/assets/img/stuzkova_makeup/stuzkova-2",
+  "/assets/img/stuzkova_makeup/stuzkova-3",
+  "/assets/img/stuzkova_makeup/stuzkova-4",
+  "/assets/img/stuzkova_makeup/stuzkova-5",
+]);
 
 /**
  * @param {unknown} input
@@ -126,13 +133,11 @@ export function normalizeSiteImageProfile(profileKey) {
  * @returns {string | null}
  */
 function localResponsiveBase(resolvedUrl) {
-  const match = resolvedUrl.match(/^(\/assets\/img\/[^/?#]+?)(?:-\w+)?\.(?:jpe?g|webp|png)(?:\?.*)?$/i);
-  if (!match) {
-    return null;
-  }
-
-  const base = match[1];
-  return LOCAL_RESPONSIVE_BASES.has(base) ? base : null;
+  const path = String(resolvedUrl).split("?")[0];
+  const withVariant = path.match(/^(\/assets\/img\/.+)-w\d+\.(?:jpe?g|webp|png)$/i);
+  const withoutVariant = path.match(/^(\/assets\/img\/.+)\.(?:jpe?g|webp|png)$/i);
+  const base = withVariant?.[1] ?? withoutVariant?.[1] ?? null;
+  return base && LOCAL_RESPONSIVE_BASES.has(base) ? base : null;
 }
 
 /**

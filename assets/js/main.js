@@ -101,16 +101,19 @@ async function bootstrap() {
     void import("./services/booking-api.js").then((mod) => mod.warmBookingBackend());
   }
 
-  if (page !== "bridalLanding") {
+  const isServiceLanding = page === "bridalLanding" || page === "promLanding";
+
+  if (!isServiceLanding) {
     initContactMap();
   }
   initI18n();
   initSeo(page);
   window.addEventListener("juliamakeup:lang", onLanguageChanged);
 
-  if (page === "bridalLanding") {
+  if (isServiceLanding) {
     bindNavigation();
     initHeaderScroll();
+    void loadPortfolioGalleryModule().then((mod) => mod.initPortfolioGallery());
     return;
   }
 
