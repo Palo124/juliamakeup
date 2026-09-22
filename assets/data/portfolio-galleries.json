@@ -75,6 +75,30 @@
       }
     ]
   },
+  "signature": {
+    "images": [
+      {
+        "src": "/assets/img/stuzkova_makeup/stuzkova-3-w1600.webp",
+        "altKey": "portfolio.gallery.signature.1"
+      },
+      {
+        "src": "/assets/img/stuzkova_makeup/stuzkova-1-w1600.webp",
+        "altKey": "portfolio.gallery.signature.2"
+      },
+      {
+        "src": "/assets/img/stuzkova_makeup/stuzkova-5-w1600.webp",
+        "altKey": "portfolio.gallery.signature.3"
+      },
+      {
+        "src": "/assets/img/stuzkova_makeup/stuzkova-4-w1600.webp",
+        "altKey": "portfolio.gallery.signature.4"
+      },
+      {
+        "src": "/assets/img/stuzkova_makeup/stuzkova-2-w1600.webp",
+        "altKey": "portfolio.gallery.signature.5"
+      }
+    ]
+  },
   "evening": {
     "images": [
       {

@@ -100,6 +100,8 @@ portfolio.soft.label,Nevesty,
 portfolio.soft.p,Svadobné líčenia.,
 portfolio.editorial.label,Extravagantné líčenia,
 portfolio.editorial.p,Výrazné líčenie či líčenie na Halloween.,
+portfolio.signature.label,Spoločenské líčenie,/assets/img/stuzkova_makeup/stuzkova-3-w640.webp
+portfolio.signature.p,"Stužkové, plesy a večery.",
 portfolio.evening.label,Úprava a laminácia obočia,
 portfolio.evening.p,Hotové práce.,
 portfolio.gallery.openSuffix,Otvoriť fotogalériu,
@@ -125,6 +127,11 @@ portfolio.gallery.editorial.2,Editoriálne čisté líčenie  portrét,
 portfolio.gallery.editorial.3,,
 portfolio.gallery.editorial.4,,
 portfolio.gallery.editorial.5,Extravagantné líčenie  portrét,
+portfolio.gallery.signature.1,"Soft glam a výraznejší glam — líčenie na stužkovú, Juliére Beauty Bratislava",/assets/img/stuzkova_makeup/stuzkova-3-w1600.webp
+portfolio.gallery.signature.2,Glam makeup na stužkovú — Juliére Beauty Bratislava,/assets/img/stuzkova_makeup/stuzkova-1-w1600.webp
+portfolio.gallery.signature.3,"Zlaté oči — líčenie na stužkovú, Juliére Beauty",/assets/img/stuzkova_makeup/stuzkova-5-w1600.webp
+portfolio.gallery.signature.4,"Grafická linka — makeup na stužkovú, Bratislava",/assets/img/stuzkova_makeup/stuzkova-4-w1600.webp
+portfolio.gallery.signature.5,"Pred a po — líčenie na stužkovú, Juliére Beauty",/assets/img/stuzkova_makeup/stuzkova-2-w1600.webp
 portfolio.gallery.evening.1,Večerné líčenie  portrét,
 portfolio.gallery.evening.2,Večerný luxus  portrét,
 portfolio.gallery.evening.3,Večerný look  produkty,

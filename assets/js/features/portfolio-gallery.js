@@ -5,6 +5,7 @@ const CATEGORY_LABEL_KEYS = {
   bridal: "portfolio.bridal.label",
   soft: "portfolio.soft.label",
   editorial: "portfolio.editorial.label",
+  signature: "portfolio.signature.label",
   evening: "portfolio.evening.label",
 };
 

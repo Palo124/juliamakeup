@@ -136,6 +136,8 @@ const BUNDLED_STRINGS = {
     "portfolio.soft.p": "Bridal makeup.",
     "portfolio.editorial.label": "Statement looks",
     "portfolio.editorial.p": "Bold makeup or Halloween-ready glam.",
+    "portfolio.signature.label": "Event makeup",
+    "portfolio.signature.p": "Prom, balls, and nights out.",
     "portfolio.evening.label": "Brow shaping & lamination",
     "portfolio.evening.p": "Finished work.",
     "portfolio.gallery.openSuffix": "Open photo gallery",
@@ -161,6 +163,11 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.editorial.3": "Editorial portrait  graphic liner",
     "portfolio.gallery.editorial.4": "Editorial set  texture study",
     "portfolio.gallery.editorial.5": "Studio editorial  luminous skin",
+    "portfolio.gallery.signature.1": "Soft glam and bolder glam — prom makeup, Juliére Beauty Bratislava",
+    "portfolio.gallery.signature.2": "Glam prom makeup — Juliére Beauty Bratislava",
+    "portfolio.gallery.signature.3": "Gold eyes — prom makeup, Juliére Beauty",
+    "portfolio.gallery.signature.4": "Graphic liner — prom makeup, Bratislava",
+    "portfolio.gallery.signature.5": "Before and after — prom makeup, Juliére Beauty",
     "portfolio.gallery.evening.1": "Evening makeup  portrait",
     "portfolio.gallery.evening.2": "Evening luxe  beauty portrait",
     "portfolio.gallery.evening.3": "Evening look  products",
@@ -634,6 +641,8 @@ const BUNDLED_STRINGS = {
     "portfolio.soft.p": "Svadobné líčenia.",
     "portfolio.editorial.label": "Extravagantné líčenia",
     "portfolio.editorial.p": "Výrazné líčenie či líčenie na Halloween.",
+    "portfolio.signature.label": "Spoločenské líčenie",
+    "portfolio.signature.p": "Stužkové, plesy a večery.",
     "portfolio.evening.label": "Úprava a laminácia obočia",
     "portfolio.evening.p": "Hotové práce.",
     "portfolio.gallery.openSuffix": "Otvoriť fotogalériu",
@@ -659,6 +668,11 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.editorial.3": "",
     "portfolio.gallery.editorial.4": "",
     "portfolio.gallery.editorial.5": "Extravagantné líčenie  portrét",
+    "portfolio.gallery.signature.1": "Soft glam a výraznejší glam — líčenie na stužkovú, Juliére Beauty Bratislava",
+    "portfolio.gallery.signature.2": "Glam makeup na stužkovú — Juliére Beauty Bratislava",
+    "portfolio.gallery.signature.3": "Zlaté oči — líčenie na stužkovú, Juliére Beauty",
+    "portfolio.gallery.signature.4": "Grafická linka — makeup na stužkovú, Bratislava",
+    "portfolio.gallery.signature.5": "Pred a po — líčenie na stužkovú, Juliére Beauty",
     "portfolio.gallery.evening.1": "Večerné líčenie  portrét",
     "portfolio.gallery.evening.2": "Večerný luxus  portrét",
     "portfolio.gallery.evening.3": "Večerný look  produkty",
@@ -1161,30 +1175,28 @@ export function resolveSiteImageUrl(raw) {
   return null;
 }
 
+function isLocalSiteAsset(src) {
+  return /^(?:\/|\.\.\/)?assets\//i.test(String(src ?? "").trim());
+}
+
 /**
- * Modal gallery images: when sheet copy is enabled, only SK column C URLs keyed by `altKey`
- * (e.g. `portfolio.gallery.bridal.1`) are used — no JSON fallback. Otherwise JSON `src` is the fallback.
+ * Modal gallery images: sheet column C keyed by `altKey` wins. Drive-only JSON
+ * fallbacks stay hidden while sheet copy is on. Local `/assets/` JSON paths
+ * are used when the sheet has no URL (prom stills are not on Drive).
  * @param {string | undefined} altKey
  * @param {string} jsonSrc
  * @returns {string}
  */
 export function resolvePortfolioGalleryImageBase(altKey, jsonSrc) {
   const key = String(altKey ?? "").trim();
-  if (CONFIG.useSheetTexts) {
-    if (!key) {
-      return "";
-    }
-    return resolveSiteImageUrl(sheetImageUrls[key]) ?? "";
+  const fromSheet = key ? resolveSiteImageUrl(sheetImageUrls[key]) ?? "" : "";
+  if (fromSheet) {
+    return fromSheet;
   }
-
-  let resolved = "";
-  if (key) {
-    resolved = resolveSiteImageUrl(sheetImageUrls[key]) ?? "";
+  if (CONFIG.useSheetTexts && !isLocalSiteAsset(jsonSrc)) {
+    return "";
   }
-  if (!resolved) {
-    resolved = resolveSiteImageUrl(jsonSrc) ?? "";
-  }
-  return resolved;
+  return resolveSiteImageUrl(jsonSrc) ?? "";
 }
 
 export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {

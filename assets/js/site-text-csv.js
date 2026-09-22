@@ -151,6 +151,7 @@ export const SK_CSV_ROW_KEY_TO_SITE_IMG_KEY = {
   "portfolio.bridal.label": "portfolio.tile.bridal",
   "portfolio.soft.label": "portfolio.tile.soft",
   "portfolio.editorial.label": "portfolio.tile.editorial",
+  "portfolio.signature.label": "portfolio.tile.signature",
   "portfolio.evening.label": "portfolio.tile.evening",
 };
 
@@ -162,6 +163,7 @@ const SITE_IMG_DIRECT_KEYS = new Set([
   "portfolio.tile.bridal",
   "portfolio.tile.soft",
   "portfolio.tile.editorial",
+  "portfolio.tile.signature",
   "portfolio.tile.evening",
 ]);
 
