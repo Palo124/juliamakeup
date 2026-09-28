@@ -339,6 +339,9 @@ const BUNDLED_STRINGS = {
     "booking.slotsHint": "Choose a time for the selected day.",
     "booking.pickDate": "Select a date.",
     "booking.noSlotsThisDay": "No available slots for this day.",
+    "booking.fallbackLead": "Don’t see the slot you want? Write to me:",
+    "booking.copyEmailAria": "Copy email",
+    "booking.emailCopied": "Email copied.",
     "booking.slotsGroupAria": "Available time slots",
     "booking.calPrev": "Previous month",
     "booking.calNext": "Next month",
@@ -833,6 +836,9 @@ const BUNDLED_STRINGS = {
     "booking.slotsHint": "Vyberte čas pre zvolený deň.",
     "booking.pickDate": "Vyberte dátum.",
     "booking.noSlotsThisDay": "Pre tento deň nie sú voľné termíny.",
+    "booking.fallbackLead": "Nevidíte termín, o ktorý máte záujem? Napíšte mi:",
+    "booking.copyEmailAria": "Skopírovať e-mail",
+    "booking.emailCopied": "E-mail skopírovaný.",
     "booking.slotsGroupAria": "Voľné časové sloty",
     "booking.calPrev": "Predchádzajúci mesiac",
     "booking.calNext": "Ďalší mesiac",
@@ -1332,6 +1338,7 @@ function applyFooterSocialLinks() {
   const lang = getLang();
   const triples = [
     ["footer-link-instagram", "footer.socialInstagramUrl", CONFIG.social?.instagram],
+    ["booking-fallback-instagram", "footer.socialInstagramUrl", CONFIG.social?.instagram],
     ["footer-link-facebook", "footer.socialFacebookUrl", CONFIG.social?.facebook],
   ];
   for (const [id, urlKey, cfgFallback] of triples) {
@@ -1351,6 +1358,14 @@ function applyFooterSocialLinks() {
       href = normalizeFooterHref(BUNDLED_STRINGS[lang]?.[urlKey] ?? BUNDLED_STRINGS.en[urlKey]);
     }
     a.href = href || "#";
+  }
+
+  const fallbackEmail = document.getElementById("booking-fallback-email");
+  if (fallbackEmail) {
+    const email = String(t("contact.email") || "").trim();
+    if (email.includes("@")) {
+      fallbackEmail.textContent = email;
+    }
   }
 
   const landingInstagramLink = document.getElementById("home-instagram-profile-link");

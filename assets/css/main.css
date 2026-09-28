@@ -1644,34 +1644,33 @@ textarea {
 .toast {
   width: 100%;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--line);
-  background: rgba(255, 251, 247, 0.96);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 20px 50px rgba(55, 34, 23, 0.18);
+  background: var(--surface-strong);
+  box-shadow: var(--shadow);
   opacity: 0;
-  transform: translateY(14px) scale(0.98);
+  transform: translateY(12px);
   transition:
-    opacity 0.35s ease,
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.32s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .toast--visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
 .toast--leaving {
   opacity: 0;
-  transform: translateY(10px) scale(0.98);
-  transition-duration: 0.25s;
+  transform: translateY(8px);
+  transition-duration: 0.22s;
 }
 
 .toast-inner {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px 14px 16px 18px;
+  gap: 10px;
+  padding: 14px 12px 14px 18px;
 }
 
 .toast-copy {
@@ -1681,16 +1680,17 @@ textarea {
 
 .toast-title {
   margin: 0 0 4px;
-  font-size: 0.98rem;
-  font-weight: 700;
-  line-height: 1.35;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.3;
   color: var(--text);
 }
 
 .toast-detail {
   margin: 0;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.88rem;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--muted);
 }
@@ -1698,34 +1698,36 @@ textarea {
 .toast-message {
   margin: 0;
   flex: 1;
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
   line-height: 1.45;
   color: var(--text);
 }
 
-.toast--success .toast-inner {
-  border-left: 4px solid #5a8f66;
+.toast--success {
+  border-color: rgba(80, 140, 100, 0.32);
+  background: #fbf8f4;
 }
 
-.toast--error .toast-inner {
-  border-left: 4px solid #b84a4a;
+.toast--error {
+  border-color: rgba(176, 80, 70, 0.38);
+  background: #fbf6f3;
 }
 
-.toast--info .toast-inner {
-  border-left: 4px solid var(--accent);
+.toast--info {
+  border-color: rgba(176, 123, 103, 0.35);
 }
 
 .toast-close {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  margin: -4px -4px -4px 0;
+  width: 28px;
+  height: 28px;
+  margin: -2px -2px -2px 0;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
   background: transparent;
   color: var(--muted);
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
@@ -1799,6 +1801,61 @@ textarea {
 
 .booking-rules li + li {
   margin-top: 4px;
+}
+
+.booking-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.booking-fallback__email {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.booking-fallback__email:hover,
+.booking-fallback__email:focus-visible {
+  color: var(--text);
+  outline: none;
+}
+
+.booking-fallback__ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 2px;
+  color: var(--muted);
+  opacity: 0.78;
+  border-radius: 8px;
+}
+
+.booking-fallback__ig:hover,
+.booking-fallback__ig:focus-visible {
+  color: var(--text);
+  opacity: 1;
+  outline: none;
+}
+
+.booking-fallback__icon {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .booking-maintenance {
@@ -2587,6 +2644,7 @@ textarea {
 .booking-form[aria-busy="true"] .booking-form-grid,
 .booking-form[aria-busy="true"] > label:last-of-type,
 .booking-form[aria-busy="true"] .booking-picker,
+.booking-form[aria-busy="true"] .booking-fallback,
 .booking-form[aria-busy="true"] #booking-slots-status {
   pointer-events: none;
   opacity: 0.45;
@@ -3190,8 +3248,17 @@ body.is-sheet-loading {
 .landing-hero__actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 12px;
   margin-top: 24px;
+}
+
+.landing-hero__booking-note {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
 }
 
 .landing-hero__card {

@@ -70,6 +70,48 @@ function slotAllowsService(slot, selected) {
   return slotAllowedServices(slot).some((name) => serviceMatches(name, svc));
 }
 
+async function copyTextToClipboard(text) {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    /* fall through */
+  }
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.position = "fixed";
+  ta.style.left = "-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  let ok = false;
+  try {
+    ok = document.execCommand("copy");
+  } catch {
+    ok = false;
+  }
+  ta.remove();
+  return ok;
+}
+
+function bindBookingFallbackEmailCopy() {
+  const btn = document.getElementById("booking-fallback-email");
+  if (!(btn instanceof HTMLButtonElement) || btn.dataset.copyBound === "1") {
+    return;
+  }
+  btn.dataset.copyBound = "1";
+  btn.addEventListener("click", async () => {
+    const email = btn.textContent.trim();
+    if (!email.includes("@")) {
+      return;
+    }
+    const ok = await copyTextToClipboard(email);
+    showToast(t("booking.emailCopied"), ok ? "success" : "error");
+  });
+}
+
 /**
  * @param {HTMLElement | null} resultEl
  * @param {string} result
@@ -381,6 +423,8 @@ export function initSheetBooking() {
   if (!section || !statusEl || !slotsEl || !form || !slotIdInput || !submitBtn || !serviceSelect) {
     return;
   }
+
+  bindBookingFallbackEmailCopy();
 
   if (CONFIG.bookingMaintenanceMode) {
     showBookingMaintenanceScreen(section, resultBanner);
