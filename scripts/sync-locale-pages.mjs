@@ -1,14 +1,12 @@
 /**
  * Generate /en pages from root HTML (index, booking, action, privacy).
- * Applies SK sheet image URLs (column C) to both locales. Run after editing HTML: npm run sync:locale-pages
+ * Copy from i18n.js. Run after editing HTML: npm run sync:locale-pages
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { BUNDLED_STRINGS, resolveSiteImageUrl } from "../assets/js/i18n.js";
-import { buildSiteImageDelivery, normalizeSiteImageProfile } from "../assets/js/site-image-delivery.js";
+import { BUNDLED_STRINGS } from "../assets/js/i18n.js";
 import { pageUrl } from "../assets/js/core/locale-urls.js";
-import { parseCsv, siteImgUrlsFromSkCsvRows } from "../assets/js/site-text-csv.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const enDir = join(root, "en");
@@ -25,9 +23,6 @@ const PAGE_KEYS = {
 function canonicalFor(pageKey, lang) {
   return pageUrl(PAGE_KEYS[pageKey], lang);
 }
-
-const skSeedCsv = readFileSync(join(root, "google-apps-script/site-texts/seed-SK.csv"), "utf8");
-const skImageMap = siteImgUrlsFromSkCsvRows(parseCsv(skSeedCsv));
 
 function hreflangBlock(pageKey) {
   const sk = canonicalFor(pageKey, "sk");
@@ -65,56 +60,8 @@ function normalizeRootAssetPaths(html) {
     .replace(/(\s(?:href|src))="\.\.\/assets\//g, '$1="/assets/');
 }
 
-function applySkSheetImages(html) {
-  return html.replace(/<img\b([^>]*\bdata-site-img="([^"]+)"[^>]*)\/?>/gi, (full, attrs, key) => {
-    const profile = normalizeSiteImageProfile(/data-site-img-profile="([^"]+)"/i.exec(attrs)?.[1]);
-    const raw = skImageMap[key.trim()];
-    const resolved = raw ? resolveSiteImageUrl(raw) : null;
-    const fallbackSrc = /\bsrc="([^"]*)"/i.exec(attrs)?.[1] ?? "";
-    const baseUrl = resolved || resolveSiteImageUrl(fallbackSrc);
-    if (!baseUrl) {
-      return full;
-    }
-
-    const delivery = buildSiteImageDelivery(baseUrl, profile);
-    let nextAttrs = attrs;
-
-    if (/\bsrc="/i.test(nextAttrs)) {
-      nextAttrs = nextAttrs.replace(/\bsrc="[^"]*"/i, `src="${escapeHtmlAttr(delivery.src)}"`);
-    } else {
-      nextAttrs = ` src="${escapeHtmlAttr(delivery.src)}"${nextAttrs}`;
-    }
-
-    if (delivery.srcset) {
-      if (/\bsrcset="/i.test(nextAttrs)) {
-        nextAttrs = nextAttrs.replace(/\bsrcset="[^"]*"/i, `srcset="${escapeHtmlAttr(delivery.srcset)}"`);
-      } else {
-        nextAttrs = `${nextAttrs.trimEnd()} srcset="${escapeHtmlAttr(delivery.srcset)}"`;
-      }
-    }
-
-    if (delivery.sizes) {
-      if (/\bsizes="/i.test(nextAttrs)) {
-        nextAttrs = nextAttrs.replace(/\bsizes="[^"]*"/i, `sizes="${escapeHtmlAttr(delivery.sizes)}"`);
-      } else {
-        nextAttrs = `${nextAttrs.trimEnd()} sizes="${escapeHtmlAttr(delivery.sizes)}"`;
-      }
-    }
-
-    if (/googleusercontent\.com|drive\.google/i.test(delivery.src)) {
-      if (/\breferrerpolicy="/i.test(nextAttrs)) {
-        nextAttrs = nextAttrs.replace(/\breferrerpolicy="[^"]*"/i, 'referrerpolicy="no-referrer"');
-      } else {
-        nextAttrs = `${nextAttrs.trimEnd()} referrerpolicy="no-referrer"`;
-      }
-    }
-
-    return `<img${nextAttrs}>`;
-  });
-}
-
 function prepareSharedHtml(html) {
-  return applySkSheetImages(normalizeRootAssetPaths(html));
+  return normalizeRootAssetPaths(html);
 }
 
 const TEXT_CONTAINER_TAGS =
@@ -255,4 +202,4 @@ writeFileSync(join(enDir, "review.html"), toEnPage(reviewShared, "review"));
 writeFileSync(join(root, "privacy.html"), toSkPage(privacyShared, "privacy"));
 writeFileSync(join(enDir, "privacy.html"), toEnPage(privacyShared, "privacy"));
 
-console.log("Synced SK + EN pages (SK/EN copy from i18n.js, SK sheet images, /assets/ paths)");
+console.log("Synced SK + EN pages (copy from i18n.js, /assets/ paths)");

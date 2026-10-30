@@ -3,7 +3,7 @@
  */
 import { CONFIG } from "../config.js";
 
-/** @typedef {"home" | "booking" | "action" | "privacy" | "bridalLanding" | "promLanding" | "review"} PageId */
+/** @typedef {"home" | "booking" | "action" | "privacy" | "bridalLanding" | "promLanding" | "ballLanding" | "christmasPartyLanding" | "review"} PageId */
 /** @typedef {"en" | "sk"} SiteLang */
 
 /**
@@ -41,6 +41,18 @@ export function getPageId(pathname = window.location.pathname) {
   if (/\/licenie-na-stuzkovu-bratislava(?:\/index\.html)?$/i.test(base)) {
     return "promLanding";
   }
+  if (/\/ball-makeup-bratislava(?:\/index\.html)?$/i.test(base)) {
+    return "ballLanding";
+  }
+  if (/\/licenie-na-ples-bratislava(?:\/index\.html)?$/i.test(base)) {
+    return "ballLanding";
+  }
+  if (/\/christmas-party-makeup-bratislava(?:\/index\.html)?$/i.test(base)) {
+    return "christmasPartyLanding";
+  }
+  if (/\/licenie-na-firemny-vecierok-bratislava(?:\/index\.html)?$/i.test(base)) {
+    return "christmasPartyLanding";
+  }
   return "home";
 }
 
@@ -56,6 +68,14 @@ export function pagePath(pageId, lang) {
   }
   if (pageId === "promLanding") {
     return lang === "en" ? "/en/prom-makeup-bratislava/" : "/licenie-na-stuzkovu-bratislava/";
+  }
+  if (pageId === "ballLanding") {
+    return lang === "en" ? "/en/ball-makeup-bratislava/" : "/licenie-na-ples-bratislava/";
+  }
+  if (pageId === "christmasPartyLanding") {
+    return lang === "en"
+      ? "/en/christmas-party-makeup-bratislava/"
+      : "/licenie-na-firemny-vecierok-bratislava/";
   }
   if (pageId === "action") {
     return lang === "en" ? "/en/action.html" : "/action.html";

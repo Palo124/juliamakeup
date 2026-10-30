@@ -88,7 +88,28 @@
         <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Main">
           <a href="/en/#about" data-i18n="nav.about">About</a>
           <a href="/en/#portfolio" data-i18n="nav.portfolio">Portfolio</a>
-          <a href="/en/prom-makeup-bratislava/" data-i18n="nav.stuzkova" aria-current="page">Prom makeup</a>
+          <div class="nav-dropdown">
+            <button
+              type="button"
+              class="nav-dropdown__toggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="nav-events-menu"
+              data-i18n="nav.events"
+            >
+              Events
+            </button>
+            <div
+              id="nav-events-menu"
+              class="nav-dropdown__menu"
+              role="group"
+              data-i18n-aria="nav.eventsMenuAria"
+              aria-label="Event makeup"
+            >
+              <a href="/en/prom-makeup-bratislava/" data-i18n="nav.stuzkova" aria-current="page">Prom makeup</a>
+              <a href="/en/ball-makeup-bratislava/" data-i18n="nav.ples">Ball makeup</a>
+            </div>
+          </div>
           <a href="/en/#prices" data-i18n="nav.prices">Services</a>
           <a href="/en/#contact" data-i18n="nav.contact">Contact</a>
           <a href="/en/#faq" data-i18n="nav.faq">Q&amp;A</a>
@@ -146,12 +167,20 @@
         </div>
       </section>
 
-      <section id="portfolio" class="section" aria-labelledby="landing-gallery-title">
+      <section
+        id="portfolio"
+        class="section portfolio-carousel landing-gallery-carousel"
+        aria-labelledby="landing-gallery-title"
+        aria-roledescription="carousel"
+        data-i18n-aria="portfolio.carouselAria"
+        aria-label="Portfolio"
+      >
         <div class="section-heading">
           <h2 id="landing-gallery-title">Portfolio</h2>
         </div>
-        <div class="landing-gallery-grid landing-gallery-grid--four">
-          <article class="portfolio-card portfolio-card--gallery rosy" data-inline-gallery-item>
+        <div class="portfolio-carousel-viewport" id="portfolio-carousel-viewport">
+          <div class="portfolio-carousel-track" id="portfolio-carousel-track">
+          <article class="portfolio-card portfolio-carousel-slide portfolio-card--gallery rosy" data-inline-gallery-item>
             <div class="portfolio-card__media">
               <img
                 class="portfolio-card__thumb"
@@ -162,11 +191,11 @@
                 loading="lazy"
                 decoding="async"
                 srcset="/assets/img/stuzkova_makeup/stuzkova-1-w320.webp 320w, /assets/img/stuzkova_makeup/stuzkova-1-w480.webp 480w, /assets/img/stuzkova_makeup/stuzkova-1-w640.webp 640w, /assets/img/stuzkova_makeup/stuzkova-1-w720.webp 720w"
-                sizes="(max-width: 899px) 85vw, 22vw"
+                sizes="(max-width: 899px) 80vw, 340px"
               >
             </div>
           </article>
-          <article class="portfolio-card portfolio-card--gallery nude" data-inline-gallery-item>
+          <article class="portfolio-card portfolio-carousel-slide portfolio-card--gallery nude" data-inline-gallery-item>
             <div class="portfolio-card__media">
               <img
                 class="portfolio-card__thumb"
@@ -177,11 +206,11 @@
                 loading="lazy"
                 decoding="async"
                 srcset="/assets/img/stuzkova_makeup/stuzkova-5-w320.webp 320w, /assets/img/stuzkova_makeup/stuzkova-5-w480.webp 480w, /assets/img/stuzkova_makeup/stuzkova-5-w640.webp 640w, /assets/img/stuzkova_makeup/stuzkova-5-w720.webp 720w"
-                sizes="(max-width: 899px) 85vw, 22vw"
+                sizes="(max-width: 899px) 80vw, 340px"
               >
             </div>
           </article>
-          <article class="portfolio-card portfolio-card--gallery bronze" data-inline-gallery-item>
+          <article class="portfolio-card portfolio-carousel-slide portfolio-card--gallery bronze" data-inline-gallery-item>
             <div class="portfolio-card__media">
               <img
                 class="portfolio-card__thumb"
@@ -192,11 +221,11 @@
                 loading="lazy"
                 decoding="async"
                 srcset="/assets/img/stuzkova_makeup/stuzkova-4-w320.webp 320w, /assets/img/stuzkova_makeup/stuzkova-4-w480.webp 480w, /assets/img/stuzkova_makeup/stuzkova-4-w640.webp 640w, /assets/img/stuzkova_makeup/stuzkova-4-w720.webp 720w"
-                sizes="(max-width: 899px) 85vw, 22vw"
+                sizes="(max-width: 899px) 80vw, 340px"
               >
             </div>
           </article>
-          <article class="portfolio-card portfolio-card--gallery rosy" data-inline-gallery-item>
+          <article class="portfolio-card portfolio-carousel-slide portfolio-card--gallery rosy" data-inline-gallery-item>
             <div class="portfolio-card__media">
               <img
                 class="portfolio-card__thumb"
@@ -207,11 +236,42 @@
                 loading="lazy"
                 decoding="async"
                 srcset="/assets/img/stuzkova_makeup/stuzkova-2-w320.webp 320w, /assets/img/stuzkova_makeup/stuzkova-2-w480.webp 480w, /assets/img/stuzkova_makeup/stuzkova-2-w640.webp 640w, /assets/img/stuzkova_makeup/stuzkova-2-w720.webp 720w"
-                sizes="(max-width: 899px) 85vw, 22vw"
+                sizes="(max-width: 899px) 80vw, 340px"
               >
             </div>
           </article>
+          </div>
         </div>
+        <div class="portfolio-carousel-ui">
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--prev"
+            id="portfolio-carousel-prev"
+            data-i18n-aria="hero.prevSlide"
+            aria-label="Previous slide"
+          >
+            ‹
+          </button>
+          <div
+            class="portfolio-carousel-dots"
+            id="portfolio-carousel-dots"
+            role="tablist"
+            data-i18n-aria="hero.chooseSlide"
+            aria-label="Choose slide"
+          ></div>
+          <button
+            type="button"
+            class="portfolio-carousel-arrow portfolio-carousel-arrow--next"
+            id="portfolio-carousel-next"
+            data-i18n-aria="hero.nextSlide"
+            aria-label="Next slide"
+          >
+            ›
+          </button>
+        </div>
+        <p class="landing-pricing__note">
+          Looking for <a href="/en/ball-makeup-bratislava/">ball makeup</a> instead?
+        </p>
       </section>
     </main>
 

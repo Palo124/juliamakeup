@@ -18,8 +18,14 @@ export function initPortfolioCarousel() {
     return;
   }
 
+  const root = viewport.closest(".portfolio-carousel");
+  const startAttr = root instanceof HTMLElement ? root.dataset.carouselStart : "";
   const startIndex =
-    count <= 1 ? 0 : Math.min(count - 1, Math.floor((count - 1) / 2));
+    startAttr != null && startAttr !== ""
+      ? Math.min(count - 1, Math.max(0, Number.parseInt(startAttr, 10) || 0))
+      : count <= 1
+        ? 0
+        : Math.min(count - 1, Math.floor((count - 1) / 2));
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -27,7 +33,6 @@ export function initPortfolioCarousel() {
 
   let index = startIndex;
   let scrollRaf = null;
-  const root = viewport.closest(".portfolio-carousel");
 
   function slideWidth() {
     const w = slides[0]?.offsetWidth;

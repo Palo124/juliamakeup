@@ -24,33 +24,6 @@ export const CONFIG = {
   useSheetBooking: true,
 
   /**
-   * Site copy from Google Sheets (no Apps Script). Tab **`SK`** is required; **`ENG`** is optional.
-   * Row layout: `key` | `text` | optional **`imageUrl`** (column C on **SK** only — drives `data-site-img`
-   * URLs; see `site-text-csv.js` → `SK_CSV_ROW_KEY_TO_SITE_IMG_KEY`). Same layout as `google-apps-script/site-texts/TEMPLATE.md`.
-   *
-   * **Recommended — Publish entire document:** File → Share → **Publish to the web** → publish the
-   * **Entire document**. Copy the id from the link (`…/spreadsheets/d/e/THIS_LONG_ID/pubhtml`) into
-   * `contentPublishedSpreadsheetId`. Open the **SK** tab in the editor and copy its `gid` from the
-   * URL (`…#gid=123456789`) into `contentSheetGids.sk` (leave `.en` empty if there is no ENG tab).
-   * automatically.
-   *
-   * **Optional:** set `contentCsvUrls.en` / `.sk` to full CSV URLs — they override the
-   * published id for that tab (e.g. if you use `/export?format=csv` instead).
-   */
-  contentPublishedSpreadsheetId:
-    "2PACX-1vQ6sVIFjIeKX_I1i_cf7TgCS3nYVdtZjfMVDWdB5ir8tMN1rxk5h4MAvM2VsKS5q_G3YGh8LAMLusaA",
-  /** Open the spreadsheet in the editor (not pubhtml), click each tab, copy `#gid=…` from the URL. */
-  contentSheetGids: {
-    en: "",
-    sk: "545201391",
-  },
-  contentCsvUrls: {
-    en: "",
-    sk: "",
-  },
-  useSheetTexts: true,
-
-  /**
    * Legacy default width when no `data-site-img-profile` is used (gallery/lightbox fallbacks).
    * Page images use profile widths in `assets/js/site-image-delivery.js` instead of this global size.
    */
@@ -69,7 +42,7 @@ export const CONFIG = {
    */
   showHomeInstagramEmbeds: false,
 
-  /** Footer social profile URLs (fallback if ENG/SK sheet keys `footer.social*Url` are empty). */
+  /** Footer social profile URLs (fallback if bundled `footer.social*Url` keys are empty). */
   social: {
     instagram: "https://www.instagram.com/julierebeauty/",
     facebook: "https://www.facebook.com/",

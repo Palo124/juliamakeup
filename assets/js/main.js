@@ -1,7 +1,7 @@
 /**
  * Site entry — wires i18n, features, and UI. See `assets/js/` layout:
  *   core/     DOM refs, constants
- *   services/ backend bridges (Google Sheets for copy)
+ *   services/ backend bridges
  *   ui/       cross-cutting UI (toasts)
  *   features/ page features (hero, navigation, map)
  */
@@ -101,7 +101,11 @@ async function bootstrap() {
     void import("./services/booking-api.js").then((mod) => mod.warmBookingBackend());
   }
 
-  const isServiceLanding = page === "bridalLanding" || page === "promLanding";
+  const isServiceLanding =
+    page === "bridalLanding" ||
+    page === "promLanding" ||
+    page === "ballLanding" ||
+    page === "christmasPartyLanding";
 
   if (!isServiceLanding) {
     initContactMap();
@@ -113,6 +117,7 @@ async function bootstrap() {
   if (isServiceLanding) {
     bindNavigation();
     initHeaderScroll();
+    initPortfolioCarousel();
     void loadPortfolioGalleryModule().then((mod) => mod.initPortfolioGallery());
     return;
   }

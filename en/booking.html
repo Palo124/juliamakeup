@@ -96,7 +96,28 @@
         <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Main">
           <a href="index.html#about" data-i18n="nav.about">About</a>
           <a href="index.html#portfolio" data-i18n="nav.portfolio">Portfolio</a>
-          <a href="/en/prom-makeup-bratislava/" data-i18n="nav.stuzkova">Prom makeup</a>
+          <div class="nav-dropdown">
+            <button
+              type="button"
+              class="nav-dropdown__toggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="nav-events-menu"
+              data-i18n="nav.events"
+            >
+              Events
+            </button>
+            <div
+              id="nav-events-menu"
+              class="nav-dropdown__menu"
+              role="group"
+              data-i18n-aria="nav.eventsMenuAria"
+              aria-label="Event makeup"
+            >
+              <a href="/en/prom-makeup-bratislava/" data-i18n="nav.stuzkova">Prom makeup</a>
+              <a href="/en/ball-makeup-bratislava/" data-i18n="nav.ples">Ball makeup</a>
+            </div>
+          </div>
           <a href="index.html#prices" data-i18n="nav.prices">Services</a>
           <a href="index.html#before-visit" data-i18n="nav.beforeVisit">Recommendations</a>
           <a href="index.html#contact" data-i18n="nav.contact">Contact</a>

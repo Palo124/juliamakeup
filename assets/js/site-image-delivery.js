@@ -43,6 +43,18 @@ const LOCAL_RESPONSIVE_BASES = new Set([
   "/assets/img/stuzkova_makeup/stuzkova-3",
   "/assets/img/stuzkova_makeup/stuzkova-4",
   "/assets/img/stuzkova_makeup/stuzkova-5",
+  "/assets/img/pred_a_po/pred-po-1",
+  "/assets/img/pred_a_po/pred-po-2",
+  "/assets/img/pred_a_po/pred-po-3",
+  "/assets/img/pred_a_po/pred-po-4",
+  "/assets/img/licenie-na-ples/licenie-na-ples-winged-liner",
+  "/assets/img/licenie-na-ples/licenie-na-ples-zlate-oci",
+  "/assets/img/licenie-na-ples/licenie-na-ples-glam-portrait",
+  "/assets/img/licenie-na-ples/licenie-na-ples-perly",
+  "/assets/img/licenie-na-ples/licenie-na-ples-metalicke-oci",
+  "/assets/img/licenie-na-ples/licenie-na-ples-soft-glam",
+  "/assets/img/licenie-na-ples/licenie-na-ples-cipkovane-rukavice",
+  "/assets/img/licenie-na-ples/licenie-na-ples-liner-glow",
 ]);
 
 /**

@@ -22,8 +22,24 @@
         "altKey": "portfolio.gallery.bridal.5"
       },
       {
-        "src": "https://drive.google.com/file/d/10B39egNR4lX5y7QGMDljANeU507uuAvT/view?usp=sharing",
+        "src": "https://drive.google.com/file/d/1y3Ned554aZX_e4QrrXZuFRfsVVE1NYQt/view?usp=sharing",
         "altKey": "portfolio.gallery.bridal.6"
+      },
+      {
+        "src": "/assets/img/pred_a_po/pred-po-1-w1600.webp",
+        "altKey": "portfolio.gallery.bridal.7"
+      },
+      {
+        "src": "/assets/img/pred_a_po/pred-po-2-w1600.webp",
+        "altKey": "portfolio.gallery.bridal.8"
+      },
+      {
+        "src": "/assets/img/pred_a_po/pred-po-3-w1600.webp",
+        "altKey": "portfolio.gallery.bridal.9"
+      },
+      {
+        "src": "/assets/img/pred_a_po/pred-po-4-w1600.webp",
+        "altKey": "portfolio.gallery.bridal.10"
       }
     ]
   },
@@ -72,6 +88,10 @@
       {
         "src": "https://drive.google.com/file/d/1gTP6m1uLJPDF2A4YRMmWaD42czPQ4tIe/view?usp=sharing",
         "altKey": "portfolio.gallery.editorial.5"
+      },
+      {
+        "src": "https://drive.google.com/file/d/1AjeB3mODFmbLQTapBL6xA-LT031dOoCP/view?usp=sharing",
+        "altKey": "portfolio.gallery.editorial.6"
       }
     ]
   },
@@ -96,6 +116,38 @@
       {
         "src": "/assets/img/stuzkova_makeup/stuzkova-2-w1600.webp",
         "altKey": "portfolio.gallery.signature.5"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-metalicke-oci-w1600.webp",
+        "altKey": "portfolio.gallery.signature.6"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-zlate-oci-w1600.webp",
+        "altKey": "portfolio.gallery.signature.7"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-glam-portrait-w1600.webp",
+        "altKey": "portfolio.gallery.signature.8"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-perly-w1600.webp",
+        "altKey": "portfolio.gallery.signature.9"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-winged-liner-w1600.webp",
+        "altKey": "portfolio.gallery.signature.10"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-soft-glam-w1600.webp",
+        "altKey": "portfolio.gallery.signature.11"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-cipkovane-rukavice-w1600.webp",
+        "altKey": "portfolio.gallery.signature.12"
+      },
+      {
+        "src": "/assets/img/licenie-na-ples/licenie-na-ples-liner-glow-w1600.webp",
+        "altKey": "portfolio.gallery.signature.13"
       }
     ]
   },

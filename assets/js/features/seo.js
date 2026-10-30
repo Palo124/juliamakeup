@@ -5,7 +5,31 @@ import { CONFIG } from "../config.js";
 import { getPageId, getSiteOrigin, pagePath, pageUrl as localePageUrl } from "../core/locale-urls.js";
 import { getLang, resolveSiteImageUrl, siteImageSrcForProfile, t } from "../i18n.js";
 
-/** @typedef {"home" | "booking" | "bridalLanding" | "promLanding" | "privacy"} SeoPage */
+/** @typedef {"home" | "booking" | "bridalLanding" | "promLanding" | "ballLanding" | "christmasPartyLanding" | "privacy"} SeoPage */
+
+const EVENT_LANDING_OG = new Set(["promLanding", "ballLanding", "christmasPartyLanding"]);
+
+/** @type {Record<string, { titleKey: string, descriptionKey: string, crumb: { sk: string, en: string }, service: { sk: string, en: string } }>} */
+const EVENT_LANDING_SCHEMA = {
+  promLanding: {
+    titleKey: "meta.titlePromLanding",
+    descriptionKey: "meta.descriptionPromLanding",
+    crumb: { sk: "Líčenie na stužkovú Bratislava", en: "Prom Makeup Bratislava" },
+    service: { sk: "Líčenie na stužkovú", en: "Prom makeup" },
+  },
+  ballLanding: {
+    titleKey: "meta.titleBallLanding",
+    descriptionKey: "meta.descriptionBallLanding",
+    crumb: { sk: "Líčenie na ples Bratislava", en: "Ball Makeup Bratislava" },
+    service: { sk: "Líčenie na ples", en: "Ball makeup" },
+  },
+  christmasPartyLanding: {
+    titleKey: "meta.titleChristmasPartyLanding",
+    descriptionKey: "meta.descriptionChristmasPartyLanding",
+    crumb: { sk: "Líčenie na firemný večierok Bratislava", en: "Christmas Party Makeup Bratislava" },
+    service: { sk: "Líčenie na firemný večierok", en: "Christmas party makeup" },
+  },
+};
 
 const FAQ_COUNT = 4;
 const BRIDAL_LANDING_FAQ_COUNT = 6;
@@ -20,7 +44,9 @@ function ogImageUrl(page) {
   const source =
     page === "bridalLanding"
       ? "https://drive.google.com/file/d/1zpPOVSkMdypIdToZJQzigpec5VMtCrDA/view?usp=sharing"
-      : page === "promLanding"
+      : page === "ballLanding"
+        ? "/assets/img/licenie-na-ples/licenie-na-ples-metalicke-oci-w1200.webp"
+        : EVENT_LANDING_OG.has(page)
         ? "/assets/img/stuzkova_makeup/stuzkova-3-w1200.webp"
         : CONFIG.seoOgImage || "assets/img/favicon_juliere.png";
   const resolved = resolveSiteImageUrl(source);
@@ -59,10 +85,11 @@ function pageMetaKeys(page) {
       descriptionKey: "meta.descriptionBridalLanding",
     };
   }
-  if (page === "promLanding") {
+  const eventMeta = EVENT_LANDING_SCHEMA[page];
+  if (eventMeta) {
     return {
-      titleKey: "meta.titlePromLanding",
-      descriptionKey: "meta.descriptionPromLanding",
+      titleKey: eventMeta.titleKey,
+      descriptionKey: eventMeta.descriptionKey,
     };
   }
   return {
@@ -180,6 +207,30 @@ function beautySalonJsonLd(origin, image) {
     },
     openingHoursSpecification: openingHoursSpecification(),
     sameAs: socialProfileUrls(),
+    hasOfferCatalog: offerCatalogJsonLd(),
+  };
+}
+
+function offerCatalogJsonLd() {
+  const lang = getLang();
+  const items = [
+    ...(lang === "sk"
+      ? [{ pageId: "bridalLanding", name: "Svadobné líčenie" }]
+      : []),
+    { pageId: "promLanding", name: lang === "sk" ? "Líčenie na stužkovú" : "Prom makeup" },
+    { pageId: "ballLanding", name: lang === "sk" ? "Líčenie na ples" : "Ball makeup" },
+  ];
+  return {
+    "@type": "OfferCatalog",
+    name: lang === "sk" ? "Služby" : "Services",
+    itemListElement: items.map((item) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: item.name,
+        url: localePageUrl(item.pageId, lang),
+      },
+    })),
   };
 }
 
@@ -260,14 +311,20 @@ function buildJsonLd(page) {
     });
   }
 
-  if (page === "promLanding") {
+  const eventLanding = EVENT_LANDING_SCHEMA[page];
+  if (eventLanding) {
+    const titleKey = eventLanding.titleKey;
+    const descriptionKey = eventLanding.descriptionKey;
+    const crumbName = eventLanding.crumb[lang] || eventLanding.crumb.en;
+    const serviceName = eventLanding.service[lang] || eventLanding.service.en;
+
     graph.push(beautySalonJsonLd(origin, image));
 
     graph.push({
       "@type": "WebPage",
       "@id": `${url}#webpage`,
-      name: t("meta.titlePromLanding"),
-      description: t("meta.descriptionPromLanding"),
+      name: t(titleKey),
+      description: t(descriptionKey),
       url,
       isPartOf: { "@id": `${origin}/#website` },
       about: { "@id": `${origin}/#business` },
@@ -287,7 +344,7 @@ function buildJsonLd(page) {
         {
           "@type": "ListItem",
           position: 2,
-          name: lang === "sk" ? "Líčenie na stužkovú Bratislava" : "Prom Makeup Bratislava",
+          name: crumbName,
           item: url,
         },
       ],
@@ -296,9 +353,9 @@ function buildJsonLd(page) {
     graph.push({
       "@type": "Service",
       "@id": `${url}#service`,
-      name: lang === "sk" ? "Líčenie na stužkovú" : "Prom makeup",
+      name: serviceName,
       serviceType: "Makeup",
-      description: t("meta.descriptionPromLanding"),
+      description: t(descriptionKey),
       url,
       provider: { "@id": `${origin}/#business` },
       areaServed: {
@@ -387,6 +444,12 @@ export function detectSeoPage(pathname = window.location.pathname) {
   }
   if (pageId === "promLanding") {
     return "promLanding";
+  }
+  if (pageId === "ballLanding") {
+    return "ballLanding";
+  }
+  if (pageId === "christmasPartyLanding") {
+    return "christmasPartyLanding";
   }
   return "home";
 }

@@ -4,7 +4,6 @@
   "type": "module",
   "//booking": "Write = POST + token links (backend/apps-script-booking). Read = GET availability (backend/apps-script-booking-read). Run booking:sync:read before read deploy.",
   "scripts": {
-    "test:site-texts": "node scripts/test-site-text-csv.mjs",
     "test:booking": "node --test scripts/test-booking-logic.mjs",
     "test:booking:frontend": "node --test scripts/test-booking-frontend.mjs",
     "test:booking:layout": "node --test scripts/test-booking-layout.mjs",

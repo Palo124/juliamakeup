@@ -188,7 +188,28 @@
         <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Hlavná navigácia">
           <a href="#about" data-i18n="nav.about">O mne</a>
           <a href="#portfolio" data-i18n="nav.portfolio">Portfólio</a>
-          <a href="/licenie-na-stuzkovu-bratislava/" data-i18n="nav.stuzkova">Stužková</a>
+          <div class="nav-dropdown">
+            <button
+              type="button"
+              class="nav-dropdown__toggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="nav-events-menu"
+              data-i18n="nav.events"
+            >
+              Udalosti
+            </button>
+            <div
+              id="nav-events-menu"
+              class="nav-dropdown__menu"
+              role="group"
+              data-i18n-aria="nav.eventsMenuAria"
+              aria-label="Udalosti"
+            >
+              <a href="/licenie-na-stuzkovu-bratislava/" data-i18n="nav.stuzkova">Stužková</a>
+              <a href="/licenie-na-ples-bratislava/" data-i18n="nav.ples">Ples</a>
+            </div>
+          </div>
           <a href="#prices" data-i18n="nav.prices">Služby + Cenník</a>
           <a href="#before-visit" data-i18n="nav.beforeVisit">Pred termínom</a>
           <a href="#contact" data-i18n="nav.contact">Kontakt</a>
@@ -550,23 +571,23 @@
           <div class="portfolio-carousel-track" id="before-visit-carousel-track">
             <article class="recommend-card portfolio-carousel-slide">
               <span class="pill" data-i18n="beforeVisit.t1.pill">Pleť</span>
-              <h3 data-i18n="beforeVisit.t1.h3">Príďte s čistou tvárou</h3>
-              <p data-i18n="beforeVisit.t1.p">Ak sa dá, bez mejkapu a bez ťažkých krémov tesne pred vizitou.</p>
+              <h3 data-i18n="beforeVisit.t1.h3">Príďte s čistou pleťou</h3>
+              <p data-i18n="beforeVisit.t1.p">Ak je to možné, príďte na líčenie bez make-upu. Rannú skincare rutinu si však pokojne môžete aplikovať ako zvyčajne.</p>
             </article>
             <article class="recommend-card portfolio-carousel-slide">
               <span class="pill" data-i18n="beforeVisit.t2.pill">Inšpirácia</span>
-              <h3 data-i18n="beforeVisit.t2.h3">Vezmite referencie</h3>
-              <p data-i18n="beforeVisit.t2.p">Pár obľúbených fotiek pomôže zladiť intenzitu, tón a finiš.</p>
+              <h3 data-i18n="beforeVisit.t2.h3">Vezmite inšpiráciu</h3>
+              <p data-i18n="beforeVisit.t2.p">Na termín si pokojne môžete priniesť fotky líčenia, ktoré si predstavujete. Vďaka nim získam lepšiu predstavu o vašich očakávaniach a štýle, ktorý sa vám páči.</p>
             </article>
             <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="beforeVisit.t3.pill">Oblečenie</span>
-              <h3 data-i18n="beforeVisit.t3.h3">Výstrih a doplnky</h3>
-              <p data-i18n="beforeVisit.t3.p">Oblečte sa alebo vezmite niečo blízke outfitu z udalosti, nech ladí líčenie.</p>
+              <span class="pill" data-i18n="beforeVisit.t3.pill">Hydratácia</span>
+              <h3 data-i18n="beforeVisit.t3.h3">Hydratácia</h3>
+              <p data-i18n="beforeVisit.t3.p">Pre docielenie čo najlepšieho efektu odporúčam večer pred udalosťou použiť hydratačnú masku. Dostatočne hydratovaná pleť je základom krásneho, prirodzeného a dlhotrvajúceho líčenia.</p>
             </article>
             <article class="recommend-card portfolio-carousel-slide">
               <span class="pill" data-i18n="beforeVisit.t4.pill">Čas</span>
               <h3 data-i18n="beforeVisit.t4.h3">Rezerva navyše</h3>
-              <p data-i18n="beforeVisit.t4.p">Kvalitná vizáž chce čas  počítajte s pár minútami navyše, aby sme nič nenáhlili.</p>
+              <p data-i18n="beforeVisit.t4.p">Kvalitná vizáž chce čas — počítajte s pár minútami navyše, aby sme nič nenáhlili.</p>
             </article>
           </div>
         </div>

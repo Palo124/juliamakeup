@@ -1,6 +1,6 @@
 /**
- * Site copy: English and Slovak.
- * Bundled strings are defaults; optional Google Sheet overrides (see CONFIG.contentCsvUrls / published id).
+ * Site copy: English and Slovak. Source of truth is `BUNDLED_STRINGS` in this file.
+ * Images come from HTML `src` / local JSON; Drive share links are rewritten to lh3.
  */
 import { CONFIG } from "./config.js";
 import { getLangFromPath, switchLocaleHref } from "./core/locale-urls.js";
@@ -51,6 +51,12 @@ const BUNDLED_STRINGS = {
     "meta.titlePromLanding": "Prom Makeup Bratislava | Juliére Beauty",
     "meta.descriptionPromLanding":
       "Soft glam, glow, and a look that feels like the best version of you. Prom makeup in Bratislava matched to your features, dress, and the night.",
+    "meta.titleBallLanding": "Ball Makeup Bratislava | Juliére Beauty",
+    "meta.descriptionBallLanding":
+      "Ball makeup in Bratislava that lasts until the last dance. Juliére Beauty, Račianska 66.",
+    "meta.titleChristmasPartyLanding": "Christmas Party Makeup Bratislava | Juliére Beauty",
+    "meta.descriptionChristmasPartyLanding":
+      "Christmas party makeup in Bratislava that lasts through toasts, photos, and the taxi home. Juliére Beauty, Račianska 66.",
     "promLanding.faq.q1": "How long does it take?",
     "promLanding.faq.a1": "60 minutes in the studio.",
     "promLanding.faq.q2": "How long does the makeup last?",
@@ -84,7 +90,6 @@ const BUNDLED_STRINGS = {
     "home.instagram.embed.1": "https://www.instagram.com/julierebeauty/reel/DZp7beuMw3U/",
     "home.instagram.embed.2": "",
     "home.instagram.embed.3": "",
-    "sheet.loading": "Loading…",
     "hero.carouselAria": "Juliére Beauty",
     "hero.slide1.alt": "Portrait  professional makeup look, Juliére Beauty",
     "hero.slide1.caption": "Featured portrait for Juliére Beauty",
@@ -105,7 +110,10 @@ const BUNDLED_STRINGS = {
     "header.navMain": "Main",
     "nav.about": "About",
     "nav.portfolio": "Portfolio",
+    "nav.events": "Events",
+    "nav.eventsMenuAria": "Event makeup",
     "nav.stuzkova": "Prom makeup",
+    "nav.ples": "Ball makeup",
     "nav.prices": "Services",
     "nav.reviews": "Reviews",
     "nav.beforeVisit": "Recommendations",
@@ -153,6 +161,10 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.4": "",
     "portfolio.gallery.bridal.5": "",
     "portfolio.gallery.bridal.6": "Bridal makeup  portrait finish",
+    "portfolio.gallery.bridal.7": "Before and after — soft glam makeup, Juliére Beauty",
+    "portfolio.gallery.bridal.8": "Before and after — glam makeup, Juliére Beauty",
+    "portfolio.gallery.bridal.9": "Before and after — warm glam makeup, Juliére Beauty",
+    "portfolio.gallery.bridal.10": "Before and after — defined eyes, Juliére Beauty",
     "portfolio.gallery.soft.1": "Soft glam makeup  portrait",
     "portfolio.gallery.soft.2": "Soft glam  beauty portrait",
     "portfolio.gallery.soft.3": "Makeup products  soft glam session",
@@ -163,11 +175,20 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.editorial.3": "Editorial portrait  graphic liner",
     "portfolio.gallery.editorial.4": "Editorial set  texture study",
     "portfolio.gallery.editorial.5": "Studio editorial  luminous skin",
+    "portfolio.gallery.editorial.6": "Statement makeup  portrait, Juliére Beauty",
     "portfolio.gallery.signature.1": "Soft glam and bolder glam — prom makeup, Juliére Beauty Bratislava",
     "portfolio.gallery.signature.2": "Glam prom makeup — Juliére Beauty Bratislava",
     "portfolio.gallery.signature.3": "Gold eyes — prom makeup, Juliére Beauty",
     "portfolio.gallery.signature.4": "Graphic liner — prom makeup, Bratislava",
     "portfolio.gallery.signature.5": "Before and after — prom makeup, Juliére Beauty",
+    "portfolio.gallery.signature.6": "Metallic eyes — ball makeup Bratislava, Juliére Beauty",
+    "portfolio.gallery.signature.7": "Gold smoky eyes — ball makeup, Juliére Beauty Bratislava",
+    "portfolio.gallery.signature.8": "Glam portrait — ball makeup Bratislava",
+    "portfolio.gallery.signature.9": "Pearl glam — ball makeup, Juliére Beauty",
+    "portfolio.gallery.signature.10": "Winged liner — ball makeup Bratislava, Juliére Beauty",
+    "portfolio.gallery.signature.11": "Soft glam — ball makeup, Juliére Beauty",
+    "portfolio.gallery.signature.12": "Lace gloves — ball makeup Bratislava",
+    "portfolio.gallery.signature.13": "Liner and glow — ball makeup, Juliére Beauty",
     "portfolio.gallery.evening.1": "Evening makeup  portrait",
     "portfolio.gallery.evening.2": "Evening luxe  beauty portrait",
     "portfolio.gallery.evening.3": "Evening look  products",
@@ -283,17 +304,19 @@ const BUNDLED_STRINGS = {
     "beforeVisit.eyebrow": "Before you arrive",
     "beforeVisit.h2": "A few tips so your appointment goes smoothly",
     "beforeVisit.t1.pill": "Skin",
-    "beforeVisit.t1.h3": "Come with a clean face",
-    "beforeVisit.t1.p": "Arrive without makeup if you can, and skip heavy creams right before the session.",
-    "beforeVisit.t2.pill": "References",
+    "beforeVisit.t1.h3": "Come with clean skin",
+    "beforeVisit.t1.p": "If you can, come without makeup. Your usual morning skincare is fine.",
+    "beforeVisit.t2.pill": "Inspiration",
     "beforeVisit.t2.h3": "Bring inspiration",
-    "beforeVisit.t2.p": "Save a few photos you like it helps align on tone, intensity, and finish.",
-    "beforeVisit.t3.pill": "Outfit",
-    "beforeVisit.t3.h3": "Neckline & jewelry",
-    "beforeVisit.t3.p": "Wear or bring something close to your event neckline so the look feels cohesive.",
+    "beforeVisit.t2.p":
+      "Feel free to bring photos of makeup you have in mind. That gives me a clearer picture of what you want and the style you like.",
+    "beforeVisit.t3.pill": "Hydration",
+    "beforeVisit.t3.h3": "Hydration",
+    "beforeVisit.t3.p":
+      "For the best result, I recommend a hydrating mask the night before. Well-hydrated skin is the base of makeup that looks good, natural, and lasts.",
     "beforeVisit.t4.pill": "Timing",
     "beforeVisit.t4.h3": "Plan a little buffer",
-    "beforeVisit.t4.p": "Artistry takes time allow a few extra minutes so we never have to rush the details.",
+    "beforeVisit.t4.p": "Good makeup takes time — leave a few extra minutes so we don’t have to rush.",
     "faq.eyebrow": "Q&A",
     "faq.h2": "Common questions",
     "faq.q1": "How do I book?",
@@ -558,6 +581,13 @@ const BUNDLED_STRINGS = {
     "meta.titlePromLanding": "Líčenie na stužkovú Bratislava | Profesionálny make-up – Juliére Beauty",
     "meta.descriptionPromLanding":
       "Soft glam, glow a look, v ktorom sa budeš cítiť ako najlepšia verzia seba. Líčenie na stužkovú v Bratislave prispôsobené črtám, šatám a štýlu večera.",
+    "meta.titleBallLanding": "Líčenie na ples Bratislava | Profesionálny make-up – Juliére Beauty",
+    "meta.descriptionBallLanding":
+      "Plesový makeup v Bratislave, ktorý vydrží až do posledného tanca. Juliére Beauty, Račianska 66.",
+    "meta.titleChristmasPartyLanding":
+      "Líčenie na firemný večierok Bratislava | Profesionálny make-up – Juliére Beauty",
+    "meta.descriptionChristmasPartyLanding":
+      "Makeup na firemný vianočný večierok v Bratislave, ktorý vydrží prípitky, fotky aj cestu domov. Juliére Beauty, Račianska 66.",
     "promLanding.faq.q1": "Ako dlho to trvá?",
     "promLanding.faq.a1": "60 minút v štúdiu.",
     "promLanding.faq.q2": "Ako dlho makeup vydrží?",
@@ -592,7 +622,6 @@ const BUNDLED_STRINGS = {
     "home.instagram.embed.2": "",
     "home.instagram.embed.3": "",
     "meta.description": "Juliére Beauty  elegantné vizážistické štúdio.",
-    "sheet.loading": "Načítavam…",
     "hero.carouselAria": "Juliére Beauty",
     "hero.slide1.alt": "Portrét  profesionálny makeup look, Juliére Beauty",
     "hero.slide1.caption": "Vybraný portrét pre Juliére Beauty",
@@ -613,7 +642,10 @@ const BUNDLED_STRINGS = {
     "header.navMain": "Hlavná navigácia",
     "nav.about": "O mne",
     "nav.portfolio": "Portfólio",
+    "nav.events": "Udalosti",
+    "nav.eventsMenuAria": "Udalosti",
     "nav.stuzkova": "Stužková",
+    "nav.ples": "Ples",
     "nav.prices": "Služby + Cenník",
     "nav.reviews": "Recenzie",
     "nav.beforeVisit": "Pred termínom",
@@ -661,6 +693,10 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.bridal.4": "Svadobné líčenie  portrét",
     "portfolio.gallery.bridal.5": "Svadobné líčenie  portrét soft glam",
     "portfolio.gallery.bridal.6": "Svadobné líčenie  portrét",
+    "portfolio.gallery.bridal.7": "Pred a po — soft glam, Juliére Beauty",
+    "portfolio.gallery.bridal.8": "Pred a po — glam líčenie, Juliére Beauty",
+    "portfolio.gallery.bridal.9": "Pred a po — teplé glam líčenie, Juliére Beauty",
+    "portfolio.gallery.bridal.10": "Pred a po — definované oči, Juliére Beauty",
     "portfolio.gallery.soft.1": "Soft glam  portrét",
     "portfolio.gallery.soft.2": "Soft glam  beauty portrét",
     "portfolio.gallery.soft.3": "Produkty na soft glam",
@@ -671,11 +707,20 @@ const BUNDLED_STRINGS = {
     "portfolio.gallery.editorial.3": "",
     "portfolio.gallery.editorial.4": "",
     "portfolio.gallery.editorial.5": "Extravagantné líčenie  portrét",
+    "portfolio.gallery.editorial.6": "Extravagantné líčenie — portrét, Juliére Beauty",
     "portfolio.gallery.signature.1": "Soft glam a výraznejší glam — líčenie na stužkovú, Juliére Beauty Bratislava",
     "portfolio.gallery.signature.2": "Glam makeup na stužkovú — Juliére Beauty Bratislava",
     "portfolio.gallery.signature.3": "Zlaté oči — líčenie na stužkovú, Juliére Beauty",
     "portfolio.gallery.signature.4": "Grafická linka — makeup na stužkovú, Bratislava",
     "portfolio.gallery.signature.5": "Pred a po — líčenie na stužkovú, Juliére Beauty",
+    "portfolio.gallery.signature.6": "Metalické oči — líčenie na ples Bratislava, Juliére Beauty",
+    "portfolio.gallery.signature.7": "Zlaté oči — líčenie na ples, Juliére Beauty Bratislava",
+    "portfolio.gallery.signature.8": "Glam portrét — líčenie na ples Bratislava",
+    "portfolio.gallery.signature.9": "Perly — líčenie na ples, Juliére Beauty",
+    "portfolio.gallery.signature.10": "Linka — líčenie na ples Bratislava, Juliére Beauty",
+    "portfolio.gallery.signature.11": "Soft glam — líčenie na ples, Juliére Beauty",
+    "portfolio.gallery.signature.12": "Čipkované rukavice — líčenie na ples Bratislava",
+    "portfolio.gallery.signature.13": "Linka a glow — líčenie na ples, Juliére Beauty",
     "portfolio.gallery.evening.1": "Večerné líčenie  portrét",
     "portfolio.gallery.evening.2": "Večerný luxus  portrét",
     "portfolio.gallery.evening.3": "Večerný look  produkty",
@@ -784,17 +829,21 @@ const BUNDLED_STRINGS = {
     "beforeVisit.eyebrow": "Pred termínom",
     "beforeVisit.h2": "Pár tipov, nech všetko prebehne hladko",
     "beforeVisit.t1.pill": "Pleť",
-    "beforeVisit.t1.h3": "Príďte s čistou tvárou",
-    "beforeVisit.t1.p": "Ak sa dá, bez mejkapu a bez ťažkých krémov tesne pred vizitou.",
+    "beforeVisit.t1.h3": "Príďte s čistou pleťou",
+    "beforeVisit.t1.p":
+      "Ak je to možné, príďte na líčenie bez make-upu. Rannú skincare rutinu si však pokojne môžete aplikovať ako zvyčajne.",
     "beforeVisit.t2.pill": "Inšpirácia",
-    "beforeVisit.t2.h3": "Vezmite referencie",
-    "beforeVisit.t2.p": "Pár obľúbených fotiek pomôže zladiť intenzitu, tón a finiš.",
-    "beforeVisit.t3.pill": "Oblečenie",
-    "beforeVisit.t3.h3": "Výstrih a doplnky",
-    "beforeVisit.t3.p": "Oblečte sa alebo vezmite niečo blízke outfitu z udalosti, nech ladí líčenie.",
+    "beforeVisit.t2.h3": "Vezmite inšpiráciu",
+    "beforeVisit.t2.p":
+      "Na termín si pokojne môžete priniesť fotky líčenia, ktoré si predstavujete. Vďaka nim získam lepšiu predstavu o vašich očakávaniach a štýle, ktorý sa vám páči.",
+    "beforeVisit.t3.pill": "Hydratácia",
+    "beforeVisit.t3.h3": "Hydratácia",
+    "beforeVisit.t3.p":
+      "Pre docielenie čo najlepšieho efektu odporúčam večer pred udalosťou použiť hydratačnú masku. Dostatočne hydratovaná pleť je základom krásneho, prirodzeného a dlhotrvajúceho líčenia.",
     "beforeVisit.t4.pill": "Čas",
     "beforeVisit.t4.h3": "Rezerva navyše",
-    "beforeVisit.t4.p": "Kvalitná vizáž chce čas  počítajte s pár minútami navyše, aby sme nič nenáhlili.",
+    "beforeVisit.t4.p":
+      "Kvalitná vizáž chce čas — počítajte s pár minútami navyše, aby sme nič nenáhlili.",
     "faq.eyebrow": "Q&A",
     "faq.h2": "Často kladené otázky",
     "faq.q1": "Ako si rezervujem termín?",
@@ -1023,88 +1072,6 @@ const BUNDLED_STRINGS = {
   },
 };
 
-/** Merged from Google Sheet at load; empty values fall back to bundled copy. */
-let sheetOverrides = { en: {}, sk: {} };
-
-/** Optional image URLs from SK sheet column C (`data-site-img` keys, alias targets, and `portfolio.gallery.*` alt keys). */
-let sheetImageUrls = {};
-
-/**
- * @param {unknown} raw
- * @returns {Record<string, string>}
- */
-function normalizeStringMap(raw) {
-  if (!raw || typeof raw !== "object") {
-    return {};
-  }
-
-  /** @type {Record<string, string>} */
-  const out = {};
-
-  for (const [k, v] of Object.entries(raw)) {
-    const key = k.trim();
-    if (!key || key.startsWith("#")) {
-      continue;
-    }
-
-    out[key] = v === null || v === undefined ? "" : String(v);
-  }
-
-  return out;
-}
-
-/**
- * Loads copy from published/public Google Sheet tabs (CSV: key, text; SK optional column C = image URLs).
- * SK tab is required when sheet texts are enabled; EN tab is optional (bundled EN strings used if missing).
- */
-export async function loadTextsFromGoogleSheet() {
-  sheetOverrides = { en: {}, sk: {} };
-  sheetImageUrls = {};
-
-  if (!CONFIG.useSheetTexts) {
-    return;
-  }
-
-  const {
-    csvRowsToStringMap,
-    parseCsv,
-    resolveSiteTextCsvUrls,
-    fetchSiteTextCsv,
-    siteImgUrlsFromSkCsvRows,
-  } = await import("./site-text-csv.js");
-
-  const urls = resolveSiteTextCsvUrls(CONFIG);
-  const enUrl = urls.en;
-  const skUrl = urls.sk;
-
-  if (!skUrl) {
-    return;
-  }
-
-  let skText;
-  try {
-    skText = await fetchSiteTextCsv(skUrl);
-  } catch (error) {
-    console.warn("[i18n] Could not load SK sheet CSV; using bundled strings.", error);
-    return;
-  }
-
-  const skRows = parseCsv(skText);
-  sheetOverrides.sk = normalizeStringMap(csvRowsToStringMap(skRows));
-  sheetImageUrls = normalizeStringMap(siteImgUrlsFromSkCsvRows(skRows));
-
-  if (!enUrl) {
-    return;
-  }
-
-  try {
-    const enText = await fetchSiteTextCsv(enUrl);
-    sheetOverrides.en = normalizeStringMap(csvRowsToStringMap(parseCsv(enText)));
-  } catch (error) {
-    console.warn("[i18n] Could not load EN sheet CSV; using bundled EN strings.", error);
-  }
-}
-
 export { extractGoogleDriveFileId } from "./site-image-delivery.js";
 
 /**
@@ -1181,27 +1148,13 @@ export function resolveSiteImageUrl(raw) {
   return null;
 }
 
-function isLocalSiteAsset(src) {
-  return /^(?:\/|\.\.\/)?assets\//i.test(String(src ?? "").trim());
-}
-
 /**
- * Modal gallery images: sheet column C keyed by `altKey` wins. Drive-only JSON
- * fallbacks stay hidden while sheet copy is on. Local `/assets/` JSON paths
- * are used when the sheet has no URL (prom stills are not on Drive).
- * @param {string | undefined} altKey
+ * Modal gallery images from `portfolio-galleries.json` (and HTML `src`).
+ * @param {string | undefined} _altKey
  * @param {string} jsonSrc
  * @returns {string}
  */
-export function resolvePortfolioGalleryImageBase(altKey, jsonSrc) {
-  const key = String(altKey ?? "").trim();
-  const fromSheet = key ? resolveSiteImageUrl(sheetImageUrls[key]) ?? "" : "";
-  if (fromSheet) {
-    return fromSheet;
-  }
-  if (CONFIG.useSheetTexts && !isLocalSiteAsset(jsonSrc)) {
-    return "";
-  }
+export function resolvePortfolioGalleryImageBase(_altKey, jsonSrc) {
   return resolveSiteImageUrl(jsonSrc) ?? "";
 }
 
@@ -1213,17 +1166,15 @@ export function resolvePortfolioGalleryImageSrc(altKey, jsonSrc) {
   return siteImageSrcForProfile(resolved, "gallery");
 }
 
-/** Apply sheet URLs and responsive delivery for elements with `data-site-img`. */
-export function applySheetImageUrls() {
+/** Responsive delivery for `img[data-site-img]` from the markup `src`. */
+export function applySiteImages() {
   document.querySelectorAll("img[data-site-img]").forEach((img) => {
     if (!(img instanceof HTMLImageElement)) {
       return;
     }
 
-    const key = img.dataset.siteImg?.trim();
     const profile = normalizeSiteImageProfile(img.dataset.siteImgProfile);
-    const fromSheet = key ? resolveSiteImageUrl(sheetImageUrls[key]) : null;
-    const resolved = fromSheet || resolveSiteImageUrl(img.getAttribute("src") || "");
+    const resolved = resolveSiteImageUrl(img.getAttribute("src") || "");
     if (!resolved) {
       return;
     }
@@ -1264,13 +1215,7 @@ export function setLang(lang) {
  */
 export function t(key, vars) {
   const lang = getLang();
-  const fromSheet = sheetOverrides[lang]?.[key];
-  const sheetVal = fromSheet !== undefined && String(fromSheet).length > 0 ? String(fromSheet) : null;
-  let str =
-    sheetVal ??
-    BUNDLED_STRINGS[lang]?.[key] ??
-    BUNDLED_STRINGS.en[key] ??
-    key;
+  let str = BUNDLED_STRINGS[lang]?.[key] ?? BUNDLED_STRINGS.en[key] ?? key;
   if (vars && typeof str === "string") {
     for (const [k, v] of Object.entries(vars)) {
       str = str.split(`{{${k}}}`).join(String(v));
@@ -1282,7 +1227,7 @@ export function t(key, vars) {
 const HOME_INSTAGRAM_EMBED_KEY_RE = /^home\.instagram\.embed\.(\d+)$/;
 const LEGACY_BRIDAL_INSTAGRAM_EMBED_KEY_RE = /^bridalLanding\.instagram\.embed\.(\d+)$/;
 
-/** Post/reel permalinks for homepage Instagram embeds (sheet column B → `home.instagram.embed.N`). */
+/** Post/reel permalinks for homepage Instagram embeds (`home.instagram.embed.N`). */
 export function getHomeInstagramEmbedPermalinks() {
   const lang = getLang();
   /** @type {Map<number, string>} */
@@ -1304,9 +1249,6 @@ export function getHomeInstagramEmbedPermalinks() {
     put(key, val);
   }
   for (const [key, val] of Object.entries(BUNDLED_STRINGS[lang] ?? {})) {
-    put(key, val);
-  }
-  for (const [key, val] of Object.entries(sheetOverrides[lang] ?? {})) {
     put(key, val);
   }
 
@@ -1333,7 +1275,7 @@ function normalizeFooterHref(raw) {
   return "";
 }
 
-/** Footer `<a href>` from Google Sheet (`sheetOverrides`) → `CONFIG.social` → bundled defaults. */
+/** Footer `<a href>` from `CONFIG.social` → bundled defaults. */
 function applyFooterSocialLinks() {
   const lang = getLang();
   const triples = [
@@ -1346,14 +1288,7 @@ function applyFooterSocialLinks() {
     if (!a) {
       continue;
     }
-    const rawSheet = sheetOverrides[lang]?.[urlKey];
-    let href = "";
-    if (rawSheet !== undefined && String(rawSheet).trim() !== "") {
-      href = normalizeFooterHref(rawSheet);
-    }
-    if (!href) {
-      href = normalizeFooterHref(cfgFallback);
-    }
+    let href = normalizeFooterHref(cfgFallback);
     if (!href) {
       href = normalizeFooterHref(BUNDLED_STRINGS[lang]?.[urlKey] ?? BUNDLED_STRINGS.en[urlKey]);
     }
@@ -1445,57 +1380,11 @@ export function applyTranslations() {
   applyFooterSocialLinks();
 }
 
-/** @type {HTMLElement | null} */
-let sheetLoadingOverlayEl = null;
-
-function sheetLoadingLabel() {
-  const lang = getLang();
-  return BUNDLED_STRINGS[lang]?.["sheet.loading"] ?? BUNDLED_STRINGS.en["sheet.loading"] ?? "Loading…";
-}
-
-function hideSheetLoadingOverlay() {
-  document.body.classList.remove("is-sheet-loading");
-  if (sheetLoadingOverlayEl) {
-    sheetLoadingOverlayEl.setAttribute("aria-busy", "false");
-    sheetLoadingOverlayEl.classList.remove("is-visible");
-  }
-}
-
-async function hydrateTextsFromGoogleSheet() {
-  if (!CONFIG.useSheetTexts) {
-    return;
-  }
-
-  const { resolveSiteTextCsvUrls } = await import("./site-text-csv.js");
-  const { sk } = resolveSiteTextCsvUrls(CONFIG);
-  if (!sk) {
-    return;
-  }
-
-  /** Only veil the page if the sheet is still loading after a beat — avoids blocking LCP. */
-  let overlayTimer = window.setTimeout(() => {
-    showSheetLoadingOverlay();
-  }, 450);
-
-  try {
-    await loadTextsFromGoogleSheet();
-    document.documentElement.lang = getLang() === "sk" ? "sk" : "en";
-    applyTranslations();
-    applySheetImageUrls();
-    window.dispatchEvent(
-      new CustomEvent("juliamakeup:lang", { detail: { lang: getLang(), source: "sheet" } }),
-    );
-  } finally {
-    window.clearTimeout(overlayTimer);
-    hideSheetLoadingOverlay();
-  }
-}
-
 export function initI18n() {
   const lang = getLangFromPath();
   document.documentElement.lang = lang === "sk" ? "sk" : "en";
   applyTranslations();
-  void hydrateTextsFromGoogleSheet();
+  applySiteImages();
 
   document.querySelectorAll("[data-lang-set]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -1507,65 +1396,4 @@ export function initI18n() {
   });
 }
 
-function showSheetLoadingOverlay() {
-  document.body.classList.add("is-sheet-loading");
-  if (!sheetLoadingOverlayEl) {
-    const root = document.createElement("div");
-    root.id = "sheet-loading-overlay";
-    root.className = "sheet-loading-overlay";
-    root.setAttribute("role", "status");
-    root.setAttribute("aria-live", "polite");
-    root.setAttribute("aria-busy", "true");
-
-    const ambient = document.createElement("div");
-    ambient.className = "sheet-loading-overlay__ambient";
-    ambient.setAttribute("aria-hidden", "true");
-
-    const inner = document.createElement("div");
-    inner.className = "sheet-loading-overlay__inner";
-
-    const card = document.createElement("div");
-    card.className = "sheet-loading-overlay__card";
-
-    const brand = document.createElement("p");
-    brand.className = "sheet-loading-overlay__brand";
-    brand.setAttribute("aria-hidden", "true");
-    const linePrimary = document.createElement("span");
-    linePrimary.className = "sheet-loading-overlay__brand-line sheet-loading-overlay__brand-line--primary";
-    linePrimary.textContent = "Juliére";
-    const lineSecondary = document.createElement("span");
-    lineSecondary.className = "sheet-loading-overlay__brand-line sheet-loading-overlay__brand-line--secondary";
-    lineSecondary.textContent = "Beauty";
-    brand.append(linePrimary, lineSecondary);
-
-    const mark = document.createElement("div");
-    mark.className = "sheet-loading-overlay__mark";
-    mark.setAttribute("aria-hidden", "true");
-    for (let i = 0; i < 3; i += 1) {
-      const dot = document.createElement("span");
-      dot.className = "sheet-loading-overlay__dot";
-      mark.appendChild(dot);
-    }
-
-    const rule = document.createElement("span");
-    rule.className = "sheet-loading-overlay__rule";
-    rule.setAttribute("aria-hidden", "true");
-
-    const label = document.createElement("p");
-    label.className = "sheet-loading-overlay__label";
-
-    card.append(brand, mark, rule, label);
-    inner.appendChild(card);
-    root.append(ambient, inner);
-    document.body.appendChild(root);
-    sheetLoadingOverlayEl = root;
-  }
-  const labelEl = sheetLoadingOverlayEl.querySelector(".sheet-loading-overlay__label");
-  if (labelEl) {
-    labelEl.textContent = sheetLoadingLabel();
-  }
-  sheetLoadingOverlayEl.classList.add("is-visible");
-}
-
-/** Bundled defaults; use `npm run export:site-texts` to regenerate sheet seed CSVs. */
 export { BUNDLED_STRINGS };

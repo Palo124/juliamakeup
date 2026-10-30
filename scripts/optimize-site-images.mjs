@@ -20,6 +20,18 @@ const MASTERS = [
   { file: "stuzkova_makeup/Stuzkova makeup 3.jpeg", stem: "stuzkova_makeup/stuzkova-3" },
   { file: "stuzkova_makeup/Stuzkova makeup 4.jpeg", stem: "stuzkova_makeup/stuzkova-4" },
   { file: "stuzkova_makeup/Stuzkova makeup 5.jpeg", stem: "stuzkova_makeup/stuzkova-5" },
+  { file: "pred_a_po/PredAPo1.jpg", stem: "pred_a_po/pred-po-1" },
+  { file: "pred_a_po/PredAPo2.jpg", stem: "pred_a_po/pred-po-2" },
+  { file: "pred_a_po/PredAPo3.jpg", stem: "pred_a_po/pred-po-3" },
+  { file: "pred_a_po/PredAPo4.jpg", stem: "pred_a_po/pred-po-4" },
+  { file: "licenie-na-ples/licenie-na-ples-winged-liner.jpg", stem: "licenie-na-ples/licenie-na-ples-winged-liner" },
+  { file: "licenie-na-ples/licenie-na-ples-zlate-oci.jpg", stem: "licenie-na-ples/licenie-na-ples-zlate-oci" },
+  { file: "licenie-na-ples/licenie-na-ples-glam-portrait.jpg", stem: "licenie-na-ples/licenie-na-ples-glam-portrait" },
+  { file: "licenie-na-ples/licenie-na-ples-perly.jpg", stem: "licenie-na-ples/licenie-na-ples-perly" },
+  { file: "licenie-na-ples/licenie-na-ples-metalicke-oci.jpg", stem: "licenie-na-ples/licenie-na-ples-metalicke-oci" },
+  { file: "licenie-na-ples/licenie-na-ples-soft-glam.jpg", stem: "licenie-na-ples/licenie-na-ples-soft-glam" },
+  { file: "licenie-na-ples/licenie-na-ples-cipkovane-rukavice.jpg", stem: "licenie-na-ples/licenie-na-ples-cipkovane-rukavice" },
+  { file: "licenie-na-ples/licenie-na-ples-liner-glow.jpg", stem: "licenie-na-ples/licenie-na-ples-liner-glow" },
 ];
 
 for (const { file, stem } of MASTERS) {
@@ -36,7 +48,7 @@ for (const { file, stem } of MASTERS) {
     }
     execFileSync(
       "convert",
-      [source, "-auto-orient", "-strip", "-resize", `${width}x`, "-quality", "82", target],
+      [source, "-auto-orient", "-strip", "-resize", `${width}x>`, "-quality", "82", target],
       { stdio: "inherit" },
     );
     console.log(`Wrote ${target.replace(`${root}/`, "")}`);

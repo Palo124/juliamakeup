@@ -188,7 +188,28 @@
         <nav id="site-nav" class="site-nav" data-i18n-aria="header.navMain" aria-label="Main">
           <a href="#about" data-i18n="nav.about">About</a>
           <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
-          <a href="/en/prom-makeup-bratislava/" data-i18n="nav.stuzkova">Prom makeup</a>
+          <div class="nav-dropdown">
+            <button
+              type="button"
+              class="nav-dropdown__toggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="nav-events-menu"
+              data-i18n="nav.events"
+            >
+              Events
+            </button>
+            <div
+              id="nav-events-menu"
+              class="nav-dropdown__menu"
+              role="group"
+              data-i18n-aria="nav.eventsMenuAria"
+              aria-label="Event makeup"
+            >
+              <a href="/en/prom-makeup-bratislava/" data-i18n="nav.stuzkova">Prom makeup</a>
+              <a href="/en/ball-makeup-bratislava/" data-i18n="nav.ples">Ball makeup</a>
+            </div>
+          </div>
           <a href="#prices" data-i18n="nav.prices">Services</a>
           <a href="#before-visit" data-i18n="nav.beforeVisit">Recommendations</a>
           <a href="#contact" data-i18n="nav.contact">Contact</a>
@@ -550,23 +571,23 @@
           <div class="portfolio-carousel-track" id="before-visit-carousel-track">
             <article class="recommend-card portfolio-carousel-slide">
               <span class="pill" data-i18n="beforeVisit.t1.pill">Skin</span>
-              <h3 data-i18n="beforeVisit.t1.h3">Come with a clean face</h3>
-              <p data-i18n="beforeVisit.t1.p">Arrive without makeup if you can, and skip heavy creams right before the session.</p>
+              <h3 data-i18n="beforeVisit.t1.h3">Come with clean skin</h3>
+              <p data-i18n="beforeVisit.t1.p">If you can, come without makeup. Your usual morning skincare is fine.</p>
             </article>
             <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="beforeVisit.t2.pill">References</span>
+              <span class="pill" data-i18n="beforeVisit.t2.pill">Inspiration</span>
               <h3 data-i18n="beforeVisit.t2.h3">Bring inspiration</h3>
-              <p data-i18n="beforeVisit.t2.p">Save a few photos you like it helps align on tone, intensity, and finish.</p>
+              <p data-i18n="beforeVisit.t2.p">Feel free to bring photos of makeup you have in mind. That gives me a clearer picture of what you want and the style you like.</p>
             </article>
             <article class="recommend-card portfolio-carousel-slide">
-              <span class="pill" data-i18n="beforeVisit.t3.pill">Outfit</span>
-              <h3 data-i18n="beforeVisit.t3.h3">Neckline &amp; jewelry</h3>
-              <p data-i18n="beforeVisit.t3.p">Wear or bring something close to your event neckline so the look feels cohesive.</p>
+              <span class="pill" data-i18n="beforeVisit.t3.pill">Hydration</span>
+              <h3 data-i18n="beforeVisit.t3.h3">Hydration</h3>
+              <p data-i18n="beforeVisit.t3.p">For the best result, I recommend a hydrating mask the night before. Well-hydrated skin is the base of makeup that looks good, natural, and lasts.</p>
             </article>
             <article class="recommend-card portfolio-carousel-slide">
               <span class="pill" data-i18n="beforeVisit.t4.pill">Timing</span>
               <h3 data-i18n="beforeVisit.t4.h3">Plan a little buffer</h3>
-              <p data-i18n="beforeVisit.t4.p">Artistry takes time allow a few extra minutes so we never have to rush the details.</p>
+              <p data-i18n="beforeVisit.t4.p">Good makeup takes time — leave a few extra minutes so we don’t have to rush.</p>
             </article>
           </div>
         </div>

@@ -26,7 +26,53 @@ export function closeMobileMenu() {
   elements.menuToggle.setAttribute("aria-label", t("header.openMenu"));
 }
 
+function bindNavDropdown() {
+  const dropdown = document.querySelector(".nav-dropdown");
+  const toggle = dropdown?.querySelector(".nav-dropdown__toggle");
+  if (!(dropdown instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  const setOpen = (open) => {
+    dropdown.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+  };
+
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(!dropdown.classList.contains("is-open"));
+  });
+
+  dropdown.addEventListener("mouseenter", () => {
+    toggle.setAttribute("aria-expanded", "true");
+  });
+
+  dropdown.addEventListener("mouseleave", () => {
+    if (!dropdown.classList.contains("is-open")) {
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Node) || dropdown.contains(target)) {
+      return;
+    }
+    setOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+      toggle.blur();
+    }
+  });
+}
+
 export function bindNavigation() {
+  bindNavDropdown();
+
   if (elements.menuToggle) {
     elements.menuToggle.addEventListener("click", toggleMobileMenu);
   }
